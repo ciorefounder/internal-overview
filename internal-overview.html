@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CIORÉ — Internal Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════════════════
+   CIORÉ INTERNAL OVERVIEW — LIGHT THEME
+   Warm ivory base · Obsidian text · Gold + Green accents
+   Same structure as v3, fully light-mode CSS
+═══════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Surfaces ─────────────────────────── */
+  --page-bg:      #F9F7F4;
+  --surface-1:    #FFFFFF;
+  --surface-2:    #F3F1EE;
+  --surface-3:    #EDE9E4;
+  --nav-bg:       rgba(249,247,244,0.96);
+  --hero-bg:      #0A0A0A;
+
+  /* ── Text on light bg ─────────────────── */
+  --ink:          #0A0A0A;
+  --ink-70:       rgba(10,10,10,0.68);
+  --ink-50:       rgba(10,10,10,0.48);
+  --ink-35:       rgba(10,10,10,0.32);
+
+  /* ── Brand accents ────────────────────── */
+  --gold:         #A8841E;
+  --gold-light:   #D4AF37;
+  --gold-bg:      rgba(168,132,30,0.07);
+  --gold-border:  rgba(168,132,30,0.28);
+  --green:        #3A5C2E;
+  --green-bg:     rgba(58,92,46,0.07);
+  --green-border: rgba(58,92,46,0.26);
+  --brown:        #3B2F2F;
+
+  /* ── Danger ───────────────────────────── */
+  --danger:        #AA2C2C;
+  --danger-bg:     rgba(170,44,44,0.06);
+  --danger-border: rgba(170,44,44,0.22);
+
+  /* ── Borders & shadows ────────────────── */
+  --border:       rgba(10,10,10,0.09);
+  --border-mid:   rgba(10,10,10,0.14);
+  --shadow-sm:    0 1px 3px rgba(10,10,10,0.05), 0 3px 10px rgba(10,10,10,0.04);
+  --shadow-md:    0 2px 8px rgba(10,10,10,0.07), 0 8px 24px rgba(10,10,10,0.06);
+  --shadow-card:  0 1px 3px rgba(10,10,10,0.05), 0 3px 10px rgba(10,10,10,0.04);
+
+  /* ── Typography ───────────────────────── */
+  --f-display: 'Bebas Neue', 'Barlow Condensed', sans-serif;
+  --f-ui:      'Barlow Condensed', sans-serif;
+  --f-body:    'Barlow', sans-serif;
+  --ease:      cubic-bezier(0.25,0.1,0.25,1);
+  --ease-out:  cubic-bezier(0,0,0.2,1);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  background: var(--page-bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-weight: 400;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PASSWORD GATE — light premium card on ivory
+═══════════════════════════════════════════════════════ */
+#gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: var(--page-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.65s var(--ease-out), visibility 0.65s;
+}
+#gate.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
+
+#gate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 45% at 50% 100%, rgba(168,132,30,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 38% at 8% 8%, rgba(58,92,46,0.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.gate-box {
+  position: relative;
+  z-index: 1;
+  width: min(500px, 90vw);
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  padding: clamp(40px,6vw,64px) clamp(32px,5vw,56px);
+  box-shadow: var(--shadow-md);
+  animation: riseIn 0.8s var(--ease-out) both;
+}
+
+@keyframes riseIn {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.gate-sup {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.gate-sup::before {
+  content: '';
+  display: block;
+  width: 36px; height: 1px;
+  background: var(--gold-light);
+  flex-shrink: 0;
+}
+
+.gate-wordmark {
+  font-family: var(--f-display);
+  font-size: clamp(64px, 14vw, 110px);
+  line-height: 0.88;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 6px;
+  user-select: none;
+}
+
+.gate-sub-wordmark {
+  font-family: var(--f-ui);
+  font-size: clamp(13px, 2.5vw, 17px);
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 36px;
+}
+
+.gate-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-border), transparent 65%);
+  margin-bottom: 32px;
+}
+
+.gate-field-label {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.gate-row { display:flex; width:100%; margin-bottom:12px; }
+
+#pwInput {
+  flex: 1;
+  padding: 14px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-mid);
+  border-right: none;
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  outline: none;
+  caret-color: var(--gold);
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+#pwInput:focus { border-color: var(--gold-border); background: var(--surface-1); }
+#pwInput::placeholder {
+  color: var(--ink-35);
+  letter-spacing: 0.04em;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.gate-btn {
+  flex-shrink: 0;
+  padding: 14px 28px;
+  background: var(--ink);
+  border: none;
+  color: #ffffff;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.22s var(--ease), transform 0.12s;
+}
+.gate-btn:hover  { background: var(--brown); }
+.gate-btn:active { transform: scale(0.97); }
+
+.gate-err {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--danger);
+  min-height: 18px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  margin-bottom: 8px;
+}
+.gate-err.show { opacity: 1; }
+
+.gate-notice {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  line-height: 2.0;
+}
+
+@keyframes shake {
+  0%,100%{ transform:translateX(0) }
+  16%    { transform:translateX(-10px) }
+  33%    { transform:translateX(10px) }
+  50%    { transform:translateX(-7px) }
+  66%    { transform:translateX(7px) }
+  83%    { transform:translateX(-3px) }
+}
+.shake { animation: shake 0.46s var(--ease); }
+
+/* ═══════════════════════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════════════════════ */
+#app { opacity:0; pointer-events:none; transition: opacity 0.6s var(--ease-out); }
+#app.on { opacity:1; pointer-events:auto; }
+
+/* ═══════════════════════════════════════════════════════
+   TOP NAV
+═══════════════════════════════════════════════════════ */
+.t-nav {
+  position: sticky;
+  top: 0;
+  z-index: 800;
+  height: 58px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-mid);
+  box-shadow: 0 1px 0 var(--border), 0 2px 10px rgba(10,10,10,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px,5vw,64px);
+}
+
+.t-nav-mark {
+  font-family: var(--f-ui);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.t-nav-center {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+@media(max-width:680px){ .t-nav-center { display:none; } }
+
+.t-nav-actions { display:flex; align-items:center; gap:8px; }
+
+.t-btn {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid var(--border-mid);
+  color: var(--ink-70);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.t-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--surface-2); }
+.t-btn.t-btn-gold { border-color: var(--gold-border); color: var(--gold); }
+.t-btn.t-btn-gold:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   CONFIDENTIAL RIBBON
+═══════════════════════════════════════════════════════ */
+.conf-ribbon {
+  background: var(--danger-bg);
+  border-bottom: 1px solid var(--danger-border);
+  padding: 10px clamp(20px,5vw,64px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--danger);
+}
+.conf-pip {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--danger);
+  flex-shrink: 0;
+  animation: pip 2.2s ease-in-out infinite;
+}
+@keyframes pip { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION TAB NAV
+═══════════════════════════════════════════════════════ */
+.s-nav-bar {
+  position: sticky;
+  top: 58px;
+  z-index: 700;
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-mid);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.s-nav-bar::-webkit-scrollbar { display:none; }
+
+.s-nav {
+  display: flex;
+  padding: 0 clamp(20px,5vw,64px);
+  gap: 0;
+  width: max-content;
+  min-width: 100%;
+}
+
+.s-tab {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  padding: 17px 22px 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.22s var(--ease), border-color 0.22s var(--ease);
+  user-select: none;
+  flex-shrink: 0;
+}
+.s-tab:hover  { color: var(--ink-70); }
+.s-tab.active { color: var(--ink); border-bottom-color: var(--gold); }
+
+/* ═══════════════════════════════════════════════════════
+   HERO — stays obsidian for brand contrast
+═══════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  padding: clamp(56px,9vw,110px) clamp(20px,5vw,64px) clamp(52px,7vw,88px);
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 42% at 70% 100%, rgba(168,132,30,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 38% 32% at 4% 88%,  rgba(58,92,46,0.08)   0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-inner { position:relative; z-index:1; }
+
+.hero-eyebrow {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.hero-eyebrow::before {
+  content: ''; display:block;
+  width: 40px; height: 1px;
+  background: var(--gold-light); flex-shrink:0;
+}
+
+.hero-title {
+  font-family: var(--f-display);
+  font-size: clamp(52px, 11vw, 120px);
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  max-width: 860px;
+  margin-bottom: 0;
+}
+
+.hero-body {
+  margin-top: 28px;
+  font-family: var(--f-body);
+  font-size: clamp(15px,1.8vw,18px);
+  font-weight: 400;
+  line-height: 1.78;
+  color: rgba(255,255,255,0.82);
+  max-width: 640px;
+}
+
+.hero-rule {
+  margin-top: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(168,132,30,0.55) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTENT WRAP
+═══════════════════════════════════════════════════════ */
+.cx {
+  padding: 0 clamp(20px,5vw,64px);
+  max-width: 1140px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PANELS
+═══════════════════════════════════════════════════════ */
+.panel { display:none; }
+.panel.active {
+  display: block;
+  animation: fadeUp 0.38s var(--ease-out) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.s-heading {
+  font-family: var(--f-display);
+  font-size: clamp(42px,7.5vw,76px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-top: clamp(48px,7vw,80px);
+  line-height: 1.0;
+}
+
+.s-intro {
+  font-family: var(--f-body);
+  font-size: clamp(16px,1.9vw,19px);
+  font-weight: 400;
+  line-height: 1.82;
+  color: var(--ink-70);
+  max-width: 740px;
+  margin-top: 24px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border-mid);
+}
+
+.cat-label {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 48px 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.cat-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-border), transparent);
+}
+.cat-label.green-label { color: var(--green); }
+.cat-label.green-label::after { background: linear-gradient(90deg, var(--green-border), transparent); }
+
+.bt {
+  font-family: var(--f-body);
+  font-size: clamp(15px,1.4vw,16.5px);
+  font-weight: 400;
+  line-height: 1.90;
+  color: var(--ink-70);
+  max-width: 760px;
+}
+.bt + .bt { margin-top: 16px; }
+.bt strong { color: var(--ink); font-weight: 700; }
+
+.pull {
+  border-left: 3px solid var(--gold-light);
+  padding: 20px 26px;
+  margin: 26px 0;
+  background: var(--gold-bg);
+  max-width: 760px;
+  font-family: var(--f-body);
+  font-size: clamp(15px,1.5vw,16.5px);
+  font-weight: 400;
+  line-height: 1.85;
+  color: var(--ink-70);
+}
+.pull strong { color: var(--ink); font-weight:700; }
+
+.dl { list-style:none; max-width:760px; margin:14px 0 22px; }
+.dl li {
+  display: flex;
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--f-body);
+  font-size: clamp(15px,1.4vw,16px);
+  font-weight: 400;
+  line-height: 1.80;
+  color: var(--ink-70);
+}
+.dl li:last-child { border-bottom:none; }
+.dl li::before {
+  content: '—';
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.dl.green li::before { color: var(--green); }
+
+/* Cards — white on ivory, soft shadow */
+.cg {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.cc {
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.22s var(--ease), transform 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+.cc:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--gold-border);
+}
+.cc::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0;
+  height: 2px;
+  background: var(--gold-light);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.38s var(--ease);
+}
+.cc:hover::before { transform: scaleX(1); }
+
+.cc-eye {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.cc-eye.green { color: var(--green); }
+
+.cc-title {
+  font-family: var(--f-ui);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.cc-body {
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.78;
+  color: var(--ink-70);
+}
+
+/* Spec table */
+.st {
+  width: 100%;
+  border-collapse: collapse;
+  max-width: 700px;
+  margin: 20px 0 28px;
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+}
+.st th {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--gold-border);
+  background: var(--surface-2);
+}
+.st td {
+  padding: 13px 16px;
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-70);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.65;
+  vertical-align: top;
+  background: var(--surface-1);
+}
+.st td:first-child {
+  color: var(--ink-50);
+  font-weight: 600;
+  white-space: nowrap;
+  font-family: var(--f-ui);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  background: var(--surface-2);
+}
+.st tr:last-child td { border-bottom:none; }
+.st tr:hover td { background: rgba(168,132,30,0.04); }
+.st tr:hover td:first-child { background: var(--surface-2); }
+
+/* Phase rows */
+.phases { max-width:760px; margin:22px 0; }
+.ph-row {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 20px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.ph-row:last-child { border-bottom:none; }
+.ph-num {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 3px;
+}
+.ph-title {
+  font-family: var(--f-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+.ph-body {
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.80;
+  color: var(--ink-70);
+}
+
+/* Warning block */
+.wb {
+  border: 1px solid var(--danger-border);
+  background: var(--danger-bg);
+  padding: 20px 24px;
+  margin: 22px 0;
+  display: flex;
+  gap: 18px;
+  max-width: 760px;
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.82;
+  color: var(--danger);
+}
+.wb strong { color: var(--danger); font-weight:700; }
+.wb-icon { font-size:17px; flex-shrink:0; margin-top:2px; }
+
+/* Inline tags */
+.tag {
+  display: inline-block;
+  padding: 5px 13px;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-mid);
+  color: var(--ink-70);
+  background: var(--surface-1);
+  margin: 3px 4px 3px 0;
+  transition: all 0.2s var(--ease);
+  box-shadow: var(--shadow-sm);
+}
+.tag:hover { border-color: var(--ink); color: var(--ink); }
+.tag.g  { border-color: var(--gold-border);  color: var(--gold);  background: var(--gold-bg); }
+.tag.gr { border-color: var(--green-border); color: var(--green); background: var(--green-bg); }
+
+/* Section rule */
+.s-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
+  margin: 56px 0;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCESS LOG DRAWER
+═══════════════════════════════════════════════════════ */
+#log-drawer {
+  position: fixed;
+  top: 58px;
+  right: 0;
+  width: min(360px,100vw);
+  height: calc(100vh - 58px);
+  background: var(--surface-1);
+  border-left: 1px solid var(--border-mid);
+  box-shadow: -4px 0 24px rgba(10,10,10,0.09);
+  z-index: 600;
+  transform: translateX(100%);
+  transition: transform 0.34s var(--ease-out);
+  overflow-y: auto;
+  padding: 34px 26px;
+}
+#log-drawer.open { transform: translateX(0); }
+
+.ld-head {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ld-close {
+  cursor: pointer;
+  color: var(--ink-50);
+  font-size: 18px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.ld-close:hover { color: var(--ink); }
+
+.ld-item {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--f-ui);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  line-height: 1.75;
+  color: var(--ink-70);
+}
+.ld-item:last-child { border-bottom:none; }
+.ld-ts  { color: var(--ink-50); font-size: 11px; letter-spacing: 0.12em; }
+.ld-ip  { color: var(--gold); margin-top: 5px; font-weight: 700; }
+.ld-empty {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-50);
+  padding: 26px 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════ */
+.site-foot {
+  border-top: 1px solid var(--border-mid);
+  padding: 40px clamp(20px,5vw,64px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 80px;
+  background: var(--surface-2);
+}
+.foot-mark {
+  font-family: var(--f-ui);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.foot-meta {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  text-align: right;
+  line-height: 1.9;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media(max-width:640px) {
+  .cg { grid-template-columns: 1fr; gap:10px; }
+  .ph-row { grid-template-columns: 64px 1fr; gap:14px; }
+}
+/* Swatch row — light theme */
+.swatch-row-light { display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 40px; }
+.sw-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--border-mid);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-sm);
+}
+.sw-dot { width:20px; height:20px; border:1px solid var(--border-mid); flex-shrink:0; }
+.sw-item span {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink-70);
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PASSWORD GATE
+═══════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-box">
+    <div class="gate-sup">Secure Contributor Access</div>
+    <div class="gate-wordmark">CIORÉ</div>
+    <div class="gate-sub-wordmark">Internal Overview</div>
+    <div class="gate-divider"></div>
+    <label class="gate-field-label" for="pwInput">Enter access password</label>
+    <div class="gate-err" id="gateErr">— Access denied. Invalid password.</div>
+    <div class="gate-row">
+      <input type="password" id="pwInput" placeholder="Password" autocomplete="off" />
+      <button class="gate-btn" id="gateBtn">Unlock</button>
+    </div>
+    <div class="gate-notice">
+      Confidential internal material. Authorized contributors only.<br>
+      Do not share this page or the password with anyone.<br>
+      All access attempts are logged for security.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     APP
+═══════════════════════════════════════ -->
+<div id="app">
+
+  <!-- TOP NAV -->
+  <nav class="t-nav">
+    <div class="t-nav-mark">Cioré</div>
+    <div class="t-nav-center">Internal Overview</div>
+    <div class="t-nav-actions">
+      <button class="t-btn t-btn-gold" id="logBtn">Access Log</button>
+      <button class="t-btn" id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <!-- CONFIDENTIAL RIBBON -->
+  <div class="conf-ribbon">
+    <div class="conf-pip"></div>
+    Confidential — Approved contributors only — Do not share password or screenshots — Logout when done
+  </div>
+
+  <!-- SECTION TAB NAV -->
+  <div class="s-nav-bar">
+    <nav class="s-nav" id="sNav">
+      <div class="s-tab active" data-panel="p1">Mission &amp; Values</div>
+      <div class="s-tab" data-panel="p2">Contributor Info</div>
+      <div class="s-tab" data-panel="p3">Phone System</div>
+      <div class="s-tab" data-panel="p4">Lumé OS</div>
+      <div class="s-tab" data-panel="p5">Nyro Power</div>
+      <div class="s-tab" data-panel="p6">Radio &amp; Comms</div>
+      <div class="s-tab" data-panel="p7">Gaia-X AI</div>
+      <div class="s-tab" data-panel="p8">Sustainability</div>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Internal — Confidential</div>
+      <div class="hero-title">Internal<br>Overview</div>
+      <p class="hero-body">Cioré exists to build powerful, privacy-first, ethically made technology that centers innovation, sustainable systems, transparency, and community. This document is for approved contributors only.</p>
+      <div class="hero-rule"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CONTENT ═══ -->
+  <div class="cx">
+
+    <!-- ═══════════════════════════════════
+         PANEL 1 — MISSION AND VALUES
+    ═══════════════════════════════════ -->
+    <div class="panel active" id="p1">
+
+      <div class="s-heading">Mission and Values</div>
+      <div class="s-intro">Cioré exists to build powerful, privacy-first, ethically made technology that centers innovation, sustainable systems, transparency, and community. Our modular smartphones and Lumé OS are designed from the ground up to protect people, preserve the planet, and put control back into users' hands.</div>
+
+      <p class="bt">Our long-term vision is to become a third major mobile platform alongside iOS and Android, proving that phones can be private, repairable, solar-assisted, and ethically produced without sacrificing modern performance.</p>
+
+      <div class="cat-label">Core Values and Ethical Commitments</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Privacy</div>
+          <div class="cc-title">Privacy First</div>
+          <div class="cc-body">We do not spy, listen, track, or sell data. Our OS and hardware are built outside surveillance based ecosystems, using sandboxing, strict permissions, and no default telemetry.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Ethics</div>
+          <div class="cc-title">Ethical Manufacturing</div>
+          <div class="cc-body">We prioritize safe, respectful, and fair labor, rejecting supply chains tied to child labor, exploitative mining, or unsafe factories.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Planet</div>
+          <div class="cc-title">Sustainability</div>
+          <div class="cc-body">We commit to low-waste, high-impact design, including recyclable batteries, recycled tempered glass, nanocellulose-reinforced composites, and modular parts to reduce e-waste.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">People</div>
+          <div class="cc-title">Community Over Capitalism</div>
+          <div class="cc-body">We serve people first. Cioré™ is powered by contributors, donors, and supporters who want to build a future where tech is ethical and inclusive.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Purpose</div>
+          <div class="cc-title">Legacy Building</div>
+          <div class="cc-body">We are creating jobs, technology, and narratives that will uplift communities for generations.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Brand Colors and Theme</div>
+
+      <div class="swatch-row-light">
+        <div class="sw-item"><div class="sw-dot" style="background:#0A0A0A;"></div><span>Obsidian Black — #0A0A0A</span></div>
+        <div class="sw-item"><div class="sw-dot" style="background:#D4AF37;"></div><span>Champagne Gold — #D4AF37</span></div>
+        <div class="sw-item"><div class="sw-dot" style="background:#3B2F2F;"></div><span>Deep Brown — #3B2F2F</span></div>
+        <div class="sw-item"><div class="sw-dot" style="background:#4F7942;"></div><span>Eco Green — #4F7942</span></div>
+      </div>
+
+    </div><!-- /p1 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 2 — CONTRIBUTOR INFO
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p2">
+
+      <div class="s-heading">Contributor Information and Conduct</div>
+      <div class="s-intro">You are joining a team that is rewriting what technology can mean for privacy, sustainability, and equity. Every contributor, whether writing code, designing hardware, researching materials, crafting content, or organizing community, is part of something that has not existed before.</div>
+
+      <div class="cat-label">Welcome Message and Expectations</div>
+
+      <p class="bt">We expect all contributors to:</p>
+      <ul class="dl" style="margin-top:14px">
+        <li>Read this Internal Overview so they understand what we are building.</li>
+        <li>Ask questions in shared channels early and often.</li>
+        <li>Align all work to our mission and values.</li>
+        <li>Operate as owners: proactive, transparent, and intentional.</li>
+      </ul>
+
+      <div class="cat-label">Professional Standards and Confidentiality</div>
+
+      <ul class="dl">
+        <li>All work produced for Cioré is internal company property and must not be shared outside our ecosystem without explicit permission.</li>
+        <li>We do not tolerate microaggressions, harassment, or toxic behavior. Every contributor is expected to operate with integrity, respect, and care.</li>
+        <li>This is a safe, collaborative space: critique ideas, not people; practice active listening; and give clear, constructive feedback.</li>
+        <li>Code, CAD files, research documents, and internal strategy must be kept private.</li>
+        <li>Public posting about unreleased features or designs is not allowed unless approved by the founder or designated communications lead.</li>
+      </ul>
+
+      <div class="cat-label">Contributor Activity and Access Policy</div>
+
+      <p class="bt">Cioré is committed to fostering an active, secure, and respectful environment for all contributors. Because we are building sensitive and mission critical technology, all contributors are expected to remain engaged and communicative throughout their time with the company.</p>
+
+      <div class="cat-label">Communication Expectations</div>
+
+      <p class="bt">Contributors are not expected to be available full time, but they are expected to remain in consistent communication. If a contributor is unable to participate for any reason, they are encouraged to notify the founder or relevant team lead as soon as possible. We understand that life happens and that personal responsibilities can arise. Our community prioritizes compassion and flexibility wherever possible.</p>
+
+      <div class="cat-label">Inactivity and Access Revocation</div>
+
+      <div class="wb">
+        <div class="wb-icon">⚠</div>
+        <div>To maintain the integrity and security of our systems, contributors who are inactive for <strong>fourteen consecutive days</strong> without any form of communication will have their Discord access temporarily revoked. Inactive contributors may be eligible to return at a later time, based on availability and mutual alignment with project needs.</div>
+      </div>
+
+      <p class="bt">Inactivity is defined as not responding to messages, not checking in on any assigned tasks, and not initiating communication with the founder or designated team members.</p>
+
+      <div class="pull">
+        Access revocation is not a punishment. It is a measure to protect the safety and focus of the project while ensuring the platform remains a space for actively engaged participants. Contributors who lose access due to inactivity are welcome to reapply or request reinstatement when ready.
+      </div>
+
+      <p class="bt">This policy exists to protect sensitive information, respect the time and energy of active contributors, and maintain momentum in our collective work. All contributors agree to this standard as part of their participation in the Cioré™ ecosystem.</p>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p2 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 3 — PHONE SYSTEM OVERVIEW
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p3">
+
+      <div class="s-heading">Phone System Overview</div>
+      <div class="s-intro">Cioré is building a privacy-first, modular smartphone ecosystem made of 5 integrated pillars.</div>
+
+      <div class="cat-label">Product Vision: What We Are Building</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Pillar 01</div>
+          <div class="cc-title">The Phone</div>
+          <div class="cc-body">A transparent, recycled-glass, modular smartphone with screw-only assembly, visible internals, and a design language inspired by luxury car UI. The emphasis is on feel and experience: premium material quality, tactile precision, and a sense of confident restraint.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Pillar 02</div>
+          <div class="cc-title">Lumé OS</div>
+          <div class="cc-body">A privacy-first operating environment built on a hardened open foundation. Lumé owns the privacy rules, user experience, and system behavior. The near-term MVP uses a hardened AOSP base for speed and device support, with the platform evolving toward deeper sovereignty over time.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Pillar 03</div>
+          <div class="cc-title">Nyro</div>
+          <div class="cc-body">A sustainable power system with solar-assisted charging, ethical battery chemistries (LFP and sodium-ion), and modular user-replaceable battery packs.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Pillar 04</div>
+          <div class="cc-title">Gaia-X</div>
+          <div class="cc-body">An ethical AI layer focused on on-device and edge AI that respects user privacy and works within Nyro energy constraints.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Pillar 05</div>
+          <div class="cc-title">Offline Mesh and Radio</div>
+          <div class="cc-body">Phone-to-phone mesh communication and built-in radio capabilities for resilient, infrastructure-independent communication.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Consumer Problems We Solve</div>
+
+      <ul class="dl">
+        <li>Pervasive data exploitation: phones and apps track location, behaviors, and contacts, monetizing users as products rather than customers.</li>
+        <li>Forced financial upgrades: performance throttling and unsupported OS versions push users into buying new $800–$1,200 phones every 2–3 years.</li>
+        <li>Massive e-waste: 62 million tonnes of e-waste were generated in 2022, projected to reach 82 million tonnes by 2030, with only ~22% formally recycled.</li>
+        <li>Unethical supply chains: many phone batteries depend on cobalt and nickel from conflict zones and child labor-heavy mines.</li>
+        <li>Hidden environmental costs: producing one smartphone can emit as much CO2 as driving ~100 miles, while devices often end up landfilled prematurely.</li>
+      </ul>
+
+      <div class="cat-label">Business Problems We Solve</div>
+
+      <p class="bt">Organizations handling sensitive information face serious risks from mainstream consumer phones:</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Employee Data Leaks: staff mixing client data with ad-tracking apps and unvetted cloud backups creates constant exposure risk.</li>
+        <li>Compliance Challenges: standard phones log and sync heavily, making GDPR, HIPAA, and financial compliance audits painful and expensive.</li>
+        <li>Targeted Executive Attacks: C-level leaders face SIM swaps, phishing, and spyware aimed at deal intel and strategic plans.</li>
+        <li>Client Trust at Risk: a single leaked call, message, or document can destroy years of professional reputation.</li>
+        <li>Remote Teams Exposed: staff on untrusted networks relying on tracker-loaded devices creates organizational blind spots.</li>
+        <li>Rising Insurance Premiums: cyber insurers raise rates or deny coverage when fleets rely on generic consumer devices without verifiable hardware-level security.</li>
+      </ul>
+
+      <div class="cat-label">Who We Protect</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Individuals</div>
+          <div class="cc-body">Everyday users tired of being tracked and profiled who want something fundamentally different. People who want to keep a phone for 5+ years, repair parts, and avoid wasteful cycles. Eco-conscious consumers actively choosing sustainable, ethically sourced products.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Professionals</div>
+          <div class="cc-body">Journalists, lawyers, therapists, and doctors who require built-in confidentiality without complex setups. Ethical tech leaders and executives in climate tech, cybersecurity, ESG, and nonprofits who need devices aligned with their public values. Investigative fieldworkers, reporters, and NGO staff who must minimize location tracking and metadata exposure.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Organizations</div>
+          <div class="cc-body">Corporate risk and compliance teams needing verifiably secure device fleets that pass audits and reduce liability. Remote IT and security teams maintaining secure fleets for distributed staff in high-risk environments. Institutional ESG buyers including universities, nonprofits, and impact-driven enterprises seeking ethically sourced hardware.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Industrial Design and Form Factor</div>
+
+      <p class="bt">The Cioré phone draws its design language from luxury car UI: tactile precision, understated premium materials, clean surfaces with functional depth, and controls that feel intentional rather than decorative. Every edge, curve, and surface is considered.</p>
+
+      <table class="st" style="margin-top:24px">
+        <thead><tr><th>Dimension</th><th>Target</th></tr></thead>
+        <tbody>
+          <tr><td>Length</td><td>155–165 mm (modern smartphone class)</td></tr>
+          <tr><td>Width</td><td>70–75 mm</td></tr>
+          <tr><td>Thickness</td><td>7–9 mm at center, tapering toward edges for visual thinness while maintaining structural depth</td></tr>
+          <tr><td>Corner Radius</td><td>4–5 mm softly rounded corners</td></tr>
+          <tr><td>Long-Edge Curvature</td><td>2–3 mm radius to prevent pressure points and reduce hand fatigue</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pull"><strong>Shape and Ergonomics:</strong> Continuous curved slab with zero flat side rails, no sharp edges, and no chamfers. The result is a single, stone-like capsule. Front glass is slightly convex. Back glass and sides form one continuous flowing surface. Softly rounded corners and long-edge curvature prevent pressure points and reduce hand fatigue. Asymmetrical bevel acts as a natural thumb and finger rest, improving grip and comfort during extended use. This bevel also functions as a structural energy-harvesting zone.</div>
+
+      <div class="cat-label">Materials: Recycled Glass and Nanocellulose</div>
+
+      <p class="bt">The primary structural body uses strong recycled tempered glass on the front and back rather than fully biodegradable casings. Biodegradable materials are not structurally appropriate for phone surfaces. Recycled glass is.</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Thickness: 0.6–1.0 mm tempered glass panels front and back.</li>
+        <li>Source: 60%+ post-industrial or post-consumer recycled glass cullet.</li>
+        <li>Chemically strengthened using ion-exchange in salt baths, similar to modern Gorilla Glass.</li>
+        <li>Commercial recycled glass protectors demonstrate equal or better drop resistance than virgin glass, with up to ~60% reduction in carbon emissions compared to virgin glass production.</li>
+      </ul>
+
+      <p class="bt">Nanocellulose (nanofibrillated cellulose from wood pulp or agricultural waste) is used as a thin reinforcement and bonding layer over or under the glass.</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Fibers under 15 nm in diameter form strong hydrogen-bonded networks with high tensile strength.</li>
+        <li>When applied as an approximately 0.1 mm coating, it can increase toughness by 20–50% and reduce crack propagation while preserving 88–92% optical clarity.</li>
+        <li>Research shows nanocellulose composites can serve as transparent, flexible substrates in optoelectronics including displays, solar cells, and touchscreens.</li>
+        <li>Full nanocellulose reinforcement is a Phase 2+ enhancement. Early prototypes use standard tempered glass with partial coatings to reduce risk.</li>
+      </ul>
+
+      <div class="cat-label">Modular Hardware System</div>
+
+      <p class="bt">Instead of permanent adhesives, Cioré uses screw-only primary assembly plus minimal bio-adhesives only where necessary. This is modeled on Fairphone 5, which achieved a 10/10 iFixit repairability score using mainly screws and clear module labels.</p>
+
+      <p class="bt" style="margin-top:16px">Recommended screw type: M1.6–M2.0 Torx (6-lobe) pan-head machine screws in 18-8 (A2) stainless steel. Benefits: corrosion-resistant, RoHS-compliant, low profile, high torque without stripping. Bio-adhesives (chitosan-aloe or cactus mucilage) used for light edge sealing where needed. These are water and heat removable, reducing harmful solvent use.</p>
+
+      <div class="cat-label">Planned Swappable Modules</div>
+
+      <ul class="dl">
+        <li>Battery module (Nyro pack)</li>
+        <li>Camera module (two-lens ribbon)</li>
+        <li>Speaker and audio module</li>
+        <li>USB-C port board and vibration motor assemblies</li>
+      </ul>
+
+      <p class="bt">Modular design dramatically extends device life, reduces e-waste, and enables future upgrades (higher-capacity batteries, improved camera modules) without replacing the full device.</p>
+
+      <div class="cat-label">Display System and Capacitive Controls</div>
+
+      <p class="bt">The display targets a semi-transparent OLED aesthetic with deep blacks, high brightness, and visible internal depth. Fully transparent production-grade MicroLED is still experimental. The practical plan:</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Phase 1–2: High-quality standard OLED with design treatments (printed graphics, selective tint, under-glass visuals) to create the floating, transparent effect.</li>
+        <li>Phase 3+: Explore transparent OLED and MicroLED modules as production costs decrease.</li>
+        <li>Layer stack: Recycled glass substrate, OLED display, touch layer, thin cactus/nanocellulose thermal pad.</li>
+      </ul>
+
+      <div class="cat-label">Capacitive Controls (No Mechanical Buttons)</div>
+
+      <ul class="dl">
+        <li>Volume Strip: Vertical capacitive zone on one side. Swipe up or down to adjust volume with haptic feedback.</li>
+        <li>Power Bar: Top capacitive bar. Tap to wake or lock. Long-press for the power menu.</li>
+        <li>Battery Mode Toggle: Capacitive slider on the opposite side to select between full charge, 80% limit, or power-saving mode.</li>
+        <li>All controls use capacitive sensors combined with haptic and audio feedback for full accessibility.</li>
+      </ul>
+
+      <div class="cat-label">Camera System</div>
+
+      <p class="bt">Rear Camera: Two-lens system in a vertical ribbon aligned with the asymmetrical curve. Flush with back surface (no large camera bump). Focus on cinematic quality and low-light performance rather than spec-sheet numbers.</p>
+      <p class="bt" style="margin-top:14px">Front Camera: Centered, under-glass or under-tint camera that is visually minimized when not in use. True under-display is emerging; treat as Phase 2+ if cost restrictive.</p>
+      <p class="bt" style="margin-top:14px">Back Panel: Dark smoked black tint that appears opaque at first glance but reveals internals and soft lighting under strong light or certain angles.</p>
+      <p class="bt" style="margin-top:14px">Logo Glow: A controlled glow aperture with low-power LEDs for breathing notification presence, fully user-controllable and disable-able. Energy use is kept under 1% daily drain for idle glows.</p>
+
+      <div class="cat-label">Additional Phone Features</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Messaging</div>
+          <div class="cc-title">Encrypted Messaging System</div>
+          <div class="cc-body">End-to-end encrypted messaging across Cioré devices and via interoperable open standards. Expressive features including MoodWave themes, VibeTag reactions, Voice Ripple clips, and Time Capsule messages are UI/UX layers that never compromise encryption. ScamSplit uses on-device AI to classify and flag potentially deceptive contacts. Alias numbers and Sandbox browser protect identity and data during unknown-sender interactions.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Navigation</div>
+          <div class="cc-title">GPS and Offline Navigation</div>
+          <div class="cc-body">Pre-loaded offline maps with turn-by-turn navigation using open data (OpenStreetMap). Location Cloaking: optional feature that obfuscates exact coordinates when sharing location. Emergency Beacon: uses Bluetooth and mesh networking to ping nearby Cioré devices when cellular coverage is unavailable. Solar Path Routing: a secondary feature that biases navigation toward open, sun-exposed paths, aligned to Nyro charging behavior.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Audio</div>
+          <div class="cc-title">Sound and Audio Experience</div>
+          <div class="cc-body">Directional microphones and DSP for intelligent noise shaping. Audio Guardian: on-device analysis that identifies harmful volume levels or frequency patterns. WhisperTone: offline voice companion for private audio commands. On-device transcription and audio search using lightweight models. Snap-on creator modules for extended audio recording and podcasting use cases.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Video</div>
+          <div class="cc-title">Veya Cross-Platform Video Calling</div>
+          <div class="cc-body">Cross-platform E2EE video calling using WebRTC and browser-based invites. Recipients do not need to install an app. No third-party routing. Minimal metadata logging. No-record detection is included as a best-effort feature; screen recording detection is not foolproof and is disclosed as such.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Biometrics</div>
+          <div class="cc-title">Biometric Unlock Methods</div>
+          <div class="cc-body">Secure Faceprint: facial templates stored as encrypted data in on-device secure hardware enclave. Earprint and Motion Signature Unlock: experimental signals treated as secondary factors layered on top of simpler unlocks in Phase 1. All biometric data stays on-device and is never transmitted.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">OS</div>
+          <div class="cc-title">Custom OS Features</div>
+          <div class="cc-body">Presence Mode: global focus mode with a visual soft glow cue and system-level enforcement of notification silence. Flow Mode: context-aware UI adjustments based on sensor data and activity patterns. Community Key: BLE proximity detection to surface nearby Cioré devices for optional local interactions.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Control</div>
+          <div class="cc-title">Update and Access Control</div>
+          <div class="cc-body">Updates are broken into plain-language line items so users understand exactly what is changing. Per-item deferment stored in the Update Vault allows users to delay non-critical items while security updates proceed. All system changes require user consent except critical security patches, which are still clearly explained before applying.</div>
+        </div>
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p3 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 4 — LUMÉ OS
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p4">
+
+      <div class="s-heading">Lumé OS</div>
+      <div class="s-intro">Lumé OS is a privacy-first operating environment built on a hardened open foundation. Apps do not choose what they can access. Lumé decides. Cioré owns the privacy rules, the user experience, and the long-term platform direction.</div>
+
+      <div class="cat-label">What Lumé OS Actually Is</div>
+
+      <p class="bt">Lumé is the operating system that powers the Cioré phone. It controls how the phone starts, how apps run, what data they can reach, and how everything is presented to the user.</p>
+      <p class="bt" style="margin-top:16px">The near-term version of Lumé OS is built on a hardened AOSP foundation — AOSP being the open-source base that many operating systems build on. This is not a cosmetic skin and it is not a generic Android setup. It is a hardened, deeply customized environment where Cioré controls the privacy model, the permissions system, the user interface, and the system behavior from the ground up.</p>
+      <p class="bt" style="margin-top:16px">This approach allows Cioré to ship a working, secure prototype faster and on real devices, without spending years building infrastructure that already exists in proven form. Over time, Lumé OS will evolve toward deeper platform independence as resources and scale allow.</p>
+
+      <div class="pull">
+        <strong>The Merge Direction in Plain English:</strong> Cioré keeps the vision. The near-term MVP uses a hardened open foundation for speed and hardware support. Cioré builds custom privacy controls, its own user experience, and its own OS identity on top. The platform is designed to evolve toward greater independence over time. This is a staged strategy, not a compromise.
+      </div>
+
+      <div class="cat-label">At a High Level, Lumé</div>
+
+      <ul class="dl">
+        <li>Starts the phone and talks to the hardware through a hardened, verified boot process.</li>
+        <li>Runs the privacy enforcement layer that controls which apps can access what, and when.</li>
+        <li>Shows the Cioré user interface: home screen, privacy dashboard, notifications, and core apps.</li>
+        <li>Controls what apps can see and do, instead of trusting them by default.</li>
+        <li>Keeps data on the device as much as possible and limits how much ever leaves.</li>
+      </ul>
+
+      <div class="cat-label">Architecture — How the Layers Work</div>
+
+      <p class="bt">Lumé OS is built in layers. The hardened AOSP base handles hardware communication, drivers, and core system stability. Cioré builds the privacy layer, user interface, and app policy system on top of that foundation. Each layer has a specific role and does not bypass the others.</p>
+
+      <div class="cg" style="margin-top:24px">
+        <div class="cc">
+          <div class="cc-eye">Layer 01</div>
+          <div class="cc-title">Hardened Base</div>
+          <div class="cc-body">A hardened AOSP foundation handles hardware communication, the kernel, device drivers, and verified boot. GrapheneOS-style hardening techniques serve as a reference for security practices. This layer gives Lumé a proven, well-supported starting point on modern devices.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Layer 02</div>
+          <div class="cc-title">Privacy Enforcement Layer</div>
+          <div class="cc-body">Cioré's custom privacy layer sits above the base. This is where Lumé's rules live. It controls permissions, blocks silent data access, enforces sandboxing, and ensures no app can reach sensitive data without explicit user approval. This layer is built and owned by Cioré.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Layer 03</div>
+          <div class="cc-title">System Services</div>
+          <div class="cc-body">Background services manage key functions including networking, notifications, power management, and app access control. All apps must go through these services to reach system features, ensuring privacy rules are enforced consistently across the device.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Layer 04</div>
+          <div class="cc-title">Sandboxing and Isolation</div>
+          <div class="cc-body">Each app runs in its own isolated space. Apps cannot access each other's data unless the user explicitly allows it. Permissions are checked by the system before any access is granted. This limits damage if something goes wrong and prevents unauthorized data collection.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Layer 05</div>
+          <div class="cc-title">Cioré UI and Privacy Dashboard</div>
+          <div class="cc-body">This is what users see and interact with. The Cioré interface includes the home screen, lock screen, notifications, settings, and a plain-language privacy dashboard where users can see exactly what each app is doing and revoke access at any time.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Layer 06</div>
+          <div class="cc-title">App Environment and Policy</div>
+          <div class="cc-body">Apps are organized into tiers based on trust level and integration depth. Cioré native apps have the deepest access. Verified third-party apps run in controlled environments. Optional Android compatibility runs in an isolated container. The policy layer governs all of it.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Tiered App Model</div>
+
+      <p class="bt">Not all apps are treated equally. Lumé OS uses a three-tier model to give users strong privacy protection while still supporting a useful app ecosystem.</p>
+
+      <div class="cg" style="margin-top:18px">
+        <div class="cc">
+          <div class="cc-eye">Tier 1</div>
+          <div class="cc-title">Cioré Native Apps</div>
+          <div class="cc-body">Apps built by Cioré or deeply verified contributors. These have the highest level of system integration, access Lumé privacy APIs directly, and are fully aligned with Cioré's data and permission model. Examples include the privacy dashboard, Gaia-X assistant, and core communication tools.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Tier 2</div>
+          <div class="cc-title">Verified Third-Party Apps</div>
+          <div class="cc-body">Carefully vetted apps that meet Cioré's privacy standards and operate within controlled environments. These apps can access approved system features but are still sandboxed and subject to Lumé's permission enforcement. Users see clear information about what each app is allowed to do.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Tier 3</div>
+          <div class="cc-title">Android Compatibility Layer</div>
+          <div class="cc-body">An optional, user-enabled container that allows standard Android apps to run in an isolated environment, separate from the core Lumé system. This layer is clearly marked, permission-scoped, and never has access to the trusted app environment. Users opt in knowingly and can disable it at any time.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Security Model</div>
+
+      <p class="bt">Security is enforced through sandboxing, permissions, encryption, and verified boot. Apps must request access to sensitive features. Permissions can expire and be reset. The system prevents unauthorized data access and ensures the integrity of the device at every layer.</p>
+
+      <div class="cg" style="margin-top:18px">
+        <div class="cc">
+          <div class="cc-eye" style="color:#AA2C2C">Threats</div>
+          <div class="cc-title">Potential Threats</div>
+          <div class="cc-body">Hardware and driver vulnerabilities. Malicious applications. Network and modem level attacks. Unauthorized system modifications. User manipulation through social engineering.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Mitigation</div>
+          <div class="cc-title">Risk Mitigation</div>
+          <div class="cc-body">Verified and secure boot ensures only trusted, signed software runs. Full device encryption protects stored data. Multiple sandboxing layers limit damage from compromised apps. Regular security updates are delivered through a verified OTA system. The Android compatibility layer is isolated from the trusted core.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Privacy Dashboard and Permissions</div>
+
+      <p class="bt">Every user gets a plain-language privacy dashboard that shows what each app has accessed, what it is currently allowed to do, and how to change those settings. There are no hidden permissions and no buried toggles. Access is explicit, time-limited where appropriate, and always visible.</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Users can allow access once, allow temporarily, or deny access permanently.</li>
+        <li>Permissions reset automatically over time unless the user chooses to make them permanent.</li>
+        <li>Apps cannot access device identifiers, location, contacts, or media without showing a clear reason.</li>
+        <li>The privacy dashboard surfaces any unusual or unexpected access attempts.</li>
+        <li>Gaia-X, Cioré's on-device AI, is strictly local and never sends data outside the device.</li>
+      </ul>
+
+      <div class="cat-label">Development Phases</div>
+
+      <div class="phases">
+        <div class="ph-row">
+          <div class="ph-num">Phase 0</div>
+          <div><div class="ph-title">Foundation and Hardware Selection</div><div class="ph-body">Confirm the AOSP-based architecture direction. Select the initial reference hardware — Pixel 8 or Pixel 9 is the recommended starting point due to unlockable bootloaders, full AOSP support, and existing hardened OS precedents like GrapheneOS. Procure 3–4 reference devices and 1–2 spares for flashing and recovery testing. Define threat model and security baseline.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Phase 1</div>
+          <div><div class="ph-title">Boot Hardened Base</div><div class="ph-body">Successfully boot a hardened AOSP build on reference hardware. Set up the build infrastructure: a dedicated build server or high-memory workstation is required since full AOSP builds take 1–3 hours and cannot be compiled on a standard laptop. Establish code hosting, CI pipeline, and OTA update hosting. Target: working, bootable system within the first 1–2 months.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Phase 2</div>
+          <div><div class="ph-title">Privacy Layer and Core Experience</div><div class="ph-body">Build and integrate Cioré's custom privacy enforcement layer, permission system, and sandboxing rules. Develop the plain-language privacy dashboard. Launch the initial Cioré UI on top of the hardened base. Integrate a basic Gaia-X MVP for on-device AI tasks. Enable secure, verified OTA updates.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Phase 3</div>
+          <div><div class="ph-title">App Ecosystem and Compatibility Testing</div><div class="ph-body">Build out Tier 1 core apps. Evaluate and onboard initial Tier 2 verified third-party apps. Begin controlled testing of the optional Tier 3 Android compatibility container. Conduct security audits and performance optimization across all layers.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Phase 4</div>
+          <div><div class="ph-title">Optimization, Audit, and Expansion</div><div class="ph-body">Stability and performance refinement. External security audit of the privacy and sandboxing layers. Broader device support and platform expansion planning. Begin evaluating longer-term paths toward deeper platform independence where strategic and financially viable.</div></div>
+        </div>
+      </div>
+
+      <div class="cat-label">Team Structure — Core Roles</div>
+
+      <ul class="dl">
+        <li>OS engineers handle AOSP base builds, hardening, and system boot.</li>
+        <li>Privacy layer engineers build Cioré's custom permission and enforcement systems.</li>
+        <li>Security engineers design sandboxing, verified boot, and threat response.</li>
+        <li>UI engineers build the Cioré interface, privacy dashboard, and user experience.</li>
+        <li>App developers build Tier 1 native apps and manage the app policy framework.</li>
+        <li>Android compatibility engineers manage the isolated Tier 3 container layer.</li>
+        <li>Hardware engineers align OS builds with device-specific components and drivers.</li>
+        <li>DevOps engineers manage build pipelines, OTA hosting, CI, and code infrastructure.</li>
+        <li>Documentation contributors support contributor onboarding and system clarity.</li>
+      </ul>
+
+      <div class="cat-label">Infrastructure and Build Environment</div>
+
+      <p class="bt">Full AOSP builds are resource-intensive. A standard laptop cannot handle them. The OS program requires dedicated infrastructure from the start.</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>Build server or high-memory workstation required — full builds take 1–3 hours on appropriate hardware.</li>
+        <li>Cloud build server: approximately $300–600/month, or a one-time investment in a dedicated workstation ($3,000–5,000).</li>
+        <li>OTA update hosting: approximately $50–100/month for serving system updates to devices.</li>
+        <li>Code hosting and CI pipeline: approximately $50–100/month.</li>
+        <li>Reference hardware: 3–4 Pixel devices at $800–1,200 total, plus 1–2 spare units at $300–400 for flashing and recovery testing.</li>
+        <li>Pixel 8 or Pixel 9 is the recommended starting point: unlockable bootloader, full AOSP support, and strong precedent from GrapheneOS.</li>
+      </ul>
+
+      <div class="cat-label">Critical Supporting Systems</div>
+
+      <ul class="dl">
+        <li>App Distribution — A secure, verified method for distributing and updating apps outside of mainstream app stores.</li>
+        <li>Developer Tools — Documentation, build guides, and contributor tooling needed for onboarding and productivity.</li>
+        <li>Update System — Signed, verified OTA updates with rollback capability. Users see plain-language changelogs for every update.</li>
+        <li>Hardware Support — Pixel devices as primary reference hardware, with a clear path toward Cioré's own hardware as the platform matures.</li>
+        <li>Performance and Accessibility — System must be optimized for real-world speed, battery life, and usability across all user types.</li>
+      </ul>
+
+      <div class="cat-label">Execution Readiness</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Now</div>
+          <div class="cc-title">Immediate Actions</div>
+          <div class="cc-body">Confirm AOSP-hardened architecture direction. Procure Pixel reference devices. Set up build infrastructure. Define security baseline and threat model. Begin Phase 1 boot target.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Active</div>
+          <div class="cc-title">In Progress</div>
+          <div class="cc-body">OS architecture finalized. AOSP-to-Lumé OS merge plan confirmed. Phase 1 boot target: approximately two months. December 2026 presale as base case milestone.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Later</div>
+          <div class="cc-title">Deferred Items</div>
+          <div class="cc-body">Multi-device hardware support. Full app ecosystem expansion. Deeper platform independence evaluation. Advanced UI polish and accessibility refinement.</div>
+        </div>
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p4 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 5 — NYRO
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p5">
+
+      <div class="s-heading">Nyro</div>
+      <div class="s-intro">Nyro is the ethical, modular power system that powers Cioré phones. It prioritizes safety, repairability, and environmental responsibility across every component.</div>
+
+      <div class="cat-label">Nyro Overview and Core Goals</div>
+
+      <ul class="dl">
+        <li>Ethically sourced battery chemistry, avoiding cobalt and conflict lithium.</li>
+        <li>Modular, user-replaceable battery packs with straightforward swap access.</li>
+        <li>Solar-assisted charging: integrated photovoltaic layers supplement but do not replace wired charging.</li>
+        <li>Intelligent load balancing, HeatSafe thermal management, and optional Gaia-X power advice.</li>
+      </ul>
+
+      <div class="cat-label">Solar-Assisted Charging vs Solar-Powered</div>
+
+      <p class="bt">Cioré phones are solar-assisted, not solar-powered. This distinction is technically accurate and sets honest expectations for contributors, engineers, and customers.</p>
+
+      <div class="pull"><strong>Why the Distinction Matters:</strong> A solar-powered device runs entirely or primarily on solar energy (calculators, e-ink readers, specialized outdoor gear). A smartphone-class device drawing several watts under load cannot be reliably powered by the small, transparent solar surfaces available on a phone form factor, especially indoors.</div>
+
+      <div class="cat-label">What Solar Assistance Delivers</div>
+
+      <ul class="dl">
+        <li>In good outdoor light, Nyro can provide 5–20% of daily energy needs, extending battery life by several hours or slowing drainage.</li>
+        <li>Transparent PV modules integrated into back glass can reach 14–20% efficiency and charge at slow but meaningful rates under direct sunlight.</li>
+        <li>Indoors and in low light, gains are smaller (a few percent per day) but still reduce grid dependence.</li>
+        <li>Wearable examples such as EcoFlow solar accessories demonstrate 3–4 hour full-phone charging under favorable conditions, showing what expanded solar surface can achieve.</li>
+      </ul>
+
+      <div class="cat-label">Battery Chemistry</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Near-Term</div>
+          <div class="cc-title">LFP — Lithium Iron Phosphate</div>
+          <div class="cc-body">Proven, safe, non-cobalt chemistry widely deployed in EVs and consumer devices. Longer cycle life and better thermal stability than standard lithium-ion. Slightly lower energy density but acceptable for 7–9 mm phone profiles.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Mid-Term</div>
+          <div class="cc-title">Sodium-Ion</div>
+          <div class="cc-body">Uses abundant sodium instead of lithium, reducing ethical and supply chain risk. Currently lower energy density than lithium; first commercial sodium-ion cells are expected around 2025–2027. Early prototypes may use sodium-ion in slightly thicker packs or lower-capacity configurations.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Future</div>
+          <div class="cc-title">Solid-State and Advanced Capacitors</div>
+          <div class="cc-body">Interesting for future Nyro research but not ready as a primary smartphone power source. Treat as R&amp;D roadmap, not baseline spec.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Thermal Management</div>
+
+      <ul class="dl">
+        <li>Cactus biopolymer sheets used as thin, partially transparent heat spreaders around the battery and SoC.</li>
+        <li>Composites doped with graphene or boron nitride can significantly increase thermal performance beyond what pure cactus mucilage provides.</li>
+        <li>Target conductivities of 10–20 W/mK are achievable in advanced composites; actual values depend on filler loading and processing.</li>
+        <li>Graphite or copper heat spreader foils supplement cactus sheets where needed.</li>
+        <li>External surface temperature target: under 45 degrees Celsius under heavy load, closer to 40–42 in typical use.</li>
+      </ul>
+
+      <div class="cat-label">Modular Battery and Take-Back Program</div>
+
+      <p class="bt">Battery modules are user-swappable via screws or magnetic latching. Spent modules are returned through a take-back program for disassembly, material recovery, and safe handling.</p>
+      <p class="bt" style="margin-top:14px">Phase 3+ aspiration: Nyro modules could power off-grid accessories or small community energy hubs.</p>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p5 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 6 — RADIO & COMMS
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p6">
+
+      <div class="s-heading">Radio and Resilient Communication</div>
+      <div class="s-intro">When no cellular or Wi-Fi infrastructure is available, Cioré phones communicate with each other via built-in mesh networking. Two primary approaches work together.</div>
+
+      <div class="cat-label">Offline Mesh Communication (Phone-to-Phone)</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Mesh 01</div>
+          <div class="cc-title">Bluetooth and Wi-Fi Direct Mesh</div>
+          <div class="cc-body">Uses BLE and Wi-Fi Direct to create offline mesh networks where phones forward messages hop-by-hop. Direct range per link: 10–30 meters for BLE; up to 100–200 meters for Wi-Fi Direct in line-of-sight. Multi-hop forwarding allows communication across entire buildings, stadiums, or neighborhoods depending on device density. Lumé OS Mesh Mode encrypts all messages end-to-end and shows a list of reachable devices. Real-time voice over BLE mesh is challenging; low-bitrate push-to-talk audio clips are the realistic near-term approach.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Mesh 02</div>
+          <div class="cc-title">Long-Range Sub-GHz Module (LoRa-Class)</div>
+          <div class="cc-body">A low-bandwidth, long-range module in the 868/915 MHz ISM band enables mile-scale communication without infrastructure. LoRa-class radios reach 2–5 km in dense urban areas and 5–15+ km in suburban or rural line-of-sight conditions. Low bitrate: best used for emergency text messages and compressed short voice clips rather than continuous voice calls. Very low power draw; compatible with Nyro power management. Within-a-mile-radius communication is realistic via multi-hop BLE/Wi-Fi mesh or direct LoRa radio.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Push-to-Talk (Walkie-Talkie Mode)</div>
+
+      <p class="bt">A dedicated Radio Mode within Lumé OS where users press and hold to transmit voice and release to listen. Transport options: BLE/Wi-Fi Direct mesh for nearby use, or LoRa-class hardware for longer-range compressed voice or voice-note-style messages. Private group communications use pre-shared or QR-scanned encryption keys. Technically feasible with modern SoCs and additional radio hardware where required.</p>
+
+      <div class="cat-label">Emergency Broadcast Reception (AM/FM/NOAA)</div>
+
+      <p class="bt">A multi-band receiver front-end enables the phone to receive emergency broadcasts without any network connection:</p>
+
+      <ul class="dl" style="margin-top:14px">
+        <li>FM radio bands (87–108 MHz).</li>
+        <li>AM radio where relevant.</li>
+        <li>NOAA Weather Radio (162 MHz band in the US).</li>
+      </ul>
+
+      <p class="bt">Broadcast Mode in Lumé displays a simple tuner or preset station list. Works fully offline with no OS or cloud connection required. Nyro battery capacity is similar to dedicated emergency radios (2,500–4,000 mAh), making receiver integration feasible.</p>
+
+      <div class="cat-label">Regulatory Constraints</div>
+
+      <div class="wb">
+        <div class="wb-icon">⚖</div>
+        <div>Radio transmission is regulated. Engineers and marketers must understand what is and is not legally permitted. <strong>FRS (Family Radio Service):</strong> license-free low-power handheld use (up to 2W on some channels), intended for personal short-range two-way radio. <strong>GMRS (General Mobile Radio Service):</strong> higher power and longer range, but requires an FCC license. Using GMRS frequencies without a license results in fines. Cioré Radio Mode operates in unlicensed ISM bands (868/915 MHz LoRa-class) with appropriate power limits, or within FRS-permitted ranges where applicable. Emergency broadcast reception is generally unrestricted. Transmission on public safety and emergency bands is not permitted.</div>
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p6 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 7 — GAIA-X
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p7">
+
+      <div class="s-heading">Gaia-X</div>
+      <div class="s-intro">Gaia-X is Cioré's ethical AI initiative. It runs entirely on the device — no cloud, no external servers, no data leaving the phone. Gaia-X integrates with Lumé OS's privacy layer to ensure it operates within the same permission and sandboxing rules as every other app on the system.</div>
+
+      <div class="cat-label">Purpose and Principles</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye" style="color:#B83232">Cloud AI</div>
+          <div class="cc-title">What We Reject</div>
+          <div class="cc-body">Cloud AI runs large models in data centers, with high energy use, continuous network traffic, and extensive data retention. Your data leaves the device constantly and is retained externally.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">On-Device</div>
+          <div class="cc-title">What Gaia-X Does</div>
+          <div class="cc-body">On-device AI runs models locally on the phone's Neural Processing Unit (NPU), enabling private, low-latency inference without sending data externally. Modern SoCs include NPUs capable of 10–35 TOPS, sufficient for speech-to-text, summarization, and basic intent recognition.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Privacy-Respecting AI Design</div>
+
+      <ul class="dl">
+        <li>No default data scraping or behavior logging. All training data is clearly sourced, consented, or synthetic.</li>
+        <li>On-device learning and personalization stays entirely local.</li>
+        <li>Federated learning with differential privacy may be used if improvement data is collected in the future.</li>
+        <li>Users can fully disable Gaia-X or restrict it to offline-only features.</li>
+      </ul>
+
+      <div class="cat-label">Energy-Aware AI</div>
+
+      <ul class="dl">
+        <li>Models are quantized (8-bit or lower) and pruned to minimize inference energy costs.</li>
+        <li>Gaia-X coordinates with Nyro: reduced activity below battery thresholds, no heavy inference when device temperature is elevated.</li>
+      </ul>
+
+      <div class="cat-label">Near-Term vs Long-Term Scope</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Near-Term (Prototypes)</div>
+          <div class="cc-title">What We Are Building Now</div>
+          <div class="cc-body">Offline transcription, captioning, journaling assistance, scam detection, and smart battery usage suggestions.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Phase 3+</div>
+          <div class="cc-title">Long-Term Vision</div>
+          <div class="cc-body">Optional small edge clusters for complex tasks in certain regions, powered by renewable energy where feasible. This requires significant capital and is a future phase, not a current expectation. The earlier internal description of dedicated solar and wind-powered mini-data centers is a long-term vision. Near-term Gaia-X stays on-device and on edge nodes only.</div>
+        </div>
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p7 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 8 — SUSTAINABILITY
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p8">
+
+      <div class="s-heading">Ethical Materials and Sustainability</div>
+      <div class="s-intro">Every material decision at Cioré is made with environmental responsibility and lifecycle impact in mind. Low-waste, high-impact design is not a marketing claim — it is an engineering constraint.</div>
+
+      <div class="cat-label">Eco-Conscious Materials</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye green">Material 01</div>
+          <div class="cc-title">Recycled Glass</div>
+          <div class="cc-body">Primary structural material for front and back surfaces. 60%+ recycled content. Equal or superior durability to virgin glass. Up to 60% reduction in carbon emissions vs virgin glass production.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Material 02</div>
+          <div class="cc-title">Nanocellulose</div>
+          <div class="cc-body">Transparent reinforcement and bonding layer. Used in coatings, optoelectronics, and PV integration. Phase 2+ enhancement. Sourced from wood pulp or agricultural waste.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Material 03</div>
+          <div class="cc-title">Bioplastics</div>
+          <div class="cc-body">Sourced from corn, algae, or sugarcane. Best suited for internal frames, brackets, and non-load-bearing parts where biodegradability is a benefit.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Material 04</div>
+          <div class="cc-title">Cactus Biopolymers</div>
+          <div class="cc-body">Renewable, low-water-agriculture source used for thermal pads and internal surfaces. Thin, partially transparent heat spreaders around battery and SoC. Composites doped with graphene or boron nitride can significantly increase thermal performance.</div>
+        </div>
+      </div>
+
+      <div class="cat-label">Environmental Impact and Lifecycle</div>
+
+      <ul class="dl green">
+        <li>Recycled glass reduces carbon emissions by approximately 60% vs virgin glass production.</li>
+        <li>Modular design extends device life and reduces replacement frequency, significantly cutting e-waste contributions.</li>
+        <li>All modules use standardized screws and labeled components to support a circular repair economy.</li>
+        <li>Designed for disassembly: at end-of-life, all modules can be separated, materials recovered, and battery chemistry safely handled.</li>
+      </ul>
+
+      <div class="pull">Modular design dramatically extends device life, reduces e-waste, and enables future upgrades — higher-capacity batteries, improved camera modules — without replacing the full device. This is not just a feature. It is our answer to the 82 million tonnes of e-waste projected by 2030.</div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p8 -->
+
+  </div><!-- /cx -->
+
+  <!-- LOG DRAWER -->
+  <div id="log-drawer">
+    <div class="ld-head">
+      Access Log
+      <span class="ld-close" id="ldClose">✕</span>
+    </div>
+    <div id="ldEntries"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-foot">
+    <div class="foot-mark">Cioré™</div>
+    <div class="foot-meta">
+      Internal Overview — Founded April 15, 2025<br>
+      EIN: 39-2327250 · Confidential · All rights reserved
+    </div>
+  </footer>
+
+</div><!-- /app -->
+
+<script>
+/* ─── PASSWORD ─── */
+const PASS = 'ciore2026';
+
+async function logAccess() {
+  let ip = 'unavailable';
+  try {
+    const r = await fetch('https://api.ipify.org?format=json');
+    const d = await r.json();
+    ip = d.ip;
+  } catch(e) {}
+  const entry = { time: new Date().toISOString(), ip };
+  let logs = [];
+  try { logs = JSON.parse(localStorage.getItem('ciore_log') || '[]'); } catch(e) {}
+  logs.unshift(entry);
+  if (logs.length > 10) logs = logs.slice(0,10);
+  localStorage.setItem('ciore_log', JSON.stringify(logs));
+}
+
+function tryUnlock() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASS) {
+    document.getElementById('gate').classList.add('fade-out');
+    document.getElementById('app').classList.add('on');
+    logAccess();
+  } else {
+    const box = document.querySelector('.gate-box');
+    box.classList.remove('shake');
+    void box.offsetWidth;
+    box.classList.add('shake');
+    const err = document.getElementById('gateErr');
+    err.classList.add('show');
+    document.getElementById('pwInput').value = '';
+    setTimeout(() => err.classList.remove('show'), 3200);
+  }
+}
+
+document.getElementById('gateBtn').addEventListener('click', tryUnlock);
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') tryUnlock();
+});
+
+/* ─── LOGOUT ─── */
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  document.getElementById('app').classList.remove('on');
+  document.getElementById('gate').classList.remove('fade-out');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('log-drawer').classList.remove('open');
+});
+
+/* ─── SECTION TABS ─── */
+document.getElementById('sNav').addEventListener('click', e => {
+  const tab = e.target.closest('.s-tab');
+  if (!tab) return;
+  const pid = tab.dataset.panel;
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(pid).classList.add('active');
+  // scroll to top of content
+  document.querySelector('.hero').scrollIntoView({ behavior:'smooth', block:'start' });
+});
+
+/* ─── ACCESS LOG ─── */
+function renderLog() {
+  let logs = [];
+  try { logs = JSON.parse(localStorage.getItem('ciore_log') || '[]'); } catch(e) {}
+  const el = document.getElementById('ldEntries');
+  if (!logs.length) {
+    el.innerHTML = '<div class="ld-empty">No records found</div>';
+    return;
+  }
+  el.innerHTML = logs.map(l => `
+    <div class="ld-item">
+      <div class="ld-ts">${new Date(l.time).toLocaleString()}</div>
+      <div class="ld-ip">IP: ${l.ip}</div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('logBtn').addEventListener('click', () => {
+  renderLog();
+  document.getElementById('log-drawer').classList.toggle('open');
+});
+
+document.getElementById('ldClose').addEventListener('click', () => {
+  document.getElementById('log-drawer').classList.remove('open');
+});
+</script>
+</body>
+</html>
