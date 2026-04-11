@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIORÉ — Internal Overview</title>
+<title>CIORÉ — Contributor Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
@@ -852,7 +852,62 @@ body {
   .cg { grid-template-columns: 1fr; gap:10px; }
   .ph-row { grid-template-columns: 64px 1fr; gap:14px; }
 }
-/* Swatch row — light theme */
+/* ═══════════════════════════════════════════════════════
+   JUMP NAVIGATION — Start Here page internal TOC
+═══════════════════════════════════════════════════════ */
+.jump-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 48px;
+  padding: 22px 24px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+}
+
+.jump-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-70);
+  border: 1px solid var(--border-mid);
+  background: var(--surface-2);
+  transition: all 0.2s var(--ease);
+}
+
+.jump-link::before {
+  content: '↓';
+  font-size: 10px;
+  color: var(--gold);
+  font-family: var(--f-body);
+  transition: transform 0.2s var(--ease);
+}
+
+.jump-link:hover {
+  border-color: var(--gold-border);
+  color: var(--gold);
+  background: var(--gold-bg);
+}
+
+.jump-link:hover::before {
+  transform: translateY(2px);
+}
+
+/* Phase row completed state */
+.ph-num[style*="color:var(--green)"] {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+
 .swatch-row-light { display:flex; flex-wrap:wrap; gap:12px; margin:18px 0 40px; }
 .sw-item {
   display: flex;
@@ -872,6 +927,953 @@ body {
   color: var(--ink-70);
 }
 
+/* ═══════════════════════════════════════════════════════
+   PROGRESS TAB — p10
+═══════════════════════════════════════════════════════ */
+
+/* Status badge */
+.pg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 0;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+.pg-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.pg-badge-active   { background: var(--green-bg);  border: 1px solid var(--green-border); color: var(--green); }
+.pg-badge-active::before { background: var(--green); }
+.pg-badge-progress { background: var(--gold-bg);   border: 1px solid var(--gold-border);  color: var(--gold); }
+.pg-badge-progress::before { background: var(--gold); }
+.pg-badge-planned  { background: var(--surface-2); border: 1px solid var(--border-mid);   color: var(--ink-50); }
+.pg-badge-planned::before { background: var(--ink-35); }
+.pg-badge-open     { background: var(--danger-bg); border: 1px solid var(--danger-border); color: var(--danger); }
+.pg-badge-open::before { background: var(--danger); animation: pip 2s ease-in-out infinite; }
+
+/* Priority card — extended card style */
+.pg-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  padding: 28px 26px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.22s var(--ease), transform 0.22s var(--ease), border-color 0.22s var(--ease);
+  margin-bottom: 14px;
+}
+.pg-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--gold-border);
+}
+.pg-card::before {
+  content: '';
+  position: absolute; top:0; left:0; bottom:0;
+  width: 3px;
+  background: var(--gold-light);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.38s var(--ease);
+}
+.pg-card:hover::before { transform: scaleY(1); }
+
+.pg-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.pg-card-title {
+  font-family: var(--f-ui);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.pg-card-body {
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.78;
+  color: var(--ink-70);
+  margin-bottom: 14px;
+}
+.pg-support-label {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.pg-support-body {
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.70;
+  color: var(--ink-50);
+  font-style: italic;
+}
+
+/* Phase snapshot grid */
+.pg-phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 12px;
+  margin: 20px 0 32px;
+}
+.pg-phase-item {
+  padding: 18px 20px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.pg-phase-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.pg-phase-dot.green { background: var(--green); }
+.pg-phase-text {
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-70);
+}
+
+/* Help tags */
+.pg-help-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 32px;
+}
+.pg-help-tag {
+  padding: 7px 14px;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-mid);
+  color: var(--ink-70);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s var(--ease);
+}
+.pg-help-tag:hover { border-color: var(--gold-border); color: var(--gold); background: var(--gold-bg); }
+.pg-help-tag.green { border-color: var(--green-border); color: var(--green); background: var(--green-bg); }
+
+/* Lumé OS phase rows */
+.pg-lume-phases { max-width: 760px; margin: 22px 0; }
+.pg-lume-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.pg-lume-row:last-child { border-bottom: none; }
+.pg-lume-num {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 2px;
+}
+.pg-lume-title {
+  font-family: var(--f-ui);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.pg-lume-body {
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-70);
+}
+
+/* Open roles grid */
+.pg-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap: 10px;
+  margin: 16px 0 32px;
+}
+.pg-role-item {
+  padding: 16px 18px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+}
+.pg-role-title {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.pg-role-body {
+  font-family: var(--f-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-50);
+}
+
+@media(max-width:640px) {
+  .pg-phase-grid { grid-template-columns: 1fr; }
+  .pg-lume-row { grid-template-columns: 70px 1fr; gap:14px; }
+  .pg-roles-grid { grid-template-columns: 1fr; }
+}
+
+
+
+.cf-route-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 28px 0 32px;
+  padding: 16px 20px;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-70);
+  max-width: 760px;
+}
+.cf-route-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+.cf-route-note strong { color: var(--ink); font-weight: 700; }
+
+.cf-timing-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 0 0 40px;
+  padding: 20px 24px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+  max-width: 760px;
+}
+.cf-timing-icon { font-size: 22px; flex-shrink: 0; }
+.cf-timing-title {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.cf-timing-body {
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-70);
+}
+
+.cf-form-wrap { max-width: 680px; margin: 0 0 16px; }
+
+.cf-field { margin-bottom: 26px; }
+
+.cf-label {
+  display: block;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 9px;
+}
+
+.cf-req { color: var(--danger); margin-left: 2px; }
+.cf-req-soft {
+  font-family: var(--f-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--ink-50);
+  margin-left: 4px;
+}
+
+.cf-input,
+.cf-select,
+.cf-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.22s var(--ease), box-shadow 0.22s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
+
+.cf-input:focus,
+.cf-select:focus,
+.cf-textarea:focus {
+  border-color: var(--gold-border);
+  box-shadow: 0 0 0 3px var(--gold-bg);
+}
+
+.cf-input::placeholder,
+.cf-textarea::placeholder { color: var(--ink-35); font-size: 14px; }
+
+.cf-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px;
+  cursor: pointer;
+}
+
+.cf-textarea { resize: vertical; min-height: 130px; }
+
+.cf-toggle-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.cf-toggle-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-mid);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink-70);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  user-select: none;
+}
+
+.cf-toggle-opt:has(.cf-radio:checked) {
+  background: var(--gold-bg);
+  border-color: var(--gold-border);
+  color: var(--ink);
+}
+
+.cf-radio {
+  accent-color: var(--gold);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cf-helper {
+  font-family: var(--f-body);
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--ink-50);
+  margin-top: 7px;
+  line-height: 1.6;
+}
+
+.cf-field-hidden {
+  opacity: 0.35;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cf-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 44px;
+  background: var(--ink);
+  border: none;
+  color: #ffffff;
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.22s var(--ease), transform 0.12s;
+  min-width: 180px;
+}
+.cf-submit-btn:hover  { background: var(--brown); }
+.cf-submit-btn:active { transform: scale(0.98); }
+.cf-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.cf-input.cf-error,
+.cf-select.cf-error,
+.cf-textarea.cf-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px var(--danger-bg);
+}
+.cf-error-msg {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--danger);
+  margin-top: 6px;
+  display: none;
+}
+.cf-error-msg.show { display: block; }
+
+.cf-success {
+  padding: 52px 40px;
+  background: var(--surface-1);
+  border: 1px solid var(--green-border);
+  text-align: center;
+}
+.cf-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  border: 2px solid var(--green-border);
+  color: var(--green);
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.cf-success-title {
+  font-family: var(--f-display);
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.cf-success-body {
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.80;
+  color: var(--ink-70);
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+.cf-reset-btn {
+  padding: 10px 28px;
+  background: transparent;
+  border: 1px solid var(--border-mid);
+  color: var(--ink-70);
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+.cf-reset-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--surface-2); }
+
+/* Error state */
+.cf-error-state {
+  padding: 40px;
+  background: var(--surface-1);
+  border: 1px solid var(--danger-border);
+  text-align: center;
+}
+.cf-error-state-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--danger-bg);
+  border: 2px solid var(--danger-border);
+  color: var(--danger);
+  font-size: 24px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-family: var(--f-ui);
+}
+.cf-error-state-title {
+  font-family: var(--f-display);
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.cf-error-state-body {
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.78;
+  color: var(--ink-70);
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+
+@media(max-width:540px) {
+  .cf-toggle-row { flex-direction: column; }
+  .cf-submit-btn { width: 100%; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   PHONE CONCEPT MOCKUP FEATURE BLOCK
+═══════════════════════════════════════════════════════ */
+.mockup-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: center;
+  margin: 32px 0 48px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.mockup-copy {
+  padding: 36px 36px 36px 36px;
+}
+
+.mockup-copy .cc-eye {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.mockup-copy .cc-title {
+  font-family: var(--f-display);
+  font-size: clamp(28px, 4vw, 42px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.0;
+  margin-bottom: 18px;
+}
+
+.mockup-copy .bt {
+  max-width: 100%;
+}
+
+.mockup-card {
+  position: relative;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mockup-image {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s var(--ease);
+  padding: 16px;
+}
+
+.mockup-feature:hover .mockup-image {
+  transform: scale(1.02);
+}
+
+.mockup-caption {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  text-align: center;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+@media(max-width: 800px) {
+  .mockup-feature {
+    grid-template-columns: 1fr;
+  }
+  .mockup-copy {
+    padding: 28px 24px 20px;
+  }
+  .mockup-image {
+    min-height: 260px;
+  }
+  .mockup-card {
+    order: -1;
+  }
+}
+
+@media(max-width: 540px) {
+  .mockup-image {
+    min-height: 220px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTRIBUTOR DIRECTORY — pCD
+═══════════════════════════════════════════════════════ */
+
+/* How it works note */
+.cd-how-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 22px;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  max-width: 760px;
+  margin: 0 0 8px;
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.72;
+  color: var(--ink-70);
+}
+.cd-how-note-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.cd-how-note strong { color: var(--ink); font-weight: 700; }
+
+/* Stats row */
+.cd-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 0;
+}
+.cd-stat {
+  flex: 1;
+  min-width: 120px;
+  padding: 18px 20px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+}
+.cd-stat-num {
+  font-family: var(--f-display);
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.cd-stat-label {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
+/* Controls bar */
+.cd-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 20px;
+}
+.cd-search-wrap {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+.cd-search-wrap::before {
+  content: '⌕';
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-35);
+  font-size: 16px;
+  pointer-events: none;
+}
+.cd-search {
+  width: 100%;
+  padding: 11px 14px 11px 36px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.22s var(--ease), box-shadow 0.22s var(--ease);
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+.cd-search:focus {
+  border-color: var(--gold-border);
+  box-shadow: 0 0 0 3px var(--gold-bg);
+}
+.cd-search::placeholder { color: var(--ink-35); font-size: 13.5px; }
+.cd-role-filter {
+  padding: 11px 36px 11px 14px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  color: var(--ink-70);
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.22s var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  border-radius: 0;
+  min-width: 160px;
+}
+.cd-role-filter:focus { border-color: var(--gold-border); }
+.cd-count-label {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  white-space: nowrap;
+}
+
+/* Contributor grid */
+.cd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 14px;
+}
+
+/* Contributor card */
+.cd-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-card);
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.22s var(--ease), transform 0.22s var(--ease), border-color 0.22s var(--ease);
+}
+.cd-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--gold-border);
+}
+.cd-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.cd-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--gold-bg);
+  border: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-display);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.cd-name {
+  font-family: var(--f-ui);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+.cd-role-text {
+  font-family: var(--f-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-50);
+  line-height: 1.4;
+}
+.cd-badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-family: var(--f-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  flex-shrink: 0;
+}
+.cd-badge-active::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+.cd-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+.cd-field { margin-bottom: 10px; }
+.cd-field:last-child { margin-bottom: 0; }
+.cd-field-label {
+  font-family: var(--f-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.cd-field-value {
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+}
+.cd-field-empty { color: var(--ink-35); font-style: italic; }
+
+/* State screens */
+.cd-state {
+  padding: 56px 20px;
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.cd-state-icon {
+  font-size: 30px;
+  margin-bottom: 16px;
+  display: block;
+}
+.cd-state-title {
+  font-family: var(--f-display);
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.cd-state-body {
+  font-family: var(--f-body);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-70);
+}
+
+/* Loading spinner */
+.cd-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--border-mid);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: cd-spin 0.7s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes cd-spin { to { transform: rotate(360deg); } }
+
+/* Join form section */
+.cd-join-wrap {
+  margin-top: 60px;
+  padding: 36px 36px 40px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sm);
+  max-width: 680px;
+}
+.cd-join-heading {
+  font-family: var(--f-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.cd-join-body {
+  font-family: var(--f-body);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink-70);
+  margin-bottom: 28px;
+}
+
+@media(max-width: 640px) {
+  .cd-grid { grid-template-columns: 1fr; }
+  .cd-controls { flex-direction: column; align-items: stretch; }
+  .cd-search-wrap { min-width: unset; }
+  .cd-stats { flex-direction: column; }
+  .cd-stat { min-width: unset; }
+  .cd-join-wrap { padding: 24px 20px 28px; }
+}
+
 </style>
 </head>
 <body>
@@ -883,7 +1885,7 @@ body {
   <div class="gate-box">
     <div class="gate-sup">Secure Contributor Access</div>
     <div class="gate-wordmark">CIORÉ</div>
-    <div class="gate-sub-wordmark">Internal Overview</div>
+    <div class="gate-sub-wordmark">Contributor Hub</div>
     <div class="gate-divider"></div>
     <label class="gate-field-label" for="pwInput">Enter access password</label>
     <div class="gate-err" id="gateErr">— Access denied. Invalid password.</div>
@@ -907,7 +1909,7 @@ body {
   <!-- TOP NAV -->
   <nav class="t-nav">
     <div class="t-nav-mark">Cioré</div>
-    <div class="t-nav-center">Internal Overview</div>
+    <div class="t-nav-center">Contributor Hub</div>
     <div class="t-nav-actions">
       <button class="t-btn t-btn-gold" id="logBtn">Access Log</button>
       <button class="t-btn" id="logoutBtn">Logout</button>
@@ -924,13 +1926,17 @@ body {
   <div class="s-nav-bar">
     <nav class="s-nav" id="sNav">
       <div class="s-tab active" data-panel="p1">Mission &amp; Values</div>
-      <div class="s-tab" data-panel="p2">Contributor Info</div>
+      <div class="s-tab" data-panel="p0">Start Here</div>
+      <div class="s-tab" data-panel="pDH">Discord HQ</div>
+      <div class="s-tab" data-panel="pCD">Contributor Directory</div>
+      <div class="s-tab" data-panel="p10">What We're Working On Now</div>
       <div class="s-tab" data-panel="p3">Phone System</div>
       <div class="s-tab" data-panel="p4">Lumé OS</div>
       <div class="s-tab" data-panel="p5">Nyro Power</div>
       <div class="s-tab" data-panel="p6">Radio &amp; Comms</div>
       <div class="s-tab" data-panel="p7">Gaia-X AI</div>
       <div class="s-tab" data-panel="p8">Sustainability</div>
+      <div class="s-tab" data-panel="p9">Tips &amp; Requests</div>
     </nav>
   </div>
 
@@ -938,14 +1944,469 @@ body {
   <div class="hero">
     <div class="hero-inner">
       <div class="hero-eyebrow">Internal — Confidential</div>
-      <div class="hero-title">Internal<br>Overview</div>
-      <p class="hero-body">Cioré exists to build powerful, privacy-first, ethically made technology that centers innovation, sustainable systems, transparency, and community. This document is for approved contributors only.</p>
+      <div class="hero-title">Contributor<br>Hub</div>
+      <p class="hero-body">Welcome to the Cioré Contributor Hub — your main resource for team updates, project context, onboarding guidance, and everything you need to show up and contribute with confidence. This hub is for approved contributors only.</p>
       <div class="hero-rule"></div>
     </div>
   </div>
 
   <!-- ═══ CONTENT ═══ -->
   <div class="cx">
+
+    <!-- ═══════════════════════════════════
+         PANEL DH — DISCORD HQ
+    ═══════════════════════════════════ -->
+    <div class="panel" id="pDH">
+
+      <div class="s-heading">Discord HQ</div>
+      <div class="s-intro">Discord is our primary communication platform and the heartbeat of the Cioré contributor community. This guide will help you set up your profile properly, navigate the server with confidence, and understand how we communicate as a team. Whether you are brand new or just looking to get your settings right, start here.</div>
+
+      <!-- ─── A. DISPLAY NAME SETUP ─── -->
+      <div class="cat-label">Display Name Setup</div>
+
+      <p class="bt">Your display name in the Cioré HQ server should follow this format so the team knows who you are and how to support you:</p>
+
+      <div class="pull" style="margin-top:20px">
+        <strong>First Name - Role</strong><br>
+        Example: <strong>Jordan - UX Designer</strong>
+      </div>
+
+      <p class="bt">This helps every contributor and the founder instantly recognize who they are talking to and what kind of work you do. It also helps project managers reach the right people quickly.</p>
+
+      <div class="cat-label" style="margin-top:36px">How to Update Your Display Name</div>
+
+      <p class="bt">If you already have a Discord account, use the <strong>per-server profile</strong> feature so your changes only apply to Cioré HQ and do not affect your other servers.</p>
+
+      <div class="phases" style="margin-top:20px">
+        <div class="ph-row">
+          <div class="ph-num">Step 01</div>
+          <div>
+            <div class="ph-title">Open the Cioré HQ Server</div>
+            <div class="ph-body">Navigate to the Cioré HQ server in your Discord sidebar.</div>
+          </div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Step 02</div>
+          <div>
+            <div class="ph-title">Open Your Profile Settings</div>
+            <div class="ph-body">Click on your avatar or username. Look for the option to edit your server profile or per-server nickname.</div>
+          </div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Step 03</div>
+          <div>
+            <div class="ph-title">Select Cioré HQ</div>
+            <div class="ph-body">Make sure you are editing the profile for this server specifically, not your global Discord profile.</div>
+          </div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num">Step 04</div>
+          <div>
+            <div class="ph-title">Update Your Display Name</div>
+            <div class="ph-body">Set your display name to match the format: <strong>First Name - Role</strong>. Save your changes.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── B. PROFILE DETAILS ─── -->
+      <div class="cat-label">Profile Details</div>
+
+      <p class="bt">Please take a few minutes to make sure your server profile is set up completely. A complete profile helps the team communicate with you respectfully and efficiently.</p>
+
+      <div class="cg" style="margin-top:20px">
+        <div class="cc">
+          <div class="cc-eye">Name</div>
+          <div class="cc-title">Display Name</div>
+          <div class="cc-body">Follow the First Name - Role format described above. This is the most important profile field to get right.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Reach</div>
+          <div class="cc-title">DM Preference</div>
+          <div class="cc-body">Set your direct message preference so others know the best way to contact you. See the DM Preferences section below for the options.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Time</div>
+          <div class="cc-title">Time Zone</div>
+          <div class="cc-body">Add your time zone so the team understands your availability and can schedule accordingly. Use the shorthand from the time zone guide below.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Identity</div>
+          <div class="cc-title">Pronouns</div>
+          <div class="cc-body">Add your pronouns to your profile so the team knows how to address you respectfully. See the Pronouns section below for available options.</div>
+        </div>
+      </div>
+
+      <!-- ─── C. TIME ZONE GUIDE ─── -->
+      <div class="cat-label">Time Zone Guide</div>
+
+      <p class="bt">Use the guide below to choose the correct shorthand for your time zone. Meetings are generally scheduled in <strong>Central Time (CT)</strong> because that is the founder's home time zone. Use a time zone converter to find the equivalent time in your location.</p>
+
+      <table class="st" style="margin-top:20px">
+        <thead>
+          <tr><th>Shorthand</th><th>Full Name</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EST</td><td>Eastern Standard Time</td></tr>
+          <tr><td>CT</td><td>Central Time (America/Chicago)</td></tr>
+          <tr><td>MST</td><td>Mountain Standard Time</td></tr>
+          <tr><td>PST</td><td>Pacific Standard Time</td></tr>
+          <tr><td>WAT</td><td>West Africa Time</td></tr>
+          <tr><td>CST</td><td>China Standard Time</td></tr>
+          <tr><td>GMT</td><td>Greenwich Mean Time</td></tr>
+          <tr><td>ADT / AST</td><td>Atlantic Daylight / Standard Time</td></tr>
+          <tr><td>AKST</td><td>Alaska Standard Time</td></tr>
+          <tr><td>HST</td><td>Hawaii–Aleutian Standard Time</td></tr>
+          <tr><td>DAVT</td><td>Davis Time</td></tr>
+          <tr><td>NDT / NST / NT</td><td>Newfoundland Time</td></tr>
+          <tr><td>BST</td><td>British Summer Time</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pull">
+        Meetings will generally be scheduled in <strong>Central Time</strong> unless otherwise noted. Use a time zone translator or converter — such as WorldTimeBuddy or timeanddate.com — to confirm the correct time for your location before any scheduled call.
+      </div>
+
+      <!-- ─── D. DM PREFERENCES ─── -->
+      <div class="cat-label">Direct Message Preferences</div>
+
+      <p class="bt">Your DM preference tells other contributors how to reach you. Please choose the option that fits your comfort level and make sure it is reflected in your server profile.</p>
+
+      <div class="cg" style="margin-top:20px">
+        <div class="cc" style="border-top:3px solid var(--green)">
+          <div class="cc-eye green">Open</div>
+          <div class="cc-title">DMs Open</div>
+          <div class="cc-body">Anyone in the Cioré HQ community can message you directly without asking first. This is the most accessible option for collaboration.</div>
+        </div>
+        <div class="cc" style="border-top:3px solid var(--gold-light)">
+          <div class="cc-eye">Closed</div>
+          <div class="cc-title">DMs Closed</div>
+          <div class="cc-body">You prefer not to receive direct messages. Contributors who need to reach you should do so in a shared channel or through a team lead.</div>
+        </div>
+        <div class="cc" style="border-top:3px solid var(--gold-light)">
+          <div class="cc-eye">Ask First</div>
+          <div class="cc-title">Ask to DM</div>
+          <div class="cc-body">You are open to direct messages, but prefer that someone check in with you first before sending a DM. A quick ask in a shared channel works great.</div>
+        </div>
+      </div>
+
+      <p class="bt" style="margin-top:8px">There is no wrong choice. Choose whatever feels most comfortable for you and your working style.</p>
+
+      <!-- ─── E. PRONOUNS ─── -->
+      <div class="cat-label">Pronouns</div>
+
+      <p class="bt">Contributors can add their pronouns to their server profile so the team can address them correctly and respectfully. Please take a moment to add yours.</p>
+
+      <ul class="dl" style="margin-top:16px">
+        <li>she / her</li>
+        <li>she / they</li>
+        <li>they / them</li>
+        <li>he / him</li>
+        <li>he / they</li>
+      </ul>
+
+      <div class="pull">
+        Please check and respect everyone's pronouns. Do not assume. If you make a mistake, simply correct yourself and move forward — no one expects perfection, only effort and care.
+      </div>
+
+      <!-- ─── F. WHAT IS CIORÉ HQ ─── -->
+      <div class="cat-label">What Is Cioré HQ?</div>
+
+      <p class="bt">Cioré HQ is the name of our Discord server. Think of it as our virtual headquarters — the place where contributor activity lives, conversations happen, and the team stays connected. Just as the Contributor Hub is where you go to read and learn, Cioré HQ on Discord is where you go to communicate and collaborate.</p>
+
+      <!-- ─── G. SERVER / CATEGORY / CHANNEL ─── -->
+      <div class="cat-label">Server, Categories, and Channels</div>
+
+      <p class="bt">If Discord is new to you, here is a quick breakdown of how it is organized:</p>
+
+      <div class="cg" style="margin-top:20px">
+        <div class="cc">
+          <div class="cc-eye">Level 1</div>
+          <div class="cc-title">Server</div>
+          <div class="cc-body">The overall private space for the organization — like an online office building. Cioré HQ is our server. You need an invitation to join.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Level 2</div>
+          <div class="cc-title">Category</div>
+          <div class="cc-body">A grouped section of related channels — like a floor or department in a building. Categories help keep conversations organized by topic or team.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Level 3</div>
+          <div class="cc-title">Channel</div>
+          <div class="cc-body">An individual room for a specific purpose — announcements, project discussion, ideas, meetings, or general conversation. Each channel has a stated purpose.</div>
+        </div>
+      </div>
+
+      <ul class="dl" style="margin-top:4px">
+        <li>Some channels are <strong>announcement-only</strong> — you can read but not post.</li>
+        <li>Some channels are <strong>project-specific</strong> — focused on active initiatives.</li>
+        <li>Some channels are <strong>role-gated</strong> — only visible or accessible based on your contributor role.</li>
+      </ul>
+
+      <!-- ─── H. HOW TO NAVIGATE ─── -->
+      <div class="cat-label">How to Navigate</div>
+
+      <ul class="dl" style="margin-top:4px">
+        <li>Use the <strong>left sidebar</strong> in Discord to move between categories and channels.</li>
+        <li>You can <strong>collapse and expand</strong> categories by clicking the category name.</li>
+        <li>When looking for a specific channel, check the server map or channel guide if one is available.</li>
+        <li>To stay updated, always check <strong>announcement channels first</strong> — that is where important notices live.</li>
+      </ul>
+
+      <!-- ─── I. WHERE TO START ─── -->
+      <div class="cat-label">Where to Start</div>
+
+      <p class="bt">When you first join, head to the <strong>Welcome</strong> or <strong>Announcements</strong> channel. That is where important updates, reminders, and notices are posted. Start there, read through what is available, and then explore the rest of the server at your own pace.</p>
+
+      <!-- ─── J. IMPORTANT CHANNELS ─── -->
+      <div class="cat-label">Important Channels to Know</div>
+
+      <p class="bt">Every channel has a purpose. Here are the ones you should know about right away:</p>
+
+      <table class="st" style="margin-top:20px">
+        <thead>
+          <tr><th>Channel</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Announcements</td><td>Important updates, reminders, and news from the founder and team leads. Read this regularly.</td></tr>
+          <tr><td>Upcoming Meetings</td><td>Meeting details, links, and scheduling information. Check here before any session.</td></tr>
+          <tr><td>Meeting Recordings</td><td>Recordings of past meetings for contributors who missed them or want to review.</td></tr>
+          <tr><td>Conflict Resolution</td><td>A space where contributors can find guidance and support if an issue needs to be addressed. This is a safe and respectful channel.</td></tr>
+          <tr><td>Server Map / Channel Guide</td><td>A reference for where things live in the server. If you are not sure where a conversation belongs, check here first.</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ─── K. COMMUNICATION EXPECTATIONS ─── -->
+      <div class="cat-label">Communication Expectations</div>
+
+      <p class="bt">We are a distributed, globally connected team. That means communication across time zones, backgrounds, and schedules. Please keep these expectations in mind as you participate in Cioré HQ:</p>
+
+      <ul class="dl" style="margin-top:16px">
+        <li>Before messaging someone, take a moment to check their <strong>role, pronouns, DM preference, and time zone</strong> in their server profile.</li>
+        <li>Please be <strong>respectful of how people identify</strong> and communicate. Use correct names and pronouns.</li>
+        <li>Be <strong>considerate of different time zones</strong> and response windows. Not everyone is available at the same hours.</li>
+        <li>Meetings are scheduled in <strong>Central Time</strong> unless otherwise noted. Use a time zone translator to confirm your local time.</li>
+        <li>Use channels for <strong>their intended purpose</strong> whenever possible. If you are unsure where something belongs, ask in a general channel or check the server map.</li>
+        <li>When in doubt, <strong>default to respect</strong>. This community is built on care, intentionality, and mutual support.</li>
+      </ul>
+
+      <div class="pull">
+        If you are ever unsure about something, message the founder directly on Discord. We would rather you ask than feel lost. Welcome to Cioré HQ.
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /pDH -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 0 — START HERE (merged)
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p0">
+
+      <div class="s-heading">Start Here</div>
+      <div class="s-intro">Welcome to Cioré. We are genuinely excited to have you here and grateful that you are choosing to contribute your time, ideas, skills, and energy to our mission. This is a collaborative, intentional, mission-driven environment where contributors work together, support one another, and help build technology that is privacy-first, sustainable, and community-centered. You belong here, and we want you to feel that from day one.</div>
+
+      <!-- ─── JUMP NAVIGATION ─── -->
+      <div class="cat-label" style="margin-top:36px">On This Page</div>
+      <div class="jump-nav">
+        <a class="jump-link" href="#sh-welcome">Welcome to the Team</a>
+        <a class="jump-link" href="#sh-culture">Team Culture</a>
+        <a class="jump-link" href="#sh-journey">Your Onboarding Journey</a>
+        <a class="jump-link" href="#sh-next">What to Do Next</a>
+        <a class="jump-link" href="#sh-template">Introduction Template</a>
+        <a class="jump-link" href="#sh-comms">Project Communication</a>
+        <a class="jump-link" href="#sh-expectations">Contributor Expectations</a>
+        <a class="jump-link" href="#sh-confidentiality">Confidentiality &amp; Respect</a>
+        <a class="jump-link" href="#sh-discord">Discord Activity</a>
+        <a class="jump-link" href="#sh-help">Need Help?</a>
+      </div>
+
+      <!-- ─── 1. WELCOME TO THE TEAM ─── -->
+      <div class="cat-label" id="sh-welcome">Welcome to the Team</div>
+
+      <p class="bt">You have made it. Whether you are an engineer, designer, strategist, writer, researcher, or organizer — you are now part of a team building something that has never existed before. We are creating privacy-first, ethically made, sustainable technology powered by a community that believes technology should serve people, not harvest them.</p>
+
+      <p class="bt" style="margin-top:16px">Your presence here matters. No contribution is too small. Your ideas, perspective, and specific kind of genius are exactly what this team needs, and we are glad you chose to bring them here.</p>
+
+      <div class="pull" style="margin-top:22px">
+        <strong>After reviewing this page, visit the Progress tab.</strong> That is where you will find what Cioré is currently focused on, what phase the company is in, what support is currently welcome, and what is coming next. It is the fastest way to understand where you can plug in.
+      </div>
+
+      <!-- ─── 2. TEAM CULTURE ─── -->
+      <div class="cat-label" id="sh-culture">Team Culture</div>
+
+      <div class="cg">
+        <div class="cc">
+          <div class="cc-eye">Together</div>
+          <div class="cc-title">A Collaborative Environment</div>
+          <div class="cc-body">Cioré is built by contributors who care about the mission and show up for each other. We work as a distributed team, which means communication, clarity, and mutual respect are essential. No one is doing this alone, and no contribution is too small to matter.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Always</div>
+          <div class="cc-title">Respect as a Standard</div>
+          <div class="cc-body">Every person in this community brings something valuable. We lead with curiosity, not judgment. We critique ideas, not people. We listen actively and give feedback that is clear, kind, and constructive. This is a space where everyone is expected to feel safe contributing their voice.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Culture</div>
+          <div class="cc-title">Positive and Intentional</div>
+          <div class="cc-body">We are building something that has not existed before, which means there will be challenges, pivots, and uncertainty. We navigate that together with optimism, patience, and encouragement. We celebrate progress and support each other through the hard parts.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Purpose</div>
+          <div class="cc-title">Your Genius Belongs Here</div>
+          <div class="cc-body">Whether you write code, design experiences, craft strategy, tell stories, or bring organizational clarity — your specific set of skills and perspective are exactly what this team needs. You are not just a contributor. You are a builder of something meaningful.</div>
+        </div>
+      </div>
+
+      <!-- ─── 3. ONBOARDING JOURNEY ─── -->
+      <div class="cat-label" id="sh-journey">Your Onboarding Journey</div>
+
+      <p class="bt">By the time you are reading this page, you have already completed most of the onboarding process. Here is a look at the full journey from start to where you are now, and what comes next.</p>
+
+      <div class="phases" style="margin-top:20px">
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Completed the Application</div><div class="ph-body">You submitted your contributor application and shared your background, skills, and motivation for joining the Cioré team. That first step brought you here.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Received the Introductory Email</div><div class="ph-body">Your application was reviewed and you received next steps via email confirming you were moving forward in the process.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Read and Submitted the Contributor Agreement</div><div class="ph-body">You reviewed the contributor agreement outlining your responsibilities, confidentiality expectations, and how we work together, and you signed and submitted it.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Met with the Founder</div><div class="ph-body">You had a one-on-one conversation covering fit, goals, alignment, and where your contributions might live within the project. That conversation confirmed you were a great match for the team.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Received Your Discord Invitation and Joined</div><div class="ph-body">You were approved and joined the private Cioré contributor Discord server — your primary home base for communication, collaboration, and staying connected to the team.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--green)">✓ Done</div>
+          <div><div class="ph-title">You Introduced Yourself in the Intro Channel</div><div class="ph-body">You posted your introduction in the introductions channel on Discord using the template. The team now knows you are here and is glad to have you.</div></div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-num" style="color:var(--gold)">Now</div>
+          <div><div class="ph-title">You Are Here — In the Contributor Hub</div><div class="ph-body">You are reading this page right now. This is the Contributor Hub — the place to find everything about what we are building, how we work, and what is happening across the team. Take your time exploring it.</div></div>
+        </div>
+      </div>
+
+      <!-- ─── 4. WHAT TO DO NEXT ─── -->
+      <div class="cat-label" id="sh-next">What to Do Next</div>
+
+      <p class="bt">Now that you are fully onboarded, here is exactly where to focus your energy.</p>
+
+      <div class="cg" style="margin-top:18px">
+        <div class="cc" style="border-top:3px solid var(--gold-light);">
+          <div class="cc-eye">Action 01</div>
+          <div class="cc-title">Review the Progress Tab</div>
+          <div class="cc-body">Visit the Progress tab to see what Cioré is currently focused on, what phase the company is in, what support is currently welcome, and what is coming next. This is the best place to find where your skills and interests align.</div>
+        </div>
+        <div class="cc" style="border-top:3px solid var(--gold-light);">
+          <div class="cc-eye">Action 02</div>
+          <div class="cc-title">Choose Where You Want to Contribute</div>
+          <div class="cc-body">Look for projects, initiatives, or support opportunities that match your skills and excite you. You do not have to pick just one area, and you do not have to figure it all out on day one.</div>
+        </div>
+        <div class="cc" style="border-top:3px solid var(--green);">
+          <div class="cc-eye green">Action 03</div>
+          <div class="cc-title">Reach Out to the Project Contact</div>
+          <div class="cc-body">Each project or initiative has a listed project manager or point of contact. Reach out to that person directly on Discord to express interest and get oriented. They will help you get plugged in.</div>
+        </div>
+        <div class="cc" style="border-top:3px solid var(--green);">
+          <div class="cc-eye green">Action 04</div>
+          <div class="cc-title">Not Sure? Message the Founder</div>
+          <div class="cc-body">If you are unsure where to begin, what is the right fit, or who to contact — message the founder directly on Discord. We will figure it out together and make sure you feel confident about where you are contributing.</div>
+        </div>
+      </div>
+
+      <!-- ─── 5. INTRODUCTION TEMPLATE ─── -->
+      <div class="cat-label" id="sh-template">Introduction Template</div>
+
+      <p class="bt">If you have not yet introduced yourself in the Discord introductions channel, use this as your guide. Make it your own — we want to hear your personality, not a form. This is your moment to say hello and let the team start getting to know you.</p>
+
+      <div class="pull" style="margin-top:20px">
+        <strong>Share a little about yourself using these prompts:</strong><br><br>
+        <span style="display:block;margin-bottom:10px">👋 <strong>Name or nickname</strong> — What should the team call you?</span>
+        <span style="display:block;margin-bottom:10px">📍 <strong>Location</strong> — Where are you based? City, state, or country is fine.</span>
+        <span style="display:block;margin-bottom:10px">🌿 <strong>Why sustainable technology matters to you</strong> — What drew you to this work and why does it feel important?</span>
+        <span style="display:block;margin-bottom:10px">🛠 <strong>Skills or areas of expertise</strong> — What do you bring? Engineering, design, strategy, content, research, operations — all of it counts.</span>
+        <span style="display:block;margin-bottom:10px">✨ <strong>A favorite sustainability practice or project</strong> — Something you have worked on, studied, or care deeply about.</span>
+        <span style="display:block;margin-bottom:10px">🎯 <strong>What you hope to contribute here</strong> — What excites you about being part of this team and what do you want to help build?</span>
+        <span style="display:block;margin-bottom:0">🌀 <strong>A fun fact about yourself</strong> — Something that tells us a little more about who you are beyond the work.</span>
+      </div>
+
+      <!-- ─── 6. PROJECT COMMUNICATION ─── -->
+      <div class="cat-label" id="sh-comms">Project Communication</div>
+
+      <p class="bt">Cioré runs on clear, direct communication. Here is how to know who to reach and where to go for different kinds of questions.</p>
+
+      <ul class="dl" style="margin-top:16px">
+        <li>For project-specific questions, reach out to the project manager or listed point of contact on the Progress tab.</li>
+        <li>For general onboarding questions or if you are unsure where to start, message the founder on Discord.</li>
+        <li>Check the Progress tab regularly to stay aligned with what the team is actively building and where support is needed.</li>
+        <li>Some opportunities are ongoing project roles. Others are one-off support needs. Each item on the Progress tab should have a contact listed so you always know who to reach.</li>
+        <li>When in doubt, over-communicate. We would always rather hear from you than have you sit in uncertainty.</li>
+      </ul>
+
+      <!-- ─── 7. CONTRIBUTOR EXPECTATIONS ─── -->
+      <div class="cat-label" id="sh-expectations">Contributor Expectations</div>
+
+      <p class="bt">We ask every contributor to operate with ownership, intention, and care. You do not have to be available around the clock, but we do ask that you show up consistently, communicate clearly, and align your work with the mission.</p>
+
+      <ul class="dl" style="margin-top:16px">
+        <li>Read the internal contributor hub so you understand what we are building and how things are organized.</li>
+        <li>Ask questions early and often — in shared channels, not in silence. There are no wrong questions here.</li>
+        <li>Align your work with the Cioré mission and values. If you are unsure whether something fits, ask first.</li>
+        <li>Operate with ownership: be proactive, be transparent, and follow through on commitments.</li>
+        <li>Treat every contributor, collaborator, and team member with the same respect you would want to receive.</li>
+      </ul>
+
+      <!-- ─── 8. CONFIDENTIALITY & RESPECT ─── -->
+      <div class="cat-label" id="sh-confidentiality">Confidentiality &amp; Respect</div>
+
+      <p class="bt">Because we are building sensitive, mission-critical technology, confidentiality and a respectful environment are non-negotiable. Every contributor is expected to honor these standards.</p>
+
+      <ul class="dl" style="margin-top:16px">
+        <li>All work produced for Cioré is internal company property and must not be shared outside our ecosystem without explicit permission from the founder or designated communications lead.</li>
+        <li>Code, CAD files, research documents, internal strategy, and anything shared in the contributor hub must be kept private.</li>
+        <li>Public posting about unreleased features, designs, or internal updates is not allowed unless specifically approved.</li>
+        <li>We do not tolerate microaggressions, harassment, toxic behavior, or any conduct that makes contributors feel unsafe or unwelcome.</li>
+        <li>Critique ideas, not people. Practice active listening. Give feedback that is clear, specific, and constructive.</li>
+        <li>This is a safe and collaborative space — and everyone shares responsibility for keeping it that way.</li>
+      </ul>
+
+      <!-- ─── 9. DISCORD ACTIVITY ─── -->
+      <div class="cat-label" id="sh-discord">Discord Activity</div>
+
+      <p class="bt">Discord is our primary communication platform and the heartbeat of the contributor community. We do not expect you to be online constantly, but we do ask that you stay reasonably connected and communicative. Life happens and we understand that. What matters most is that you let us know if you need to step back.</p>
+
+      <div class="wb" style="margin-top:20px">
+        <div class="wb-icon">💬</div>
+        <div>
+          <strong>A note on inactivity:</strong> Contributors who become inactive and do not respond, react, or communicate for an extended period may automatically lose server access through our inactivity system. This is not a punishment. It is a way to protect our workflow, our security, and the energy of the active team. If life gets busy, just send a quick message. You are always welcome to reconnect and return when you are ready to participate again.
+        </div>
+      </div>
+
+      <ul class="dl" style="margin-top:20px">
+        <li>Stay reasonably active and engaged on Discord — check in at least a few times a week if you are able.</li>
+        <li>If you need to step back temporarily, send a quick message to the founder or a team lead so we know what is going on.</li>
+        <li>Respond to messages and check-ins even if it is just a brief acknowledgment — communication goes a long way.</li>
+        <li>Contributors who are inactive for fourteen or more consecutive days without any communication may have their Discord access temporarily paused.</li>
+        <li>Returning after a break is always welcome — just reach out and we will get you back in.</li>
+      </ul>
+
+      <!-- ─── 10. NEED HELP? ─── -->
+      <div class="cat-label" id="sh-help">Need Help?</div>
+
+      <div class="pull">
+        If you are ever unsure where to go, what to work on, or who to contact — do not hesitate to reach out. Message the founder directly on Discord. We want every contributor to feel supported, informed, and able to move forward with clarity. There are no wrong questions here, and no one should ever feel lost or left behind. We are in this together.
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p0 -->
 
     <!-- ═══════════════════════════════════
          PANEL 1 — MISSION AND VALUES
@@ -998,60 +2459,7 @@ body {
 
     </div><!-- /p1 -->
 
-    <!-- ═══════════════════════════════════
-         PANEL 2 — CONTRIBUTOR INFO
-    ═══════════════════════════════════ -->
-    <div class="panel" id="p2">
-
-      <div class="s-heading">Contributor Information and Conduct</div>
-      <div class="s-intro">You are joining a team that is rewriting what technology can mean for privacy, sustainability, and equity. Every contributor, whether writing code, designing hardware, researching materials, crafting content, or organizing community, is part of something that has not existed before.</div>
-
-      <div class="cat-label">Welcome Message and Expectations</div>
-
-      <p class="bt">We expect all contributors to:</p>
-      <ul class="dl" style="margin-top:14px">
-        <li>Read this Internal Overview so they understand what we are building.</li>
-        <li>Ask questions in shared channels early and often.</li>
-        <li>Align all work to our mission and values.</li>
-        <li>Operate as owners: proactive, transparent, and intentional.</li>
-      </ul>
-
-      <div class="cat-label">Professional Standards and Confidentiality</div>
-
-      <ul class="dl">
-        <li>All work produced for Cioré is internal company property and must not be shared outside our ecosystem without explicit permission.</li>
-        <li>We do not tolerate microaggressions, harassment, or toxic behavior. Every contributor is expected to operate with integrity, respect, and care.</li>
-        <li>This is a safe, collaborative space: critique ideas, not people; practice active listening; and give clear, constructive feedback.</li>
-        <li>Code, CAD files, research documents, and internal strategy must be kept private.</li>
-        <li>Public posting about unreleased features or designs is not allowed unless approved by the founder or designated communications lead.</li>
-      </ul>
-
-      <div class="cat-label">Contributor Activity and Access Policy</div>
-
-      <p class="bt">Cioré is committed to fostering an active, secure, and respectful environment for all contributors. Because we are building sensitive and mission critical technology, all contributors are expected to remain engaged and communicative throughout their time with the company.</p>
-
-      <div class="cat-label">Communication Expectations</div>
-
-      <p class="bt">Contributors are not expected to be available full time, but they are expected to remain in consistent communication. If a contributor is unable to participate for any reason, they are encouraged to notify the founder or relevant team lead as soon as possible. We understand that life happens and that personal responsibilities can arise. Our community prioritizes compassion and flexibility wherever possible.</p>
-
-      <div class="cat-label">Inactivity and Access Revocation</div>
-
-      <div class="wb">
-        <div class="wb-icon">⚠</div>
-        <div>To maintain the integrity and security of our systems, contributors who are inactive for <strong>fourteen consecutive days</strong> without any form of communication will have their Discord access temporarily revoked. Inactive contributors may be eligible to return at a later time, based on availability and mutual alignment with project needs.</div>
-      </div>
-
-      <p class="bt">Inactivity is defined as not responding to messages, not checking in on any assigned tasks, and not initiating communication with the founder or designated team members.</p>
-
-      <div class="pull">
-        Access revocation is not a punishment. It is a measure to protect the safety and focus of the project while ensuring the platform remains a space for actively engaged participants. Contributors who lose access due to inactivity are welcome to reapply or request reinstatement when ready.
-      </div>
-
-      <p class="bt">This policy exists to protect sensitive information, respect the time and energy of active contributors, and maintain momentum in our collective work. All contributors agree to this standard as part of their participation in the Cioré™ ecosystem.</p>
-
-      <div style="height:60px"></div>
-
-    </div><!-- /p2 -->
+    <!-- p2 removed — content merged into Start Here (p0) -->
 
     <!-- ═══════════════════════════════════
          PANEL 3 — PHONE SYSTEM OVERVIEW
@@ -1060,6 +2468,27 @@ body {
 
       <div class="s-heading">Phone System Overview</div>
       <div class="s-intro">Cioré is building a privacy-first, modular smartphone ecosystem made of 5 integrated pillars.</div>
+
+      <!-- OFFICIAL CONCEPT VIEW -->
+      <div class="cat-label">Official Concept View</div>
+
+      <div class="mockup-feature">
+        <div class="mockup-copy">
+          <span class="cc-eye">First Official Concept</span>
+          <div class="cc-title">Cioré Phone Mockup</div>
+          <p class="bt">This is the first official concept view of the Cioré phone. It is being shared internally to give contributors a visual reference for the current product direction, industrial design language, and overall feel of the device.</p>
+          <p class="bt" style="margin-top:14px">This concept represents an early but intentional design milestone. As prototype development continues, some details may evolve through engineering, sourcing, usability, and materials decisions.</p>
+        </div>
+        <figure class="mockup-card">
+          <img
+            class="mockup-image"
+            src="https://i.ibb.co/Kjfvt0mz/IMG-0097.jpg"
+            alt="First official concept mockup of the Cioré phone"
+            loading="lazy"
+          >
+          <figcaption class="mockup-caption">First official concept view for internal contributor reference.</figcaption>
+        </figure>
+      </div>
 
       <div class="cat-label">Product Vision: What We Are Building</div>
 
@@ -1684,6 +3113,595 @@ body {
 
     </div><!-- /p8 -->
 
+
+    <!-- ═══════════════════════════════════
+         PANEL 10 — PROGRESS
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p10">
+
+      <div class="s-heading">What We're Working On Now</div>
+      <div class="s-intro">This is the best place to quickly understand what Cioré is currently focused on, what is actively moving, what is being prepared, and where optional support is currently welcome. Review this page, find areas aligned with your interests and skills, and reach out on Discord if you have bandwidth and want to help.</div>
+
+      <!-- ─── CURRENT PHASE ─── -->
+      <div class="cat-label" id="pg-phase">Current Phase</div>
+
+      <p class="bt">Cioré is in an active foundation-building and growth phase. We are strengthening the contributor experience, refining public-facing presence, growing the waitlist, preparing for strategic outreach, advancing prototype research, and laying the groundwork for future Lumé OS execution. Every area of the company is moving — some faster than others, and all intentionally.</p>
+
+      <div class="pg-phase-grid">
+        <div class="pg-phase-item"><div class="pg-phase-dot"></div><div class="pg-phase-text">Brand and website refinement</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot"></div><div class="pg-phase-text">Contributor onboarding and flow improvements</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot green"></div><div class="pg-phase-text">Audience growth and waitlist building</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot green"></div><div class="pg-phase-text">Strategic outreach and partnership exploration</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot"></div><div class="pg-phase-text">Prototype development research and ethical vendor sourcing</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot"></div><div class="pg-phase-text">Accelerator preparation and pitch milestones</div></div>
+        <div class="pg-phase-item"><div class="pg-phase-dot green"></div><div class="pg-phase-text">Planning for future Lumé OS execution</div></div>
+      </div>
+
+      <!-- ─── ACTIVE PRIORITIES ─── -->
+      <div class="cat-label" id="pg-priorities">Active Priorities</div>
+
+      <p class="bt">These are the areas where work is currently happening. If you see something aligned with your skills and have bandwidth to support, reach out on Discord. Support in all areas is optional and contributor-driven.</p>
+
+      <div style="margin-top:22px">
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Website Revamp</div>
+            <span class="pg-badge pg-badge-progress">In Progress</span>
+          </div>
+          <div class="pg-card-body">The team has already put the code together and is now finalizing the website revamp. This work is focused on improving the public-facing experience, visual clarity, messaging, and readiness for broader audience growth.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Light QA, copy refinement, visual polish feedback, conversion feedback, accessibility review</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Waitlist Growth and Email Outreach</div>
+            <span class="pg-badge pg-badge-active">Active</span>
+          </div>
+          <div class="pg-card-body">Waitlist growth is already underway. Email outreach has begun, and the team expects this to expand as public posting increases and the updated visual experience becomes stronger.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Email strategy suggestions, audience growth ideas, landing page feedback, messaging refinement, outreach organization</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Strategic Outreach and Partnerships</div>
+            <span class="pg-badge pg-badge-active">Active</span>
+          </div>
+          <div class="pg-card-body">Cioré is actively exploring outreach to privacy-focused companies, sustainability-aligned companies, STEM and research organizations, and academic institutions. The goal is to open collaboration conversations, explore aligned partnerships, and build relationships that may support future growth.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Researching aligned organizations, building outreach lists, drafting outreach language, finding relevant contacts, organizing collaboration pipelines</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Prototype Development Research</div>
+            <span class="pg-badge pg-badge-progress">Early Development</span>
+          </div>
+          <div class="pg-card-body">Prototype development has begun at the concept level. Early exploration is underway, and the team is also researching ethical vendors already identified while continuing to narrow options based on cost-effectiveness, sourcing quality, and values alignment.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Ethical vendor research, sourcing comparison, materials research, cost comparison, sustainable manufacturing research, documentation support</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Contributor Flow Improvements</div>
+            <span class="pg-badge pg-badge-progress">In Progress</span>
+          </div>
+          <div class="pg-card-body">Candy, Kanika, and Angela are helping improve contributor flow so new contributors have a clearer experience from onboarding into active participation. This work supports a smoother contributor journey, better clarity, and stronger internal organization.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Onboarding feedback, contributor experience ideas, process clarity suggestions, resource organization, documentation refinement</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Accelerator Preparation</div>
+            <span class="pg-badge pg-badge-active">Active</span>
+          </div>
+          <div class="pg-card-body">Cioré is currently participating in the Your Startup Accelerator program and preparing for a pitch milestone in May 2026. This includes refining messaging, positioning, readiness materials, and overall presentation quality.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Pitch feedback, messaging refinement, market research support, visual deck review, strategic storytelling help</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Social Media Presence</div>
+            <span class="pg-badge pg-badge-progress">Active Planning</span>
+          </div>
+          <div class="pg-card-body">The founder is currently planning Cioré's social media presence and looking to strengthen visibility, consistency, and contributor awareness as public-facing activity grows.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Content planning, platform strategy, post ideas, brand voice refinement, scheduling support, light design support</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Grant Research</div>
+            <span class="pg-badge pg-badge-open">Open Support Need</span>
+          </div>
+          <div class="pg-card-body">As Cioré continues preparing for growth and funding pathways, grant research support is welcome to help identify aligned opportunities and organize promising leads.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Grant database research, opportunity sorting, eligibility review, deadline tracking, summary notes</div>
+        </div>
+
+        <div class="pg-card">
+          <div class="pg-card-head">
+            <div class="pg-card-title">Operational Readiness</div>
+            <span class="pg-badge pg-badge-progress">In Progress</span>
+          </div>
+          <div class="pg-card-body">Internal operational preparation is underway as the company continues awaiting funding and strengthening internal structure. This includes administrative research, organizational documentation, and internal systems preparation.</div>
+          <div class="pg-support-label">Support Welcome</div>
+          <div class="pg-support-body">Administrative research support, organizational documentation, internal systems documentation, process research</div>
+        </div>
+
+      </div>
+
+      <!-- ─── WHAT'S COMING NEXT ─── -->
+      <div class="cat-label" id="pg-next">What's Coming Next</div>
+
+      <p class="bt">The next major project area is Lumé OS development. This work is being approached intentionally and is not being rushed. Some groundwork already exists, the vision is clearly defined, and execution will deepen once the right support structure and contributors are in place. We would rather move carefully on a project of this importance than move fast in the wrong direction.</p>
+
+      <!-- ─── LUMÉ OS ─── -->
+      <div class="cat-label" id="pg-lume">Lumé OS — Planned Next-Phase Focus</div>
+
+      <p class="bt">Lumé OS is Cioré's privacy-first operating environment. It is planned as a hardened, deeply customized system built on an open foundation. The near-term direction uses a hardened AOSP-based path for practicality and hardware support. Cioré's long-term direction is greater platform sovereignty over time. Lumé OS will control privacy rules, permissions, user experience, and system behavior at every layer — and the project is phased intentionally rather than treated as an immediate free-form build.</p>
+
+      <div class="cat-label" style="margin-top:36px">Why We Are Not Rushing This</div>
+
+      <div class="pull">
+        There is not yet a dedicated project manager in place for Lumé OS. Some key roles are still open. We want the right people and structure before deeper execution begins, and we do not want to guess on a project of this importance. When the foundation is right, Lumé OS will move forward with clarity and confidence. Until then, groundwork, planning, research, and role-filling are the priority.
+      </div>
+
+      <div class="cat-label">Lumé OS Phase Summary</div>
+
+      <div class="pg-lume-phases">
+        <div class="pg-lume-row">
+          <div class="pg-lume-num">Phase 0</div>
+          <div>
+            <div class="pg-lume-title">Foundation and Hardware Selection</div>
+            <div class="pg-lume-body">Confirm architecture direction. Select initial reference hardware — Pixel 8 or Pixel 9 is the recommended starting point. Procure reference and spare devices. Define security baseline and threat model.</div>
+          </div>
+        </div>
+        <div class="pg-lume-row">
+          <div class="pg-lume-num">Phase 1</div>
+          <div>
+            <div class="pg-lume-title">Boot Hardened Base</div>
+            <div class="pg-lume-body">Boot a hardened AOSP build on reference hardware. Set up build infrastructure — dedicated build server required. Establish code hosting, CI pipeline, and OTA update hosting. Target: working bootable system.</div>
+          </div>
+        </div>
+        <div class="pg-lume-row">
+          <div class="pg-lume-num">Phase 2</div>
+          <div>
+            <div class="pg-lume-title">Privacy Layer and Core Experience</div>
+            <div class="pg-lume-body">Build and integrate Cioré's custom privacy enforcement layer, permission system, and sandboxing rules. Develop the plain-language privacy dashboard. Launch the initial Cioré UI. Integrate Gaia-X MVP for on-device AI tasks.</div>
+          </div>
+        </div>
+        <div class="pg-lume-row">
+          <div class="pg-lume-num">Phase 3</div>
+          <div>
+            <div class="pg-lume-title">App Ecosystem and Compatibility Testing</div>
+            <div class="pg-lume-body">Build out Tier 1 core apps. Evaluate and onboard initial Tier 2 verified third-party apps. Begin controlled testing of the optional Tier 3 Android compatibility container. Conduct security audits.</div>
+          </div>
+        </div>
+        <div class="pg-lume-row">
+          <div class="pg-lume-num">Phase 4</div>
+          <div>
+            <div class="pg-lume-title">Optimization, Audit, and Expansion</div>
+            <div class="pg-lume-body">Stability and performance refinement. External security audit. Broader device support and platform expansion planning. Begin evaluating longer-term paths toward deeper platform independence.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-label">Open Roles and Support Areas</div>
+
+      <p class="bt">These are areas where contributors can express interest if aligned. These are not assigned positions — they are the kinds of people and skill sets that will strengthen future Lumé OS work when the time is right.</p>
+
+      <div class="pg-roles-grid">
+        <div class="pg-role-item">
+          <div class="pg-role-title">Project Leadership</div>
+          <div class="pg-role-body">Project manager or coordination lead with experience in technical or software projects</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">OS Engineering</div>
+          <div class="pg-role-body">Systems engineers with experience in Android, AOSP, Linux kernel, or embedded platforms</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">Privacy and Security</div>
+          <div class="pg-role-body">Security-minded systems thinkers with experience in sandboxing, permissions, or privacy architecture</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">Documentation</div>
+          <div class="pg-role-body">Writers who can translate complex technical concepts into clear contributor and user documentation</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">UI / UX</div>
+          <div class="pg-role-body">Designers and UX thinkers interested in privacy-first system interface flows and user control models</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">Technical Research</div>
+          <div class="pg-role-body">Researchers who can explore hardware, software, and platform compatibility across device targets</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">Infrastructure and DevOps</div>
+          <div class="pg-role-body">Engineers with experience in build pipelines, CI systems, OTA hosting, and release infrastructure</div>
+        </div>
+        <div class="pg-role-item">
+          <div class="pg-role-title">Hardware Coordination</div>
+          <div class="pg-role-body">Contributors who can help bridge hardware sourcing, device testing, and software integration planning</div>
+        </div>
+      </div>
+
+      <!-- ─── WHERE HELP IS WELCOME ─── -->
+      <div class="cat-label" id="pg-help">Where Help Is Welcome</div>
+
+      <p class="bt">If any of these areas align with your skills or interests and you have bandwidth, raise your hand on Discord. No pressure, no commitment — just let the team know you are available and interested.</p>
+
+      <div class="pg-help-grid">
+        <span class="pg-help-tag">Website Feedback</span>
+        <span class="pg-help-tag">Accessibility Review</span>
+        <span class="pg-help-tag">Waitlist Growth Ideas</span>
+        <span class="pg-help-tag">Email Outreach Support</span>
+        <span class="pg-help-tag">Social Media Planning</span>
+        <span class="pg-help-tag">Strategic Outreach Research</span>
+        <span class="pg-help-tag">Partnership List Building</span>
+        <span class="pg-help-tag green">Academic / Research Outreach</span>
+        <span class="pg-help-tag green">Privacy Company Outreach</span>
+        <span class="pg-help-tag green">Sustainability Company Outreach</span>
+        <span class="pg-help-tag">Grant Research</span>
+        <span class="pg-help-tag">Ethical Vendor Research</span>
+        <span class="pg-help-tag">Prototype Sourcing Comparisons</span>
+        <span class="pg-help-tag">Onboarding Experience Feedback</span>
+        <span class="pg-help-tag">Pitch and Messaging Feedback</span>
+        <span class="pg-help-tag">Documentation Support</span>
+        <span class="pg-help-tag green">OS Project Planning Support</span>
+        <span class="pg-help-tag green">Technical Research</span>
+      </div>
+
+      <!-- ─── HOW TO PLUG IN ─── -->
+      <div class="cat-label" id="pg-plug">How to Plug In</div>
+
+      <div class="pull">
+        If you see an area on this page that aligns with your skills or interests, reach out on Discord. If there is not yet a listed project lead for that area, message the founder directly. There is no formal application for optional support — just a conversation about fit, bandwidth, and how you can best contribute. We are glad you are here and looking forward to building with you.
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p10 -->
+
+    <!-- ═══════════════════════════════════
+         PANEL 9 — TIPS, REQUESTS & SUGGESTIONS
+    ═══════════════════════════════════ -->
+    <div class="panel" id="p9">
+
+      <div class="s-heading">Tips, Requests &amp; Suggestions</div>
+      <div class="s-intro">Use this form to share a tip, suggestion, request, workflow idea, or other non-project update directly with the founder. If your question is about a specific project, please contact that project's manager directly instead of using this form.</div>
+
+      <!-- ROUTING NOTE -->
+      <div class="cf-route-note">
+        <span class="cf-route-icon">📋</span>
+        <div>
+          <strong>Project-specific questions?</strong> Those should go to the project manager listed on the Progress tab. This form is for non-project submissions only.
+        </div>
+      </div>
+
+      <!-- INTRO CARDS -->
+      <div class="cat-label">What You Can Submit Here</div>
+
+      <div class="cg" style="margin-top:0">
+        <div class="cc">
+          <div class="cc-eye">Ideas</div>
+          <div class="cc-title">Share a Suggestion</div>
+          <div class="cc-body">Have a tip, workflow idea, or recommendation that could make things run better? This is the place to share it. We want to hear what you are thinking.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye green">Support</div>
+          <div class="cc-title">Request Something</div>
+          <div class="cc-body">Need a recommendation letter, hour verification, or another kind of support from the founder? Submit it here and we will take care of it.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-eye">Feedback</div>
+          <div class="cc-title">Send a Private Note</div>
+          <div class="cc-body">Have general feedback about the contributor experience, a concern, or something you want to flag quietly? You can submit anonymously if you prefer.</div>
+        </div>
+      </div>
+
+      <!-- TIMING NOTE -->
+      <div class="cf-timing-note">
+        <div class="cf-timing-icon">🗓</div>
+        <div>
+          <div class="cf-timing-title">Response Timeline</div>
+          <div class="cf-timing-body">The founder reviews submissions every Friday and aims to address them within the following week. If more than a week passes without a response, feel free to message the founder directly on Discord.</div>
+        </div>
+      </div>
+
+      <!-- THE FORM -->
+      <div class="cat-label">Submit Your Tip, Request, or Suggestion</div>
+
+      <div class="cf-form-wrap" id="cfFormWrap">
+        <form id="supportForm" novalidate>
+
+          <!-- 1. SUBMISSION TYPE -->
+          <div class="cf-field">
+            <label class="cf-label" for="cfType">Submission Type <span class="cf-req">*</span></label>
+            <select class="cf-select" id="cfType" name="Submission Type" required>
+              <option value="" disabled selected>Select a type</option>
+              <option value="Suggestion">Suggestion</option>
+              <option value="Tip">Tip</option>
+              <option value="Workflow Recommendation">Workflow Recommendation</option>
+              <option value="General Feedback">General Feedback</option>
+              <option value="Support Request">Support Request</option>
+              <option value="Recommendation Letter Request">Recommendation Letter Request</option>
+              <option value="Hour Verification Request">Hour Verification Request</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- 2. ANONYMOUS -->
+          <div class="cf-field">
+            <label class="cf-label">Anonymous Submission</label>
+            <div class="cf-toggle-row">
+              <label class="cf-toggle-opt">
+                <input type="radio" name="Anonymous Submission" value="No" checked class="cf-radio"> No, include my details
+              </label>
+              <label class="cf-toggle-opt">
+                <input type="radio" name="Anonymous Submission" value="Yes" class="cf-radio"> Yes, keep me anonymous
+              </label>
+            </div>
+            <div class="cf-helper" id="cfAnonNote" style="display:none">Anonymous submissions are welcome. Note that follow-up may not be possible without contact details.</div>
+          </div>
+
+          <!-- 3. NAME -->
+          <div class="cf-field" id="cfNameField">
+            <label class="cf-label" for="cfName">Name</label>
+            <input type="text" class="cf-input" id="cfName" name="Name" placeholder="Your name or preferred nickname" autocomplete="name">
+            <div class="cf-helper">You can use a nickname if you prefer.</div>
+          </div>
+
+          <!-- 4. EMAIL -->
+          <div class="cf-field" id="cfEmailField">
+            <label class="cf-label" for="cfEmail">Email Address <span class="cf-req-soft" id="cfEmailReqNote">(required if requesting a response)</span></label>
+            <input type="email" class="cf-input" id="cfEmail" name="Email Address" placeholder="your@email.com" autocomplete="email">
+          </div>
+
+          <!-- 5. SUBJECT -->
+          <div class="cf-field">
+            <label class="cf-label" for="cfSubject">Subject / Short Title <span class="cf-req">*</span></label>
+            <input type="text" class="cf-input" id="cfSubject" name="Subject / Short Title" placeholder="Give your submission a short, clear title" required>
+          </div>
+
+          <!-- 6. DETAILS -->
+          <div class="cf-field">
+            <label class="cf-label" for="cfDetails">Details <span class="cf-req">*</span></label>
+            <textarea class="cf-textarea" id="cfDetails" name="Details" rows="6" placeholder="Share the full context, idea, or request here. The more clearly you describe it, the easier it is to act on." required></textarea>
+          </div>
+
+          <!-- 7. RESPONSE REQUESTED -->
+          <div class="cf-field">
+            <label class="cf-label">Would You Like a Response?</label>
+            <div class="cf-toggle-row">
+              <label class="cf-toggle-opt">
+                <input type="radio" name="Would You Like a Response" value="Yes" class="cf-radio"> Yes, please follow up
+              </label>
+              <label class="cf-toggle-opt">
+                <input type="radio" name="Would You Like a Response" value="No" checked class="cf-radio"> No, this is just a share
+              </label>
+            </div>
+          </div>
+
+          <!-- 8. FOLLOW UP METHOD -->
+          <div class="cf-field">
+            <label class="cf-label" for="cfFollowUp">Best Way to Follow Up</label>
+            <select class="cf-select" id="cfFollowUp" name="Best Way to Follow Up">
+              <option value="No Follow Up Needed" selected>No Follow Up Needed</option>
+              <option value="Email">Email</option>
+              <option value="Discord">Discord</option>
+            </select>
+          </div>
+
+          <!-- SUBMIT -->
+          <div class="cf-field" style="margin-top:32px;margin-bottom:0">
+            <button type="submit" class="cf-submit-btn" id="cfSubmitBtn">
+              <span id="cfBtnText">Submit</span>
+            </button>
+            <div class="cf-helper" style="margin-top:12px">Submissions are reviewed every Friday.</div>
+          </div>
+
+        </form>
+
+        <!-- SUCCESS STATE -->
+        <div class="cf-success" id="cfSuccess" style="display:none">
+          <div class="cf-success-icon">✓</div>
+          <div class="cf-success-title">Thank You for Reaching Out</div>
+          <div class="cf-success-body">Your submission has been received. The founder reviews submissions every Friday and will aim to follow up within the following week. If your submission requires a response and more than a week passes, feel free to message the founder directly on Discord.</div>
+          <button class="cf-reset-btn" id="cfResetBtn">Submit Another</button>
+        </div>
+
+        <!-- ERROR STATE -->
+        <div class="cf-error-state" id="cfErrorState" style="display:none">
+          <div class="cf-error-state-icon">!</div>
+          <div class="cf-error-state-title">Something Went Wrong</div>
+          <div class="cf-error-state-body">We could not submit your form right now. Please try again. If the issue continues, message the founder directly on Discord.</div>
+          <button class="cf-reset-btn" id="cfRetryBtn">Try Again</button>
+        </div>
+      </div>
+
+      <div style="height:60px"></div>
+
+    </div><!-- /p9 -->
+
+
+    <!-- ═══════════════════════════════════
+         PANEL CD — CONTRIBUTOR DIRECTORY
+    ═══════════════════════════════════ -->
+    <div class="panel" id="pCD">
+
+      <div class="s-heading">Contributor Directory</div>
+      <div class="s-intro">See who is working with Cioré, what they are focused on, and what skills or knowledge they are open to sharing. Use this directory to find collaborators, learn from others, or simply get to know the team.</div>
+
+      <!-- HOW IT WORKS -->
+      <div class="cd-how-note" style="margin-top:32px">
+        <span class="cd-how-note-icon">ℹ</span>
+        <div>
+          <strong>About this directory.</strong> Only contributors marked Active in our internal system appear here. New submissions enter a Submitted state and are reviewed before becoming visible — this keeps the directory accurate and trustworthy. Until additional contributors are added and approved, this section may remain limited and is also serving as an internal display and reference view for the team.
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="cat-label">Directory</div>
+
+      <div class="cd-stats" id="cdStats" style="display:none">
+        <div class="cd-stat">
+          <div class="cd-stat-num" id="cdCount">—</div>
+          <div class="cd-stat-label">Active Contributors</div>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="cd-controls" id="cdControls" style="display:none; margin-top:20px">
+        <div class="cd-search-wrap">
+          <input
+            type="text"
+            class="cd-search"
+            id="cdSearch"
+            placeholder="Search by name, role, skills, or interests…"
+            autocomplete="off"
+          >
+        </div>
+        <select class="cd-role-filter" id="cdRoleFilter">
+          <option value="">All Roles</option>
+        </select>
+        <span class="cd-count-label" id="cdResultCount"></span>
+      </div>
+
+      <!-- CONTENT AREA -->
+      <div id="cdContent">
+
+        <!-- Loading -->
+        <div class="cd-state" id="cdLoading">
+          <div class="cd-spinner"></div>
+          <div class="cd-state-title">Loading Directory</div>
+          <div class="cd-state-body">Fetching contributor data — just a moment.</div>
+        </div>
+
+        <!-- Error -->
+        <div class="cd-state" id="cdError" style="display:none">
+          <span class="cd-state-icon">⚠</span>
+          <div class="cd-state-title">Could Not Load</div>
+          <div class="cd-state-body">We are having trouble loading the directory right now. Please try again later or reach out to the team directly.</div>
+        </div>
+
+        <!-- Empty -->
+        <div class="cd-state" id="cdEmpty" style="display:none">
+          <span class="cd-state-icon">👋</span>
+          <div class="cd-state-title">No Active Contributors Yet</div>
+          <div class="cd-state-body">Once contributors are approved and marked Active, they will appear here. Check back soon.</div>
+        </div>
+
+        <!-- No search results -->
+        <div class="cd-state" id="cdNoResults" style="display:none">
+          <span class="cd-state-icon">🔍</span>
+          <div class="cd-state-title">No Results</div>
+          <div class="cd-state-body">No contributors match your current search or filter. Try adjusting your terms.</div>
+        </div>
+
+        <!-- Grid -->
+        <div class="cd-grid" id="cdGrid" style="display:none"></div>
+
+      </div>
+
+      <!-- JOIN / SUBMIT FORM -->
+      <div class="cd-join-wrap">
+
+        <div class="cd-join-heading">Don't See Yourself Here?</div>
+        <div class="cd-join-body">If you are a contributor and do not see yourself listed, submit your information below. Your submission will be sent to the team for review. Once approved and marked Active, you will appear in the directory.</div>
+
+        <!-- Form view -->
+        <div id="cdfFormView">
+
+          <iframe name="cdfTarget" id="cdfTarget" style="display:none" aria-hidden="true"></iframe>
+
+          <form
+            id="cdfForm"
+            method="POST"
+            action="https://script.google.com/macros/s/AKfycbxUtcJ4k4rlGMNhBZwjdv2x2kT4r1bcznV-8YqAQgKA0tS9jnjp-O2QSV0MdpcdHRtJ/exec"
+            target="cdfTarget"
+            novalidate
+          >
+            <input type="hidden" name="formType" value="ContributorDirectorySubmission">
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 20px">
+              <div class="cf-field">
+                <label class="cf-label" for="cdfFirst">First Name <span class="cf-req">*</span></label>
+                <input type="text" class="cf-input" id="cdfFirst" name="firstName" placeholder="Your first name" autocomplete="given-name">
+              </div>
+              <div class="cf-field">
+                <label class="cf-label" for="cdfLast">Last Name <span class="cf-req">*</span></label>
+                <input type="text" class="cf-input" id="cdfLast" name="lastName" placeholder="Your last name" autocomplete="family-name">
+              </div>
+            </div>
+
+            <div class="cf-field">
+              <label class="cf-label" for="cdfRole">Role <span class="cf-req">*</span></label>
+              <input type="text" class="cf-input" id="cdfRole" name="role" placeholder="e.g. UX Designer, Backend Engineer, Content Strategist">
+              <div class="cf-helper">How would you describe what you do or what you are here to contribute?</div>
+            </div>
+
+            <div class="cf-field">
+              <label class="cf-label" for="cdfSkills">Skills</label>
+              <textarea class="cf-textarea" id="cdfSkills" name="skills" rows="2" placeholder="e.g. coding, storytelling, UX, hardware, content creation, research…"></textarea>
+            </div>
+
+            <div class="cf-field">
+              <label class="cf-label" for="cdfLearn">Interested In Learning</label>
+              <textarea class="cf-textarea" id="cdfLearn" name="interestedInLearning" rows="2" placeholder="What are you curious about or hoping to grow in while contributing here?"></textarea>
+            </div>
+
+            <div class="cf-field">
+              <label class="cf-label" for="cdfShare">Resources I Can Share</label>
+              <textarea class="cf-textarea" id="cdfShare" name="resourcesCanShare" rows="2" placeholder="Any tools, templates, contacts, or knowledge you are open to sharing with the team?"></textarea>
+            </div>
+
+            <div class="cf-field" style="margin-top:24px; margin-bottom:0">
+              <button type="submit" class="cf-submit-btn" id="cdfSubmitBtn">
+                <span id="cdfBtnText">Submit My Info</span>
+              </button>
+              <div class="cf-helper" style="margin-top:10px">Submissions are reviewed by the founder. Your profile will appear in the directory once approved.</div>
+            </div>
+
+          </form>
+        </div><!-- /cdfFormView -->
+
+        <!-- Loading view -->
+        <div id="cdfLoaderView" style="display:none">
+          <div class="cd-state" style="padding:32px 0">
+            <div class="cd-spinner"></div>
+            <div class="cd-state-body">Sending your information…</div>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="cf-success" id="cdfSuccess" style="display:none">
+          <div class="cf-success-icon">✓</div>
+          <div class="cf-success-title">Submitted for Review</div>
+          <div class="cf-success-body">Thanks — your information has been submitted. Once the founder reviews and approves your entry, you will appear in the directory above. If you have questions, message the founder directly on Discord.</div>
+          <button class="cf-reset-btn" id="cdfResetBtn">Submit Another Entry</button>
+        </div>
+
+        <!-- Error -->
+        <div class="cf-error-state" id="cdfErrorState" style="display:none">
+          <div class="cf-error-state-icon">!</div>
+          <div class="cf-error-state-title">Submission Failed</div>
+          <div class="cf-error-state-body">We could not submit your information right now. Please try again. If the issue continues, message the founder directly on Discord.</div>
+          <button class="cf-reset-btn" id="cdfRetryBtn">Try Again</button>
+        </div>
+
+      </div><!-- /cd-join-wrap -->
+
+      <div style="height:60px"></div>
+
+    </div><!-- /pCD -->
+
+
   </div><!-- /cx -->
 
   <!-- LOG DRAWER -->
@@ -1699,7 +3717,7 @@ body {
   <footer class="site-foot">
     <div class="foot-mark">Cioré™</div>
     <div class="foot-meta">
-      Internal Overview — Founded April 15, 2025<br>
+      Contributor Hub — Founded April 15, 2025<br>
       EIN: 39-2327250 · Confidential · All rights reserved
     </div>
   </footer>
@@ -1794,6 +3812,423 @@ document.getElementById('logBtn').addEventListener('click', () => {
 document.getElementById('ldClose').addEventListener('click', () => {
   document.getElementById('log-drawer').classList.remove('open');
 });
+
+/* ─── CONTRIBUTOR FORM — p9 ─── */
+(function() {
+  const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/cioreofficial.com/s/AKfycbzi0Z1SlDKRU3qf5iggyVDfuHUI_Ju-feW5AjTLPo4QqofbeeuQwVdGYkLeuccsc83f/exec';
+
+  // ── Element refs ──────────────────────────────────────────────────────────
+  // The form now has a single clean id="supportForm"
+  const form         = document.getElementById('supportForm');
+  const nameField    = document.getElementById('cfNameField');
+  const emailField   = document.getElementById('cfEmailField');
+  const anonNote     = document.getElementById('cfAnonNote');
+  const emailReqNote = document.getElementById('cfEmailReqNote');
+  const emailInput   = document.getElementById('cfEmail');
+  const followUpSel  = document.getElementById('cfFollowUp');
+  const submitBtn    = document.getElementById('cfSubmitBtn');
+  const submitBtnTxt = document.getElementById('cfBtnText');
+  const successEl    = document.getElementById('cfSuccess');
+  const errorEl      = document.getElementById('cfErrorState');
+  const resetBtn     = document.getElementById('cfResetBtn');
+  const retryBtn     = document.getElementById('cfRetryBtn');
+
+  if (!form) return; // Safety — panel not yet in DOM (shouldn't happen but guards against future restructuring)
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function isAnon() {
+    const r = form.querySelector('input[name="Anonymous Submission"]:checked');
+    return r && r.value === 'Yes';
+  }
+
+  function wantsResponse() {
+    const r = form.querySelector('input[name="Would You Like a Response"]:checked');
+    return r && r.value === 'Yes';
+  }
+
+  function showForm() {
+    form.style.display   = '';
+    successEl.style.display = 'none';
+    errorEl.style.display   = 'none';
+  }
+
+  function showSuccess() {
+    form.style.display      = 'none';
+    successEl.style.display = 'block';
+    errorEl.style.display   = 'none';
+  }
+
+  function showErrorState() {
+    form.style.display      = 'none';
+    successEl.style.display = 'none';
+    errorEl.style.display   = 'block';
+  }
+
+  // ── Visibility / required logic ───────────────────────────────────────────
+  function updateFieldVisibility() {
+    const anon = isAnon();
+    const resp = wantsResponse();
+
+    nameField.classList.toggle('cf-field-hidden', anon);
+    emailField.classList.toggle('cf-field-hidden', anon);
+    anonNote.style.display = anon ? 'block' : 'none';
+
+    if (!anon && resp) {
+      emailReqNote.textContent = '(required for follow-up)';
+      emailInput.required = true;
+    } else {
+      emailReqNote.textContent = '(required if requesting a response)';
+      emailInput.required = false;
+    }
+
+    if (!resp) followUpSel.value = 'No Follow Up Needed';
+  }
+
+  form.querySelectorAll('input[name="Anonymous Submission"]')
+      .forEach(r => r.addEventListener('change', updateFieldVisibility));
+  form.querySelectorAll('input[name="Would You Like a Response"]')
+      .forEach(r => r.addEventListener('change', updateFieldVisibility));
+  updateFieldVisibility(); // set initial state
+
+  // ── Validation ────────────────────────────────────────────────────────────
+  function clearErrors() {
+    form.querySelectorAll('.cf-error').forEach(el => el.classList.remove('cf-error'));
+    form.querySelectorAll('.cf-error-msg.show').forEach(el => {
+      el.classList.remove('show');
+      el.textContent = '';
+    });
+  }
+
+  function showFieldError(inputEl, msg) {
+    inputEl.classList.add('cf-error');
+    let errEl = inputEl.parentNode.querySelector('.cf-error-msg');
+    if (!errEl) {
+      errEl = document.createElement('div');
+      errEl.className = 'cf-error-msg';
+      inputEl.parentNode.appendChild(errEl);
+    }
+    errEl.textContent = msg;
+    errEl.classList.add('show');
+  }
+
+  function validate() {
+    let ok = true;
+    const typeEl    = form.querySelector('[name="Submission Type"]');
+    const subjectEl = form.querySelector('[name="Subject / Short Title"]');
+    const detailsEl = form.querySelector('[name="Details"]');
+    const emailEl   = form.querySelector('[name="Email Address"]');
+
+    if (!typeEl.value) {
+      showFieldError(typeEl, 'Please select a submission type.');
+      ok = false;
+    }
+    if (!subjectEl.value.trim()) {
+      showFieldError(subjectEl, 'Please add a short title for your submission.');
+      ok = false;
+    }
+    if (!detailsEl.value.trim()) {
+      showFieldError(detailsEl, 'Please add some details before submitting.');
+      ok = false;
+    }
+    if (!isAnon() && wantsResponse() && !emailEl.value.trim()) {
+      showFieldError(emailEl, 'Please enter your email so we can follow up.');
+      ok = false;
+    }
+    return ok;
+  }
+
+  // ── Submit ────────────────────────────────────────────────────────────────
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    clearErrors();
+    if (!validate()) return;
+
+    // Loading state
+    submitBtn.disabled       = true;
+    submitBtnTxt.textContent = 'Sending…';
+
+    // Build x-www-form-urlencoded payload.
+    // Apps Script doPost(e) reads e.parameter which is only populated reliably
+    // from application/x-www-form-urlencoded — not multipart/form-data.
+    const fd     = new FormData(form);
+    const params = new URLSearchParams();
+    for (const [key, value] of fd.entries()) {
+      params.append(key, value);
+    }
+    // Blank personal fields when anonymous
+    if (isAnon()) {
+      params.set('Name', '');
+      params.set('Email Address', '');
+    }
+
+    // mode: 'no-cors' is the correct pattern for posting to an Apps Script
+    // web app from an external page. The script.google.com redirect (302)
+    // causes CORS errors in default mode even when the POST succeeds.
+    // no-cors lets the request fire and complete; we show success once fetch
+    // resolves (meaning the request was dispatched and accepted by the server).
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    params.toString(),
+        mode:    'no-cors',
+      });
+      // Fetch resolved without a network error — data sent.
+      form.reset();
+      updateFieldVisibility();
+      showSuccess();
+    } catch (err) {
+      // Only a true network failure (offline, DNS error) lands here.
+      console.error('Submission network error:', err);
+      showErrorState();
+    } finally {
+      submitBtn.disabled       = false;
+      submitBtnTxt.textContent = 'Submit';
+    }
+  });
+
+  // ── Reset / retry ─────────────────────────────────────────────────────────
+  if (resetBtn) resetBtn.addEventListener('click', function() {
+    form.reset();
+    clearErrors();
+    updateFieldVisibility();
+    showForm();
+  });
+
+  if (retryBtn) retryBtn.addEventListener('click', showForm);
+
+})();
+
+/* ─── CONTRIBUTOR DIRECTORY — pCD ─── */
+(function() {
+  // ── Config ────────────────────────────────────────────────────────────────
+  // Live Apps Script endpoint — replace with updated URL if redeployed
+  const DIRECTORY_API_URL = 'https://script.google.com/macros/s/AKfycbxUtcJ4k4rlGMNhBZwjdv2x2kT4r1bcznV-8YqAQgKA0tS9jnjp-O2QSV0MdpcdHRtJ/exec';
+
+  // ── Directory read state ──────────────────────────────────────────────────
+  let allContributors = [];
+  let directoryLoaded = false;
+
+  // ── DOM refs — directory display ──────────────────────────────────────────
+  const elStats      = document.getElementById('cdStats');
+  const elCount      = document.getElementById('cdCount');
+  const elControls   = document.getElementById('cdControls');
+  const elSearch     = document.getElementById('cdSearch');
+  const elRoleFilter = document.getElementById('cdRoleFilter');
+  const elResultCount = document.getElementById('cdResultCount');
+  const elLoading    = document.getElementById('cdLoading');
+  const elError      = document.getElementById('cdError');
+  const elEmpty      = document.getElementById('cdEmpty');
+  const elNoResults  = document.getElementById('cdNoResults');
+  const elGrid       = document.getElementById('cdGrid');
+
+  // ── DOM refs — submission form ────────────────────────────────────────────
+  const cdfForm       = document.getElementById('cdfForm');
+  const cdfIframe     = document.getElementById('cdfTarget');
+  const cdfFormView   = document.getElementById('cdfFormView');
+  const cdfLoaderView = document.getElementById('cdfLoaderView');
+  const cdfSuccess    = document.getElementById('cdfSuccess');
+  const cdfErrorSt    = document.getElementById('cdfErrorState');
+  const cdfSubmitBtn  = document.getElementById('cdfSubmitBtn');
+  const cdfBtnText    = document.getElementById('cdfBtnText');
+  const cdfResetBtn   = document.getElementById('cdfResetBtn');
+  const cdfRetryBtn   = document.getElementById('cdfRetryBtn');
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function safe(v) { return v === null || v === undefined ? '' : String(v).trim(); }
+
+  function initials(first, last) {
+    return (safe(first).charAt(0) + safe(last).charAt(0)).toUpperCase() || '?';
+  }
+
+  function fieldOrDash(v) {
+    const s = safe(v);
+    return s ? '<span class="cd-field-value">' + s + '</span>'
+             : '<span class="cd-field-value cd-field-empty">—</span>';
+  }
+
+  // ── Render one contributor card ───────────────────────────────────────────
+  function renderCard(c) {
+    const first = safe(c['First Name']);
+    const last  = safe(c['Last Name']);
+    const role  = safe(c['Role']);
+    return '<div class="cd-card">' +
+      '<div class="cd-card-head">' +
+        '<div>' +
+          '<div class="cd-avatar">' + initials(first, last) + '</div>' +
+        '</div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div class="cd-name">' + (first ? first + ' ' + last : 'Unnamed') + '</div>' +
+          '<div class="cd-role-text">' + (role || '—') + '</div>' +
+        '</div>' +
+        '<span class="cd-badge-active">Active</span>' +
+      '</div>' +
+      '<div class="cd-divider"></div>' +
+      '<div class="cd-field"><div class="cd-field-label">Skills</div>' + fieldOrDash(c['Skills']) + '</div>' +
+      '<div class="cd-field"><div class="cd-field-label">Interested In Learning</div>' + fieldOrDash(c['Interested In Learning']) + '</div>' +
+      '<div class="cd-field"><div class="cd-field-label">Resources They Can Share</div>' + fieldOrDash(c['Resources They Can Share']) + '</div>' +
+    '</div>';
+  }
+
+  // ── Populate role filter dropdown ─────────────────────────────────────────
+  function buildRoleFilter(data) {
+    const roles = [...new Set(data.map(c => safe(c['Role'])).filter(Boolean))].sort();
+    roles.forEach(function(r) {
+      const opt = document.createElement('option');
+      opt.value = r;
+      opt.textContent = r;
+      elRoleFilter.appendChild(opt);
+    });
+  }
+
+  // ── Filter and render grid ────────────────────────────────────────────────
+  function applyFilters() {
+    const q    = safe(elSearch.value).toLowerCase();
+    const role = safe(elRoleFilter.value);
+
+    const filtered = allContributors.filter(function(c) {
+      if (role && safe(c['Role']) !== role) return false;
+      if (q) {
+        const blob = [
+          c['First Name'], c['Last Name'], c['Role'],
+          c['Skills'], c['Interested In Learning'], c['Resources They Can Share']
+        ].map(safe).join(' ').toLowerCase();
+        if (blob.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+
+    elResultCount.textContent = filtered.length + ' contributor' + (filtered.length !== 1 ? 's' : '');
+
+    elEmpty.style.display     = 'none';
+    elNoResults.style.display = 'none';
+    elGrid.style.display      = 'none';
+
+    if (!allContributors.length) {
+      elEmpty.style.display = 'block';
+    } else if (!filtered.length) {
+      elNoResults.style.display = 'block';
+    } else {
+      elGrid.style.display = 'grid';
+      elGrid.innerHTML = filtered.map(renderCard).join('');
+    }
+  }
+
+  // ── Show directory states ─────────────────────────────────────────────────
+  function showDirLoading() {
+    elLoading.style.display   = 'block';
+    elError.style.display     = 'none';
+    elEmpty.style.display     = 'none';
+    elNoResults.style.display = 'none';
+    elGrid.style.display      = 'none';
+    elStats.style.display     = 'none';
+    elControls.style.display  = 'none';
+  }
+
+  function showDirError() {
+    elLoading.style.display   = 'none';
+    elError.style.display     = 'block';
+    elStats.style.display     = 'none';
+    elControls.style.display  = 'none';
+  }
+
+  function showDirReady() {
+    elLoading.style.display   = 'none';
+    elError.style.display     = 'none';
+    elStats.style.display     = 'flex';
+    elControls.style.display  = 'flex';
+  }
+
+  // ── Fetch directory data ──────────────────────────────────────────────────
+  async function loadDirectory() {
+    if (directoryLoaded) return;
+    showDirLoading();
+    try {
+      const res  = await fetch(DIRECTORY_API_URL);
+      const data = await res.json();
+      if (!Array.isArray(data)) throw new Error('Unexpected response format');
+      // Filter to Active contributors client-side (endpoint may also filter)
+      allContributors = data.filter(function(c) {
+        return safe(c['Status']).toLowerCase() === 'active';
+      });
+      directoryLoaded = true;
+      elCount.textContent = allContributors.length;
+      buildRoleFilter(allContributors);
+      showDirReady();
+      applyFilters();
+    } catch (err) {
+      console.error('Directory load error:', err);
+      showDirError();
+    }
+  }
+
+  // Wire search + filter
+  if (elSearch)     elSearch.addEventListener('input',  applyFilters);
+  if (elRoleFilter) elRoleFilter.addEventListener('change', applyFilters);
+
+  // Load when tab is clicked
+  document.getElementById('sNav').addEventListener('click', function(e) {
+    const tab = e.target.closest('.s-tab');
+    if (tab && tab.dataset.panel === 'pCD') {
+      setTimeout(loadDirectory, 40);
+    }
+  });
+
+  // ── Submission form — iframe POST pattern ─────────────────────────────────
+  if (!cdfForm || !cdfIframe) return;
+
+  function cdfShowView(which) {
+    cdfFormView.style.display   = which === 'form'    ? '' : 'none';
+    cdfLoaderView.style.display = which === 'loading' ? 'block' : 'none';
+    cdfSuccess.style.display    = which === 'success' ? 'block' : 'none';
+    cdfErrorSt.style.display    = which === 'error'   ? 'block' : 'none';
+  }
+
+  function cdfValidate() {
+    const first = document.getElementById('cdfFirst');
+    const last  = document.getElementById('cdfLast');
+    const role  = document.getElementById('cdfRole');
+    let ok = true;
+    [first, last, role].forEach(function(el) {
+      if (!el) return;
+      if (!el.value.trim()) { el.classList.add('cf-error'); ok = false; }
+      else                   { el.classList.remove('cf-error'); }
+    });
+    return ok;
+  }
+
+  cdfForm.addEventListener('submit', function(e) {
+    if (!cdfValidate()) {
+      e.preventDefault();
+      cdfShowView('error');
+      return;
+    }
+    // Validation passed — let native POST fire to iframe
+    cdfSubmitBtn.disabled  = true;
+    cdfBtnText.textContent = 'Sending\u2026';
+    cdfShowView('loading');
+  });
+
+  cdfIframe.addEventListener('load', function() {
+    // Only respond when a submission is genuinely in progress
+    if (cdfLoaderView.style.display !== 'none') {
+      cdfForm.reset();
+      cdfSubmitBtn.disabled  = false;
+      cdfBtnText.textContent = 'Submit My Info';
+      cdfShowView('success');
+    }
+  });
+
+  if (cdfResetBtn) cdfResetBtn.addEventListener('click', function() {
+    cdfForm.reset();
+    cdfShowView('form');
+  });
+
+  if (cdfRetryBtn) cdfRetryBtn.addEventListener('click', function() {
+    cdfShowView('form');
+  });
+
+})();
 </script>
 </body>
 </html>
