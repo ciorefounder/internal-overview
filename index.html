@@ -3633,43 +3633,9 @@ function isPubliclyVisible(n) {
   };
 
   // ── tryUnlock override ───────────────────────────────────────────────────
-  // ── ADMIN USERNAME ─────────────────────────────────────────────────
-  // Change 'ciorefounder' to your actual private admin username.
-  var ADMIN_UN = 'ciorefounder';
-  // ─────────────────────────────────────────────────────────────────
-
-  // Called as soon as credentials are confirmed — opens the hub
-  function doLogin(role) {
-    console.log('[Cioré] doLogin called, role:', role);
-
-    // 1. Hide gate completely
-    var gate = document.getElementById('gate');
-    if (gate) {
-      gate.style.display    = 'none';
-      gate.style.visibility = 'hidden';
-      gate.style.opacity    = '0';
-    }
-
-    // 2. Show #app — belt AND suspenders
-    var app = document.getElementById('app');
-    if (app) {
-      app.style.display    = 'flex';
-      app.style.visibility = 'visible';
-      app.style.opacity    = '1';
-      app.classList.add('on');
-    }
-
-    // 3. Apply role (admin tabs etc.) — safe wrapper
-    try { applyRole(role); } catch(e) { console.warn('[Cioré] applyRole error:', e); }
-
-    // 4. Navigate to home panel
-    try {
-      if (window.navigateTo) window.navigateTo('p0home');
-    } catch(e) { console.warn('[Cioré] navigateTo error:', e); }
-
-    console.log('[Cioré] Hub open. gate hidden:', gate ? gate.style.display : 'n/a',
-                '| app visible:', app ? app.style.display : 'n/a');
-  }
+  // Login is handled entirely by Apps Script.
+  // Admin access is determined by the IsAdmin column in the sheet.
+  // No admin username is hardcoded here.
 
   window.tryUnlock = function() {
     var el = document.getElementById('pwUsername');
@@ -3682,22 +3648,13 @@ function isPubliclyVisible(n) {
 
     function resetBtn() { if (btn) { btn.textContent = orig; btn.disabled = false; } }
 
-    // Admin check — instant, no network call needed
-    if (u.toLowerCase() === ADMIN_UN.toLowerCase()) {
-      window._cioreCurrentUser = { username: ADMIN_UN, name: 'Admin', role: 'admin' };
-      resetBtn();
-      doLogin('admin');
-      return;
-    }
+    // Send username to Apps Script — server checks the sheet,
+    // matches the Username column, checks Status = Active,
+    // and returns role: 'admin' if IsAdmin column = yes,
+    // or role: 'contributor' otherwise.
+    var url = DIRECTORY_API_URL + '?action=login&username=' + encodeURIComponent(u);
+    var done = false;
 
-    // Contributor — ask Apps Script to check username against the sheet
-    // Using ?action=login so the server does the matching and returns
-    // a clean success/fail response. No CORS issues, no redirect problems.
-    var url = DIRECTORY_API_URL
-      + '?action=login'
-      + '&username=' + encodeURIComponent(u);
-
-    var done  = false;
     var timer = setTimeout(function() {
       if (done) return;
       done = true;
@@ -3716,26 +3673,26 @@ function isPubliclyVisible(n) {
         var data;
         try { data = JSON.parse(txt); }
         catch(e) {
-          console.error('[Cioré] Response parse error:', txt.slice(0, 300));
+          console.error('[Cioré] Parse error:', txt.slice(0,300));
           shakeGate_('Server response error. Try again.');
           return;
         }
 
         if (!data.success) {
-          var msg = data.error || 'Username not found or account not active.';
-          shakeGate_(msg);
+          shakeGate_(data.error || 'Username not found or account not active.');
           return;
         }
 
         window._cioreCurrentUser = data.user;
-        doLogin('contributor');
+        var role = (data.user && data.user.role === 'admin') ? 'admin' : 'contributor';
+        doLogin(role);
       })
       .catch(function(err) {
         if (done) return;
         done = true;
         clearTimeout(timer);
         resetBtn();
-        console.error('[Cioré] Login fetch error:', err);
+        console.error('[Cioré] Login error:', err);
         shakeGate_('Could not reach the server. Check your connection.');
       });
   };
