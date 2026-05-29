@@ -3673,61 +3673,70 @@ function isPubliclyVisible(n) {
 
   window.tryUnlock = function() {
     var el = document.getElementById('pwUsername');
-    var u  = el ? el.value.trim().toLowerCase() : '';
+    var u  = el ? el.value.trim() : '';
     if (!u) { shakeGate_('Enter your username.'); return; }
 
     var btn  = document.getElementById('gateBtn');
     var orig = btn ? btn.textContent : 'Enter';
     if (btn) { btn.textContent = 'Checking…'; btn.disabled = true; }
 
-    function resetBtn() {
-      if (btn) { btn.textContent = orig; btn.disabled = false; }
-    }
+    function resetBtn() { if (btn) { btn.textContent = orig; btn.disabled = false; } }
 
-    // Admin — instant, no network needed
-    if (u === ADMIN_UN.toLowerCase()) {
+    // Admin check — instant, no network call needed
+    if (u.toLowerCase() === ADMIN_UN.toLowerCase()) {
       window._cioreCurrentUser = { username: ADMIN_UN, name: 'Admin', role: 'admin' };
       resetBtn();
       doLogin('admin');
       return;
     }
 
-    // Contributor — verify against sheet
-    var url  = DIRECTORY_API_URL + '?action=getContributors';
-    var done = false;
+    // Contributor — ask Apps Script to check username against the sheet
+    // Using ?action=login so the server does the matching and returns
+    // a clean success/fail response. No CORS issues, no redirect problems.
+    var url = DIRECTORY_API_URL
+      + '?action=login'
+      + '&username=' + encodeURIComponent(u);
 
+    var done  = false;
     var timer = setTimeout(function() {
-      if (done) return; done = true; resetBtn();
-      shakeGate_('Server timed out. Try again.');
-    }, 10000);
+      if (done) return;
+      done = true;
+      resetBtn();
+      shakeGate_('Server timed out. Please try again.');
+    }, 12000);
 
     fetch(url)
       .then(function(r) { return r.text(); })
       .then(function(txt) {
-        if (done) return; done = true; clearTimeout(timer); resetBtn();
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resetBtn();
+
         var data;
         try { data = JSON.parse(txt); }
-        catch(e) { shakeGate_('Server error — see console.'); console.error('[Cioré] Parse fail:', txt.slice(0,300)); return; }
+        catch(e) {
+          console.error('[Cioré] Response parse error:', txt.slice(0, 300));
+          shakeGate_('Server response error. Try again.');
+          return;
+        }
 
-        var rows = Array.isArray(data) ? data : (data.contributors || data.data || []);
-        var match = rows.find(function(c) {
-          return String(c.Username||'').trim().toLowerCase() === u
-              && String(c.Status||'').trim() === 'Active';
-        });
-        if (!match) { shakeGate_('Username not found or not yet active.'); return; }
+        if (!data.success) {
+          var msg = data.error || 'Username not found or account not active.';
+          shakeGate_(msg);
+          return;
+        }
 
-        window._cioreCurrentUser = {
-          id:       match.ID || '',
-          username: match.Username || u,
-          name:     ((match.FirstName||'')+' '+(match.LastName||'')).trim() || u,
-          role:     'contributor'
-        };
+        window._cioreCurrentUser = data.user;
         doLogin('contributor');
       })
       .catch(function(err) {
-        if (done) return; done = true; clearTimeout(timer); resetBtn();
-        console.error('[Cioré] Fetch error:', err);
-        shakeGate_('Could not reach server. Check console.');
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resetBtn();
+        console.error('[Cioré] Login fetch error:', err);
+        shakeGate_('Could not reach the server. Check your connection.');
       });
   };
 
