@@ -1158,14 +1158,14 @@ img { max-width: 100%; display: block; }
     <div class="gate-wordmark">Cioré</div>
     <div class="gate-sub-wordmark">Contributor Hub</div>
     <div class="gate-divider"></div>
-    <label class="gate-field-label" for="pwUsername">Username</label>
-    <div class="gate-err" id="gateErr">Username not found. Please check with the founder.</div>
+    <label class="gate-field-label" for="pwUsername">Access Code</label>
+    <div class="gate-err" id="gateErr">Access code not recognised. Please check with the founder.</div>
     <div class="gate-row" style="margin-bottom:20px">
-      <input type="text" id="pwUsername" placeholder="Your assigned username" autocomplete="username" />
+      <input type="text" id="pwUsername" placeholder="Your access code" autocomplete="off" />
       <button class="gate-btn" id="gateBtn">Enter</button>
     </div>
     <div class="gate-no-creds">
-      <span class="gate-no-creds-q">Do not have a username yet?</span>
+      <span class="gate-no-creds-q">Do not have an access code yet?</span>
       <button class="gate-no-creds-link" id="gateNoCreds">Request access to the Contributor Hub</button>
     </div>
     <div class="gate-notice">Confidential internal resource. Authorized contributors only. All access is logged.</div>
@@ -2780,7 +2780,7 @@ img { max-width: 100%; display: block; }
       <button class="sub-overlay-close" id="subOverlayClose" aria-label="Close">&#x2715;</button>
     </div>
     <div class="sub-overlay-body">
-      <p class="sub-overlay-intro">This form is for requesting access to the Contributor Hub. Submitting it does not give you immediate access. Once your request is reviewed and you are approved in the backend, you will receive an email confirming approval. That email will include your assigned username so you can log in.</p>
+      <p class="sub-overlay-intro">This form is for requesting access to the Contributor Hub. Submitting this form does not give you immediate access. Once your request is reviewed and approved, the founder will assign your personal access code and send it to you by email. You will use that code to log in.</p>
 
       <div id="subFormView">
         <iframe name="subTarget" id="subTarget" style="display:none" aria-hidden="true"></iframe>
@@ -2802,11 +2802,7 @@ img { max-width: 100%; display: block; }
             <label class="cf-label" for="subRole">Role <span class="cf-req">*</span></label>
             <input type="text" class="cf-input" id="subRole" name="role" placeholder="e.g. UX Designer, Developer, Content Strategist">
           </div>
-          <div class="cf-field">
-            <label class="cf-label" for="subUsername">Requested Username <span class="cf-req-soft">(we may adjust for uniqueness)</span></label>
-            <input type="text" class="cf-input" id="subUsername" name="requestedUsername" placeholder="e.g. jordan.smith or jsmith" autocomplete="off">
-            <div class="cf-helper">Once approved, you will receive your confirmed username by email along with your access details.</div>
-          </div>
+
           <div class="cf-field">
             <label class="cf-label" for="subSkills">Skills</label>
             <textarea class="cf-textarea" id="subSkills" name="skills" rows="2" placeholder="e.g. coding, design, storytelling, hardware..."></textarea>
@@ -2832,7 +2828,7 @@ img { max-width: 100%; display: block; }
         <div class="cf-success">
           <div class="cf-success-icon">&#10003;</div>
           <div class="cf-success-title">Request Received</div>
-          <div class="cf-success-body">Thank you for submitting your access request. The founder will review it and follow up by email once a decision is made. Your confirmed username and access details will be included in that email.</div>
+          <div class="cf-success-body">Thank you for submitting your access request. The founder will review it and follow up by email. If approved, you will receive your personal access code by email along with instructions to access the hub.</div>
           <button class="cf-reset-btn" id="subCloseSuccess">Close</button>
         </div>
       </div>
@@ -2897,7 +2893,8 @@ img { max-width: 100%; display: block; }
 
 /* ───
 
-<script>
+<script>const DIRECTORY_API_URL = 'https://script.google.com/macros/s/AKfycbxUtcJ4k4rlGMNhBZwjdv2x2kT4r1bcznV-8YqAQgKA0tS9jnjp-O2QSV0MdpcdHRtJ/exec';
+
 /* ─── PASSWORD ─── */
 // Auth is handled by the Admin System IIFE below.
 
@@ -2957,7 +2954,65 @@ document.addEventListener('DOMContentLoaded', function() {
   })();
 
   /* ─── LOGOUT ─── */
-  var logoutBtn = document.getElementById('logoutBtn');
+  /* ─── TIPS FORM ─── */
+  (function() {
+    var tipBtn      = document.getElementById('tipSubmitBtn');
+    var tipBtnText  = document.getElementById('tipBtnText');
+    var tipSuccess  = document.getElementById('tipSuccess');
+    var tipReset    = document.getElementById('tipReset');
+    var tipType     = document.getElementById('tipType');
+    var tipContent  = document.getElementById('tipContent');
+    var tipName     = document.getElementById('tipName');
+
+    function resetTipForm() {
+      if (tipType)    tipType.value    = '';
+      if (tipContent) tipContent.value = '';
+      if (tipName)    tipName.value    = '';
+      if (tipSuccess) tipSuccess.style.display = 'none';
+      if (tipBtn)     tipBtn.style.display     = 'inline-block';
+    }
+
+    if (tipBtn) {
+      tipBtn.addEventListener('click', function() {
+        var type    = tipType    ? tipType.value.trim()    : '';
+        var message = tipContent ? tipContent.value.trim() : '';
+        var name    = tipName    ? tipName.value.trim()    : '';
+        var anon    = document.querySelector('input[name="tipAnon"]:checked');
+        var isAnon  = anon ? anon.value === 'yes' : false;
+
+        if (!message) {
+          if (tipContent) tipContent.focus();
+          return;
+        }
+
+        if (tipBtnText) tipBtnText.textContent = 'Sending…';
+        tipBtn.disabled = true;
+
+        var params = 'action=submitTip'
+          + '&tipType='    + encodeURIComponent(type)
+          + '&tipContent=' + encodeURIComponent(message)
+          + '&tipName='    + encodeURIComponent(isAnon ? 'Anonymous' : name)
+          + '&submitter='  + encodeURIComponent(
+              window._cioreCurrentUser ? window._cioreCurrentUser.name || '' : '');
+
+        fetch(DIRECTORY_API_URL + '?' + params)
+          .then(function() {
+            if (tipSuccess) tipSuccess.style.display = 'block';
+            if (tipBtn)     tipBtn.style.display     = 'none';
+          })
+          .catch(function() {
+            if (tipBtnText) tipBtnText.textContent = 'Submit';
+            tipBtn.disabled = false;
+          });
+      });
+    }
+
+    if (tipReset) {
+      tipReset.addEventListener('click', resetTipForm);
+    }
+  })();
+
+    var logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) logoutBtn.addEventListener('click', function() {
     var app   = document.getElementById('app');
     var gate  = document.getElementById('gate');
@@ -3155,7 +3210,7 @@ function isPubliclyVisible(n) {
 
 /* ─── CONTRIBUTOR FORM — p9 ─── */
 (function() {
-  const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/cioreofficial.com/s/AKfycbzi0Z1SlDKRU3qf5iggyVDfuHUI_Ju-feW5AjTLPo4QqofbeeuQwVdGYkLeuccsc83f/exec';
+  const APPS_SCRIPT_URL = DIRECTORY_API_URL; // uses the same endpoint as login
 
   // ── Element refs ──────────────────────────────────────────────────────────
   // The form now has a single clean id="supportForm"
@@ -3343,8 +3398,7 @@ function isPubliclyVisible(n) {
 (function() {
   // ── Config ────────────────────────────────────────────────────────────────
   // Live Apps Script endpoint — replace with updated URL if redeployed
-  const DIRECTORY_API_URL = 'https://script.google.com/macros/s/AKfycbxUtcJ4k4rlGMNhBZwjdv2x2kT4r1bcznV-8YqAQgKA0tS9jnjp-O2QSV0MdpcdHRtJ/exec';
-
+  
   // ── Directory read state ──────────────────────────────────────────────────
   let allContributors = [];
   let directoryLoaded = false;
@@ -3638,29 +3692,32 @@ function isPubliclyVisible(n) {
   // No admin username is hardcoded here.
 
   window.tryUnlock = function() {
-    var el = document.getElementById('pwUsername');
-    var u  = el ? el.value.trim() : '';
-    if (!u) { shakeGate_('Enter your username.'); return; }
+    var el   = document.getElementById('pwUsername');
+    var code = el ? el.value.trim() : '';
+    if (!code) { shakeGate_('Enter your access code.'); return; }
 
     var btn  = document.getElementById('gateBtn');
     var orig = btn ? btn.textContent : 'Enter';
-    if (btn) { btn.textContent = 'Checking…'; btn.disabled = true; }
+    if (btn) { btn.textContent = 'Checking\u2026'; btn.disabled = true; }
 
-    function resetBtn() { if (btn) { btn.textContent = orig; btn.disabled = false; } }
+    function resetBtn() {
+      if (btn) { btn.textContent = orig; btn.disabled = false; }
+    }
 
-    // Send username to Apps Script — server checks the sheet,
-    // matches the Username column, checks Status = Active,
-    // and returns role: 'admin' if IsAdmin column = yes,
-    // or role: 'contributor' otherwise.
-    var url = DIRECTORY_API_URL + '?action=login&username=' + encodeURIComponent(u);
-    var done = false;
+    // Send access code to Apps Script
+    // Apps Script looks up column I (AccessCode), checks column E (Status=Active)
+    // and returns success:true with role from column K (IsAdmin)
+    var url = DIRECTORY_API_URL
+      + '?action=login'
+      + '&username=' + encodeURIComponent(code);
 
+    var done  = false;
     var timer = setTimeout(function() {
       if (done) return;
       done = true;
       resetBtn();
-      shakeGate_('Server timed out. Please try again.');
-    }, 12000);
+      shakeGate_('Server timed out. Please try again in a moment.');
+    }, 15000);
 
     fetch(url)
       .then(function(r) { return r.text(); })
@@ -3673,13 +3730,13 @@ function isPubliclyVisible(n) {
         var data;
         try { data = JSON.parse(txt); }
         catch(e) {
-          console.error('[Cioré] Parse error:', txt.slice(0,300));
-          shakeGate_('Server response error. Try again.');
+          console.error('[Cior\xe9] Response error:', txt.slice(0,200));
+          shakeGate_('Server error. Please try again.');
           return;
         }
 
         if (!data.success) {
-          shakeGate_(data.error || 'Username not found or account not active.');
+          shakeGate_(data.error || 'Access code not recognised.');
           return;
         }
 
@@ -3692,8 +3749,8 @@ function isPubliclyVisible(n) {
         done = true;
         clearTimeout(timer);
         resetBtn();
-        console.error('[Cioré] Login error:', err);
-        shakeGate_('Could not reach the server. Check your connection.');
+        console.error('[Cior\xe9] Login error:', err);
+        shakeGate_('Could not reach the server. Please check your connection.');
       });
   };
 
