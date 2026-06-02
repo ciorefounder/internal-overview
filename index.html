@@ -1200,8 +1200,9 @@ img { max-width: 100%; display: block; }
         <div class="nav-item" data-panel="p4">Lum&eacute; OS</div>
         <div class="nav-item" data-panel="p5">Nyro Power</div>
         <div class="nav-item" data-panel="p6">Radio and Comms</div>
-        <div class="nav-item" data-panel="p7">Gaia-X</div>
+        <div class="nav-item" data-panel="p7">System Design</div>
         <div class="nav-item" data-panel="p8">Sustainability</div>
+        <div class="nav-item" data-panel="pRES">Research</div>
       </div>
       <div class="nav-group admin-only" id="adminNavGroup" style="display:none">
         <span class="nav-group-label">Admin</span>
@@ -1909,6 +1910,37 @@ img { max-width: 100%; display: block; }
 
       <div style="height:60px"></div>
 
+
+      <div class="cat-label">Community Hardware Feedback</div>
+      <p class="bt" style="margin-bottom:16px">Our waitlist and social media community has been actively sharing what they want from the Cioré phone. These are real requests from real people who are waiting for this product. We take this seriously and it informs our research direction. Below is what we are hearing and where things stand.</p>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Audio Jack</div><span class="pg-badge pg-badge-active">Researching</span></div>
+        <div class="pg-card-body">A significant portion of the waitlist wants a physical audio jack. This is one of the most consistent hardware requests we have received. We are researching how to include a 3.5mm audio jack without compromising the modular design or the form factor. For users who use wired headphones, adapters, or external recording equipment, this matters. It is on our list and being evaluated seriously.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Modular Physical Buttons</div><span class="pg-badge pg-badge-active">Researching</span></div>
+        <div class="pg-card-body">The modular design of the Cioré phone opens the door to customizable physical button placement and function. Community feedback has pointed to programmable side buttons, customizable shortcut keys, and the ability to configure hardware controls without software workarounds. We are researching how modular button systems can work within the existing screw-assembly design framework.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Modular Keyboard Attachment</div><span class="pg-badge pg-badge-active">Researching</span></div>
+        <div class="pg-card-body">Some community members want the option of a physical keyboard. A snap-on or slide-out keyboard module would fit within the modular philosophy of the phone and serve users who prefer typing without relying entirely on a touchscreen. We are researching how this would integrate with the hardware and what the technical requirements would be for a first or later phase implementation.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Phone Stand</div><span class="pg-badge pg-badge-active">Researching</span></div>
+        <div class="pg-card-body">A purpose-built stand that works with the Cioré phone's dimensions and solar charging behavior is a natural companion accessory. Community interest has been clear. This could function as both a display stand and a Nyro-compatible solar positioning tool. We are looking at how this fits into the accessory ecosystem.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Case and Form Factor Variations</div><span class="pg-badge pg-badge-active">Researching</span></div>
+        <div class="pg-card-body">Not everyone connects with the same phone shape. We have received feedback from community members who want different casing options, including different grip profiles, rounded versus flat edge variations, and alternative materials. The modular nature of the phone makes this more feasible than on a traditional sealed device. We are researching what variations make sense for a first release and what could come later as the product line grows.</div>
+      </div>
+
+      <div class="wb"><div class="wb-icon">&#9432;</div><div>These are active research areas informed directly by what our community is asking for. If you have background in hardware design, materials research, or product engineering and want to contribute to any of these, reach out on Discord or check the open workstreams on the Working On Now page.</div></div>
+
     </div><!-- /p3 -->
 <div class="panel" id="p4">
 
@@ -2234,60 +2266,58 @@ img { max-width: 100%; display: block; }
       <div style="height:60px"></div>
 
     </div><!-- /p6 -->
-<div class="panel" id="p7">
+    <div class="panel" id="p7">
+      <h1 class="s-heading">Intelligent System Design</h1>
+      <p class="s-intro">Our waitlist community has been clear: they do not want AI forced onto their phone. We heard that. What people are asking for is a phone that works intelligently without sending their data anywhere. That is exactly what we are building.</p>
 
-      <div class="s-heading">Gaia-X</div>
-      <div class="s-intro">Gaia-X is Cioré's ethical AI initiative. It runs entirely on the device, no cloud, no external servers, no data leaving the phone. Gaia-X integrates with Lumé OS's privacy layer to ensure it operates within the same permission and sandboxing rules as every other app on the system.</div>
+      <div class="cat-label">The Direction We Are Taking</div>
+      <p class="bt" style="margin-bottom:16px">Instead of adding a separate AI module or layer, the features people actually want, which are smarter battery management, better thermal control, and app prioritization, are being designed to live directly in the operating system at the kernel and system level. This is where those features belong technically, and it means they work without cloud connections, without data leaving the device, and without anything running in the background watching your behavior.</p>
 
-      <div class="cat-label">Purpose and Principles</div>
-
-      <div class="cg">
-        <div class="cc">
-          <div class="cc-eye" style="color:#B83232">Cloud AI</div>
-          <div class="cc-title">What We Reject</div>
-          <div class="cc-body">Cloud AI runs large models in data centers, with high energy use, continuous network traffic, and extensive data retention. Your data leaves the device constantly and is retained externally.</div>
-        </div>
-        <div class="cc">
-          <div class="cc-eye green">On-Device</div>
-          <div class="cc-title">What Gaia-X Does</div>
-          <div class="cc-body">On-device AI runs models locally on the phone's Neural Processing Unit (NPU), enabling private, low-latency inference without sending data externally. Modern SoCs include NPUs capable of 10–35 TOPS, sufficient for speech-to-text, summarization, and basic intent recognition.</div>
-        </div>
-      </div>
-
-      <div class="cat-label">Privacy-Respecting AI Design</div>
-
-      <ul class="dl">
-        <li>No default data scraping or behavior logging. All training data is clearly sourced, consented, or synthetic.</li>
-        <li>On-device learning and personalization stays entirely local.</li>
-        <li>Federated learning with differential privacy may be used if improvement data is collected in the future.</li>
-        <li>Users can fully disable Gaia-X or restrict it to offline-only features.</li>
-      </ul>
-
-      <div class="cat-label">Energy-Aware AI</div>
-
-      <ul class="dl">
-        <li>Models are quantized (8-bit or lower) and pruned to minimize inference energy costs.</li>
-        <li>Gaia-X coordinates with Nyro: reduced activity below battery thresholds, no heavy inference when device temperature is elevated.</li>
-      </ul>
-
-      <div class="cat-label">Near-Term vs Long-Term Scope</div>
+      <div class="pull">Our engineer put it simply: battery management, thermal control, and app prioritization are best implemented at the kernel and system level anyway. We do not need a separate AI module to accomplish any of these. We need good OS engineering.</div>
 
       <div class="cg">
-        <div class="cc">
-          <div class="cc-eye">Near-Term (Prototypes)</div>
-          <div class="cc-title">What We Are Building Now</div>
-          <div class="cc-body">Offline transcription, captioning, journaling assistance, scam detection, and smart battery usage suggestions.</div>
-        </div>
-        <div class="cc">
-          <div class="cc-eye green">Phase 3+</div>
-          <div class="cc-title">Long-Term Vision</div>
-          <div class="cc-body">Optional small edge clusters for complex tasks in certain regions, powered by renewable energy where feasible. This requires significant capital and is a future phase, not a current expectation. The earlier internal description of dedicated solar and wind-powered mini-data centers is a long-term vision. Near-term Gaia-X stays on-device and on edge nodes only.</div>
-        </div>
+        <div class="cc"><div class="cc-eye green">Battery</div><div class="cc-title">Kernel-Level Power Management</div><div class="cc-body">Power governors built into the kernel manage battery use based on rules you can understand. No cloud model required. No behavioral data collected. The phone optimizes itself using logic that stays entirely on the device.</div></div>
+        <div class="cc"><div class="cc-eye green">Thermal</div><div class="cc-title">System-Level Thermal Control</div><div class="cc-body">Thermal frameworks handle heat management at the OS level. When the phone gets warm, the system responds using built-in rules, not by sending data to a server and waiting for instructions.</div></div>
+        <div class="cc"><div class="cc-eye green">Apps</div><div class="cc-title">App Prioritization Without Surveillance</div><div class="cc-body">Resource limiting tools like CGroups allow the OS to manage which apps get processing power and when. This happens based on what you are doing right now, not based on a profile built from your history.</div></div>
+        <div class="cc"><div class="cc-eye green">Isolation</div><div class="cc-title">Hard App Isolation</div><div class="cc-body">Apps cannot see each other. When you close an app it is frozen. It cannot access your files, reach other apps, or run background processes you did not ask for. The walls are real.</div></div>
       </div>
 
-      <div style="height:60px"></div>
+      <div class="cat-label">What We Are Researching</div>
+      <p class="bt" style="margin-bottom:16px">Our engineer identified the following as the right technical research areas for where we are going. This is active research work that contributors with OS or systems background can help with.</p>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Linux Kernel Power Governors</div><span class="pg-badge pg-badge-progress">Research Active</span></div>
+        <div class="pg-card-body">How Linux manages CPU frequency and power states at the kernel level. This is the foundation for intelligent battery management that does not require any cloud connection or behavioral tracking.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">CGroups Resource Limiting</div><span class="pg-badge pg-badge-progress">Research Active</span></div>
+        <div class="pg-card-body">Control groups allow the OS to set precise limits on how much CPU, memory, and I/O any process or app can use. This is how app prioritization works without surveillance. Research is focused on how to expose this in a way users can understand and control.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Thermal Frameworks</div><span class="pg-badge pg-badge-progress">Research Active</span></div>
+        <div class="pg-card-body">How Android and Linux handle thermal events at the system level. Research is focused on what custom governors can be built and how to surface thermal state to users in plain language rather than hiding it in system logs.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">PostmarketOS and AOSP Power Management</div><span class="pg-badge pg-badge-progress">Research Active</span></div>
+        <div class="pg-card-body">How PostmarketOS handles system optimization natively, and how the AOSP power HAL works. Studying these tells us what already exists, what we can build on, and what custom governors make sense for Cioré.</div>
+      </div>
+
+      <div class="cat-label">What This Means for Privacy</div>
+      <div class="cg">
+        <div class="cc"><div class="cc-eye green">No Hidden Engines</div><div class="cc-title">Clean Out of the Box</div><div class="cc-body">The Cioré phone ships without system chatbots, background summarization tools, or software guessing your intent. The optimization features that matter are built into the OS itself, not added as a separate layer on top.</div></div>
+        <div class="cc"><div class="cc-eye green">Manual Control</div><div class="cc-title">Your Decisions Stay Your Decisions</div><div class="cc-body">If you say no to something, it stays off. There are no automated system overrides. No permissions that slowly drift back on. What you set is what happens.</div></div>
+        <div class="cc"><div class="cc-eye green">Local Only</div><div class="cc-title">Your Data Does Not Leave</div><div class="cc-body">Every optimization feature in Lumé OS is designed to work entirely on the device. Nothing is sent to a server to be processed and returned. Your phone thinks for itself.</div></div>
+        <div class="cc"><div class="cc-eye green">Visible</div><div class="cc-title">You Can See What Is Happening</div><div class="cc-body">System behavior is surfaced in plain language, not buried in settings menus. When something happens on your phone, you can see why, in words you do not need a technical background to understand.</div></div>
+      </div>
+
+      <div class="cat-label">The Research Question We Are Answering</div>
+      <div class="wb"><div class="wb-icon">&#9432;</div><div>Our engineer framed it this way: we need to determine whether we need a separate intelligent module at all, or whether good kernel and system-level engineering accomplishes everything we want. The research above is how we answer that question. Everything we find gets documented and shared with the team.</div></div>
 
     </div><!-- /p7 -->
+
 <div class="panel" id="p8">
 
       <div class="s-heading">Ethical Materials and Sustainability</div>
@@ -2379,9 +2409,9 @@ img { max-width: 100%; display: block; }
 
       <div class="pg-card">
         <div class="pg-card-head"><div class="pg-card-title">Contributor Waitlist</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">We need help managing and growing the contributor waitlist. This includes keeping track of interested applicants, organizing the pipeline, and ensuring the process runs smoothly as more people apply.</div>
+        <div class="pg-card-body">The contributor waitlist is active and growing. Where we need help is with the structure around it, specifically designing the allotted slots for different contributor types, helping set outreach frequency, and building a repeatable process for how we move people from interested to active. General pipeline management is handled, but the design and timing work is open.</div>
         <div class="pg-support-label">We Need Help Here</div>
-        <div class="pg-support-body">Pipeline organization, applicant tracking, process documentation, contributor flow support</div>
+        <div class="pg-support-body">Slot structure design, frequency planning, outreach cadence, intake flow improvement</div>
       </div>
 
       <div class="pg-card">
@@ -2400,9 +2430,9 @@ img { max-width: 100%; display: block; }
 
       <div class="pg-card">
         <div class="pg-card-head"><div class="pg-card-title">Components and Supplier Organization</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">We need help mapping out all components required for the Cioré phone, building checklist structures for each component category, and conducting additional supplier research. This is an important active workstream that will feed directly into prototype planning and ethical sourcing decisions.</div>
+        <div class="pg-card-body">We have begun identifying suppliers but we are not limiting ourselves to the ones we have found so far. There is a wide range of domestic suppliers worth researching, and we want to make sure we are looking broadly, comparing quality, pricing, and ethics, and building a solid checklist structure by component category. This feeds directly into prototype planning and ethical sourcing decisions.</div>
         <div class="pg-support-label">We Need Help Here</div>
-        <div class="pg-support-body">Component mapping, checklist structure, supplier research, sourcing documentation, ethical verification research</div>
+        <div class="pg-support-body">Expanded supplier research, domestic sourcing comparison, component checklist by category, ethical verification, sourcing documentation, pricing research</div>
       </div>
 
       <div class="pg-card">
@@ -2424,6 +2454,20 @@ img { max-width: 100%; display: block; }
         <div class="pg-card-body">Internal operational preparation is underway as the company continues awaiting funding and strengthening internal structure. This includes administrative research, organizational documentation, and internal systems preparation.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
         <div class="pg-support-body">Administrative research support, organizational documentation, internal systems documentation, process research</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Operating System and Hardware Research</div><span class="pg-badge pg-badge-active">Active</span></div>
+        <div class="pg-card-body">Research is underway to define how Lum&eacute; OS will handle core system functions at the kernel level, without relying on cloud-connected or generative tools. Specific areas under active investigation include Linux kernel power governors, resource limiting frameworks, thermal management, and how existing privacy operating systems handle these natively. Hardware component research is also active, with the goal of mapping out what the Cioré phone requires, understanding what is available, and identifying realistic pricing.</div>
+        <div class="pg-support-label">We Need Help Here</div>
+        <div class="pg-support-body">OS feature research, kernel-level system research, hardware component mapping, component pricing research, privacy OS comparison research, documentation support</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Community Hardware Research</div><span class="pg-badge pg-badge-active">Active</span></div>
+        <div class="pg-card-body">The waitlist and social media community has requested several hardware features: a physical audio jack, modular button options, a physical keyboard attachment, a phone stand, and alternative casing shapes and materials. These are being researched as part of the product direction. Help is needed to evaluate feasibility, research how other modular hardware projects have addressed similar requests, and document what is realistic for different phases of the product.</div>
+        <div class="pg-support-label">We Need Help Here</div>
+        <div class="pg-support-body">Hardware feasibility research, modular design research, accessory ecosystem research, community feedback documentation, materials and casing research</div>
       </div>
 
       <div class="cat-label">Completed</div>
@@ -2547,6 +2591,81 @@ img { max-width: 100%; display: block; }
       </div>
 
     </div><!-- /p9 -->
+
+    <div class="panel" id="pRES">
+      <h1 class="s-heading">Research</h1>
+      <p class="s-intro">This page is where you can follow the research Cioré is doing as we build toward the phone and the operating system. Research here is real, sourced, and done in plain language. As the founder works through each topic, notes and findings are added here so the team can stay informed and contribute.</p>
+
+      <div class="cat-label">Why We Research Before We Build</div>
+      <p class="bt">Building a privacy-first phone means understanding what you are protecting people from. That requires studying how current phones actually work, what existing privacy systems do well, where the gaps are, and what is technically feasible for a company at our stage. This is not theoretical. Every research area here connects directly to a decision we will eventually make.</p>
+
+      <div class="cat-label">Current Research: AI and Privacy in 2026</div>
+      <p class="bt" style="margin-bottom:16px">Research date: May 29, 2026. This research covers what kinds of AI are actually running inside phones right now, how apps embed them, what data they touch, and what real user control looks like technically. The goal was to understand the landscape clearly enough to explain it in plain language and make good product decisions from it.</p>
+
+      <div class="pull">Main finding: The strongest opportunity is not just saying we value privacy. It is giving people clear control over AI: showing when apps use it, what data it touches, and what they can turn off, limit, or block. No competitor is doing this in plain language, at the OS level, for everyday users.</div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">What Kinds of AI Are Actually Inside Phones</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">Two types matter. On-device AI runs entirely on your phone's chip, nothing leaves. Cloud AI sends your data to a company's server, gets a result back, and returns it. Most privacy risk lives in that round trip. Generative AI (chatbots, image filters, voice assistants) is what most people think of, but predictive AI has been inside apps for over a decade, watching what you tap and how long you pause, mostly invisible. Android 16 now runs AI on notifications at the OS level before you even see them, turned on by default.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">How Apps Embed AI and What Data They Touch</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">App developers do not build AI from scratch. They drop in pre-built toolkits from Google, Meta, OpenAI, and others. Each toolkit has its own data collection rules that you never agreed to. An app can contain four or five of these toolkits simultaneously. The data these systems most commonly need includes voice and audio, photos, behavioral patterns like what you tap and how long you pause, and everything you type. The choice to use cloud AI is a business decision, not a technical requirement. Many apps use it because it is easier and cheaper, not because it is the only option.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">What Existing Privacy Operating Systems Do and Where They Stop</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">GrapheneOS has the strongest security and the most rigorous sandboxing. CalyxOS balances usability with solid protection. Murena is the most mainstream-friendly and closest to what Cioré is building for. Purism is a cautionary example of overpromising on delivery. The gap all of them share: none of them have a product story, a feature, or plain-language communication specifically about AI inside apps. That conversation has been left entirely on the table. Cioré is entering a market that has not addressed what users are actually asking about right now.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Technical Possibilities for Detecting AI in Apps</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">Two methods exist. Static scanning reads the app file before it runs and looks for known AI toolkit signatures. A French nonprofit called Exodus Privacy already does this for tracking toolkits and is actively maintained. Network monitoring watches what an app connects to while running. Known AI services have recognizable web addresses, and tools like TrackerControl can already see these connections, they just do not label them as AI for regular users. The hardest problem is translation. Vague warnings get ignored. Specific, plain-language labels change behavior. Research from Carnegie Mellon confirmed this: specificity works, generic warnings do not.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">What Real User Control Actually Means Technically</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">Controls range from strong to symbolic. Cutting an app's network access entirely is the strongest: if it cannot reach a server, it cannot send your data there. Blocking specific server addresses is also strong and more surgical. Permission revocation is medium strength because it stops new collection but not use of data already collected. Privacy policy opt-outs are the weakest because they rely on the company's honesty and have no technical enforcement. Cioré's goal is to give users real valves, not the appearance of valves.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">The Legal Landscape in 2026</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">The EU AI Act is the most important regulation currently in effect. Since February 2025, certain AI practices are banned in the EU including social scoring and manipulation below user awareness. Starting August 2026, any AI system that interacts with users must disclose it is AI. AI-generated content must be labeled. These requirements apply to any company whose product is used in the EU, regardless of where the company is based. Cioré's planned approach of surfacing AI activity to users is aligned with where this regulation is going. Opt-in is also becoming law: several jurisdictions are moving toward requiring AI features to be off by default.</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">The Competitive Landscape and Where Cioré Fits</div><span class="pg-badge pg-badge-progress">Researched</span></div>
+        <div class="pg-card-body">The privacy phone market exists and is real, but it is built for technically sophisticated users. Most people cannot complete the setup process for GrapheneOS. CalyxOS is easier but still requires manual setup. Murena is the closest to a mainstream product. Nobody in this market is specifically positioned around AI. The entire conversation about AI inside apps has been left open. Cioré's opportunity is combining solid technical protection with communication and usability that works for everyday people, not just developers and journalists.</div>
+      </div>
+
+      <div class="cat-label">Key Phrases From the Research</div>
+      <div class="pull">On-device AI is like a calculator built into your phone. It thinks for itself. Nothing leaves. Cloud AI is like calling someone at a company, reading them everything you just did, having them figure it out, and telling you the answer. That call is the privacy risk.</div>
+
+      <div class="cg" style="margin-top:20px">
+        <div class="cc"><div class="cc-eye green">Plain Language</div><div class="cc-title">Your free app has four companies inside it that you never hired.</div><div class="cc-body">This is how we explain third-party AI toolkits embedded in apps without using technical terms.</div></div>
+        <div class="cc"><div class="cc-eye green">Plain Language</div><div class="cc-title">Apps are allowed to write their own privacy report. We actually check.</div><div class="cc-body">Research on 1.4 million apps found that what apps claimed they collected did not match what they actually did. Detection-based labeling is more reliable than self-reporting.</div></div>
+        <div class="cc"><div class="cc-eye green">Plain Language</div><div class="cc-title">Existing privacy phones were built for security experts. We built ours for everyone else.</div><div class="cc-body">The usability gap is the largest available market in this space and it is almost entirely unserved.</div></div>
+        <div class="cc"><div class="cc-eye green">Our Stance</div><div class="cc-title">We are not against AI. We are against AI you did not ask for.</div><div class="cc-body">This is the honest, grounded position. We use tools. Our community uses tools. The issue is consent, visibility, and control.</div></div>
+      </div>
+
+      <div class="cat-label">Research Sources</div>
+      <p class="bt" style="margin-bottom:12px">All findings above are grounded in published, dated research. Key sources include:</p>
+      <ul class="dl">
+        <li>Android Authority and TechCrunch: Android 16 AI features and defaults (December 2025)</li>
+        <li>Google Android Developer Docs: On-device vs. cloud AI guidance (2026)</li>
+        <li>Exodus Privacy: Android APK tracker and SDK scanning (actively maintained, March 2026)</li>
+        <li>Carnegie Mellon CyLab: Apple privacy label accuracy research (2022 through 2024)</li>
+        <li>Latham and Watkins: EU AI Act update and enforcement timeline (May 2026)</li>
+        <li>Factually: Privacy phone and de-Googled device comparisons (April and May 2026)</li>
+        <li>TrackerControl and NetGuard: Network-level app monitoring documentation</li>
+        <li>IntelTechniques: GrapheneOS 2026 settings and permission model (January 2026)</li>
+      </ul>
+
+      <div class="cat-label">What Comes Next</div>
+      <p class="bt">As more research is completed, this page will be updated. Upcoming research areas include hardware component research, supplier landscape, OS kernel research for Lumé, and user research on what our waitlist community actually wants to see and control on their phone. If you have a research background and want to contribute to any of these areas, reach out on Discord or check the Working On Now page for open research workstreams.</p>
+
+    </div><!-- /pRES -->
 
     <div class="panel" id="pCD">
       <h1 class="s-heading">Contributor Directory</h1>
@@ -3560,6 +3679,9 @@ function isPubliclyVisible(n) {
       // Expose for refreshPublicDirectory fallback and admin
       window._cioreAllContributors    = allContributors;
       window._cioreAllContributorsRaw = allNorm; // full set for admin (all statuses)
+      // Update homepage contributor count card
+      var _countEl = document.getElementById('phContribCount');
+      if (_countEl) _countEl.textContent = allContributors.length;
 
       // Sync ALL normalized records (not just Active) into admin dataset
       if (window._cioreImportFromAppsScript) {
