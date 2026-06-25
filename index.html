@@ -10,7 +10,7 @@
 <style>
 
 /* ═══════════════════════════════════════════════════════
-   CIORÉ CONTRIBUTOR HUB — v29
+   CIORÉ CONTRIBUTOR HUB, v29
    Light theme · Charcoal structure · Eco green accent
 ═══════════════════════════════════════════════════════ */
 
@@ -1145,6 +1145,8 @@ img { max-width: 100%; display: block; }
 .cm-toast.success { background: #18a558; }
 .cm-toast.error   { background: #c53030; }
 
+.pg-channel-label { font-family: var(--f-ui); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #18a558; margin-top: 12px; margin-bottom: 3px; }
+.pg-channel-body { font-size: 13px; color: var(--ink-2); }
 </style>
 </head>
 <body>
@@ -1186,6 +1188,7 @@ img { max-width: 100%; display: block; }
         <div class="nav-item active" data-panel="p0home">Home</div>
         <div class="nav-item" data-panel="p1">Mission and Values</div>
         <div class="nav-item" data-panel="p0">Start Here</div>
+        <div class="nav-item" data-panel="pCOC">Code of Conduct</div>
       </div>
       <div class="nav-group">
         <span class="nav-group-label">Community</span>
@@ -1281,6 +1284,11 @@ img { max-width: 100%; display: block; }
               <div class="ph-feature-card" data-dest="p10">
                 <div class="ph-feature-card-title">What We Are Working On</div>
                 <div class="ph-feature-card-text">Active priorities, current phase, and where your skills can make the biggest impact.</div>
+                <div class="ph-feature-card-arrow">&#8594;</div>
+              </div>
+              <div class="ph-feature-card" data-dest="pCOC">
+                <div class="ph-feature-card-title">Code of Conduct</div>
+                <div class="ph-feature-card-text">Community standards, expectations, confidentiality, and how we work together.</div>
                 <div class="ph-feature-card-arrow">&#8594;</div>
               </div>
             </div>
@@ -1595,13 +1603,14 @@ img { max-width: 100%; display: block; }
       <div class="cat-label" id="p0-journey">Your Onboarding Journey</div>
       <p class="bt" style="margin-bottom:16px">Here is the path from application to active contributor.</p>
       <div class="phases">
-        <div class="ph-row"><div class="ph-num">01</div><div><div class="ph-title">You Apply</div><div class="ph-body">You submit your application through the contributor access request form.</div></div></div>
-        <div class="ph-row"><div class="ph-num">02</div><div><div class="ph-title">Schedule a Meeting</div><div class="ph-body">You receive an automatic email with a link to schedule a meeting with the founder.</div></div></div>
-        <div class="ph-row"><div class="ph-num">03</div><div><div class="ph-title">We Meet</div><div class="ph-body">The founder meets with you to learn more about your background, interests, and how you want to contribute.</div></div></div>
-        <div class="ph-row"><div class="ph-num">04</div><div><div class="ph-title">Contributor Agreement Sent</div><div class="ph-body">If it is a good fit, the founder sends you the contributor agreement to review and sign.</div></div></div>
-        <div class="ph-row"><div class="ph-num">05</div><div><div class="ph-title">You Sign and Confirm</div><div class="ph-body">You fill out the agreement, upload it, and reply to the email with a confirmation so the founder knows it is done.</div></div></div>
-        <div class="ph-row"><div class="ph-num">06</div><div><div class="ph-title">Welcome Information Sent</div><div class="ph-body">The founder sends your welcome information, which includes your Discord server invite and your Contributor Hub username in the same email.</div></div></div>
-        <div class="ph-row"><div class="ph-num">07</div><div><div class="ph-title">Access Approved</div><div class="ph-body">The founder activates your account in the backend and approves your Discord access. You are now an active contributor.</div></div></div>
+        <div class="ph-row"><div class="ph-num">01</div><div><div class="ph-title">You Apply</div><div class="ph-body">You submit your interest through the contributor access request form on the Contributor Hub gate page.</div></div></div>
+        <div class="ph-row"><div class="ph-num">02</div><div><div class="ph-title">Automatic Email Sent</div><div class="ph-body">You receive an automatic email with a link to schedule a meeting with the founder. Keep this email. You will need it in a later step.</div></div></div>
+        <div class="ph-row"><div class="ph-num">03</div><div><div class="ph-title">You Schedule and We Meet</div><div class="ph-body">Use the link in that email to schedule a time. The founder meets with you to learn about your background, interests, and how you want to contribute.</div></div></div>
+        <div class="ph-row"><div class="ph-num">04</div><div><div class="ph-title">Alignment Check</div><div class="ph-body">If the conversation goes well and it feels like a good fit on both sides, the process moves forward. The founder will let you know.</div></div></div>
+        <div class="ph-row"><div class="ph-num">05</div><div><div class="ph-title">Fill Out the Contributor Agreement</div><div class="ph-body">Go back to the original automatic email you received in step two. The contributor agreement is linked there. Fill it out, upload your completed copy, and reply to that same email with a single emoji so the founder knows it is done.</div></div></div>
+        <div class="ph-row"><div class="ph-num">06</div><div><div class="ph-title">Access Request Link Sent</div><div class="ph-body">Once the founder receives your agreement, they will send you a link to request access to the Contributor Hub. Use that link to submit your access request.</div></div></div>
+        <div class="ph-row"><div class="ph-num">07</div><div><div class="ph-title">Access Code and Discord Invite Sent</div><div class="ph-body">After your request comes through, the founder will email you your personal access code for the Contributor Hub along with your Discord server invite in the same email.</div></div></div>
+        <div class="ph-row"><div class="ph-num">08</div><div><div class="ph-title">Join, Introduce, and Plug In</div><div class="ph-body">Log into the hub using your access code. Join the Discord server and introduce yourself in the welcome channel. Then head to the Working On Now page to find where your skills fit and get started.</div></div></div>
       </div>
 
       <div class="cat-label" id="p0-next">What To Do Next</div>
@@ -1644,6 +1653,87 @@ img { max-width: 100%; display: block; }
       <div class="wb"><div class="wb-icon">&#9432;</div><div>If you need support, have a question, or something is unclear, post in the relevant Discord channel or reach out to the founder directly. You are never expected to figure things out alone. We are here to support each other.</div></div>
 
     </div><!-- /p0 -->
+
+    <div class="panel" id="pCOC">
+      <h1 class="s-heading">Code of Conduct</h1>
+      <p class="s-intro">By accepting your contributor access and participating in any Cioré workstream, you are agreeing to uphold everything in this document. You do not need to sign a separate form. Your participation is your agreement.</p>
+
+      <div class="wb"><div class="wb-icon">&#9432;</div><div>This Code of Conduct applies to all contributors in all spaces connected to Cioré, including Discord, the Contributor Hub, calls, emails, and any public or private communication done in connection with your role here.</div></div>
+
+      <div class="cat-label">1. Why This Exists</div>
+      <p class="bt">Cioré is a community-driven startup built on trust, transparency, and a shared belief that technology should serve people. This code exists to protect that environment. It sets clear expectations so every contributor knows how to show up, what is expected, and what this community will and will not tolerate. We are building something meaningful together. This is how we make sure the process reflects the product.</p>
+
+      <div class="cat-label">2. Core Values</div>
+      <div class="cg">
+        <div class="cc"><div class="cc-eye green">Respect</div><div class="cc-title">Treat Everyone Well</div><div class="cc-body">Treat every contributor with kindness, empathy, and fairness. This applies in Discord, in documents, in meetings, and in every written message.</div></div>
+        <div class="cc"><div class="cc-eye green">Professionalism</div><div class="cc-title">Follow Through</div><div class="cc-body">Communicate clearly. Follow through on what you commit to. If something comes up, say so early rather than going quiet.</div></div>
+        <div class="cc"><div class="cc-eye green">Integrity</div><div class="cc-title">Be Honest</div><div class="cc-body">Be honest about your work, your capacity, and any concerns you have. If you see something that does not feel right, bring it to the founder.</div></div>
+        <div class="cc"><div class="cc-eye green">Inclusivity</div><div class="cc-title">Everyone Belongs</div><div class="cc-body">Cioré is built for and by people from all backgrounds. Differences in experience, identity, and perspective make this team stronger.</div></div>
+        <div class="cc"><div class="cc-eye green">Alignment</div><div class="cc-title">Uphold the Mission</div><div class="cc-body">You are here because you believe in what we are building. Uphold that mission in how you work, what you say publicly, and how you represent this community.</div></div>
+      </div>
+
+      <div class="cat-label">3. How We Work Together</div>
+      <ul class="dl">
+        <li>Be professional in all interactions, whether in Discord, email, documents, or calls.</li>
+        <li>Communicate early if you need more time or run into a challenge. We would rather know than wonder.</li>
+        <li>Use the designated Cioré channels for all project communication. Keep work conversations in the right spaces.</li>
+        <li>Do not use offensive, discriminatory, or harassing language or imagery anywhere connected to Cioré.</li>
+        <li>Be open to feedback. Assume good intent. Encourage honest, constructive conversations.</li>
+        <li>Recognize others. If someone does good work, say so. We are a team.</li>
+        <li>Do not take credit for contributions that are not yours.</li>
+      </ul>
+
+      <div class="cat-label">4. Confidentiality</div>
+      <p class="bt" style="margin-bottom:12px">What happens inside Cioré stays inside Cioré.</p>
+      <ul class="dl">
+        <li>Do not share internal documents, design files, product details, contributor information, or any internal discussions outside of the team without explicit written permission from the founder.</li>
+        <li>This includes anything in this hub, anything shared in Discord, and anything discussed in contributor calls or meetings.</li>
+        <li>Confidentiality does not end when your contributor role does. These obligations remain in effect after you leave.</li>
+        <li>If you are unsure whether something can be shared externally, ask the founder before sharing it.</li>
+      </ul>
+
+      <div class="cat-label">5. Data and Tools</div>
+      <ul class="dl">
+        <li>Use only approved Cioré tools and systems for all work-related communications, file storage, and collaboration.</li>
+        <li>Do not store Cioré materials in personal accounts, unauthorized apps, or anywhere outside of approved systems.</li>
+        <li>Comply with all applicable data privacy standards. If your role involves any contributor or user data, handle it with care.</li>
+      </ul>
+
+      <div class="cat-label">6. Intellectual Property</div>
+      <ul class="dl">
+        <li>Work you create specifically for Cioré as part of your contributor role belongs to Cioré unless otherwise agreed in writing.</li>
+        <li>Your own personal work, created outside of and unrelated to Cioré, remains yours.</li>
+        <li>You may include non-confidential examples of your Cioré contributions in a personal portfolio with prior approval from the founder.</li>
+        <li>Do not use Cioré name, trademarks, logos, or branding without explicit authorization.</li>
+      </ul>
+
+      <div class="cat-label">7. Conflicts of Interest</div>
+      <p class="bt" style="margin-bottom:12px">We ask for transparency, not perfection.</p>
+      <ul class="dl">
+        <li>Disclose any outside relationships, employment, or activities that could reasonably conflict with Cioré interests.</li>
+        <li>Do not use your contributor role to promote unrelated products, services, or organizations.</li>
+        <li>Do not engage in work that directly competes with Cioré during your time as a contributor and for one year after your role ends.</li>
+        <li>Do not solicit other Cioré contributors, employees, or partners away from the organization.</li>
+        <li>If you are ever unsure whether something is a conflict, bring it to the founder. There is no penalty for asking.</li>
+      </ul>
+
+      <div class="cat-label">8. Harassment and Discrimination</div>
+      <p class="bt" style="margin-bottom:12px">Cioré has zero tolerance for harassment, discrimination, or bullying in any form.</p>
+      <p class="bt" style="margin-bottom:12px">This includes unwelcome comments, slurs, jokes, or behavior targeting anyone based on race, gender, sexual orientation, disability, age, religion, national origin, or any other characteristic. It applies in public channels, direct messages, calls, and any space where Cioré contributors interact.</p>
+      <div class="wb"><div class="wb-icon">&#9888;</div><div>If you experience or witness anything that violates this, report it to the founder directly. All reports are treated confidentially and taken seriously. No one will face retaliation for reporting in good faith.</div></div>
+
+      <div class="cat-label">9. Accountability</div>
+      <p class="bt" style="margin-bottom:12px">We are a startup. Things are still being built, processes are still forming, and not everything will be perfect. We ask for your patience and we extend the same to you. What we do expect is that everyone holds themselves to the standards in this document.</p>
+      <ul class="dl">
+        <li>Violations may result in removal from a project or from your contributor role entirely.</li>
+        <li>Serious violations involving data misuse, harassment, or theft of intellectual property may result in legal action.</li>
+        <li>All concerns are reviewed confidentially and handled fairly.</li>
+      </ul>
+
+      <div class="cat-label">10. Your Agreement</div>
+      <div class="pull">By accepting your contributor access and participating as an active contributor to Cioré, you confirm that you have read, understood, and agree to uphold this Code of Conduct. Your participation is your agreement. If anything in this document is unclear, reach out to the founder before proceeding.</div>
+
+    </div><!-- /pCOC -->
 
 <div class="panel" id="p1">
 
@@ -2373,9 +2463,9 @@ img { max-width: 100%; display: block; }
       </div>
 
     </div><!-- /p8 -->
-    <div class="panel" id="p10">
+        <div class="panel" id="p10">
       <h1 class="s-heading">What We Are Working On Now</h1>
-      <p class="s-intro">This is the best place to understand what Cioré is currently focused on, what is actively moving, and where contributor support is welcome. Review this page, find areas aligned with your interests and skills, and reach out on Discord if you want to help.</p>
+      <p class="s-intro">This is the best place to understand what Cioré is currently focused on, what is actively moving, and where contributor support is welcome. Review this page, find areas aligned with your interests and skills, and head to the Discord channel listed on each card to connect with the team working on it.</p>
 
       <div class="cat-label">Current Phase</div>
       <div style="background:#0d1117;border-radius:12px;padding:32px 36px;margin-bottom:8px;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(24,165,88,0.14),0 2px 16px rgba(0,0,0,0.18)">
@@ -2398,20 +2488,24 @@ img { max-width: 100%; display: block; }
       </div>
 
       <div class="cat-label">Active Priorities</div>
-      <p class="bt" style="margin-bottom:16px">These are the areas where work is currently happening. If you see something aligned with your skills and have bandwidth to help, reach out on Discord.</p>
+      <p class="bt" style="margin-bottom:16px">These are the areas where work is currently happening. Each card includes the Discord channel where that workstream lives. Head there to connect with others working on it and find out how you can plug in.</p>
 
       <div class="pg-card">
         <div class="pg-card-head"><div class="pg-card-title">Waitlist Growth and Email Outreach</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">Waitlist growth is underway. Email outreach has begun and is expected to expand as public posting increases and the updated visual experience becomes stronger. General help with this is not broadly needed, but if you can assist with setting frequency or organizing repeated outreach segments, that support is welcome.</div>
+        <div class="pg-card-body">Waitlist growth is underway. Email outreach has begun and is expected to expand as public posting increases. General help with this is not broadly needed, but if you can assist with setting outreach frequency or organizing repeated outreach segments, that support is welcome.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
         <div class="pg-support-body">Outreach segment organization, frequency planning, messaging refinement</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#waitlist-growth under Active Projects</div>
       </div>
 
       <div class="pg-card">
         <div class="pg-card-head"><div class="pg-card-title">Contributor Waitlist</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">The contributor waitlist is active and growing. Where we need help is with the structure around it, specifically designing the allotted slots for different contributor types, helping set outreach frequency, and building a repeatable process for how we move people from interested to active. General pipeline management is handled, but the design and timing work is open.</div>
+        <div class="pg-card-body">The contributor waitlist is active and growing. Where we need help is with the structure around it, specifically designing the allotted slots for different contributor types, helping set outreach frequency, and building a repeatable process for how we move people from interested to active.</div>
         <div class="pg-support-label">We Need Help Here</div>
         <div class="pg-support-body">Slot structure design, frequency planning, outreach cadence, intake flow improvement</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#waitlist-growth under Active Projects</div>
       </div>
 
       <div class="pg-card">
@@ -2419,20 +2513,17 @@ img { max-width: 100%; display: block; }
         <div class="pg-card-body">Cioré is actively exploring outreach to privacy-focused companies, sustainability-aligned organizations, STEM and research institutions, and academic partners. The goal is to open collaboration conversations, explore aligned partnerships, and build relationships that may support future growth.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
         <div class="pg-support-body">Researching aligned organizations, building outreach lists, drafting outreach language, finding relevant contacts, organizing collaboration pipelines</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#strategic-outreach</div>
       </div>
 
       <div class="pg-card">
-        <div class="pg-card-head"><div class="pg-card-title">Prototype Development Research</div><span class="pg-badge pg-badge-progress">In Progress</span></div>
-        <div class="pg-card-body">Prototype development has begun at the concept level. Early exploration is underway and the team is researching ethical vendors and narrowing options based on cost effectiveness, sourcing quality, and values alignment.</div>
-        <div class="pg-support-label">Where Help Is Welcome</div>
-        <div class="pg-support-body">Ethical vendor research, sourcing comparison, materials research, cost comparison, sustainable manufacturing research, documentation support</div>
-      </div>
-
-      <div class="pg-card">
-        <div class="pg-card-head"><div class="pg-card-title">Components and Supplier Organization</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">We have begun identifying suppliers but we are not limiting ourselves to the ones we have found so far. There is a wide range of domestic suppliers worth researching, and we want to make sure we are looking broadly, comparing quality, pricing, and ethics, and building a solid checklist structure by component category. This feeds directly into prototype planning and ethical sourcing decisions.</div>
+        <div class="pg-card-head"><div class="pg-card-title">Components, Suppliers, and Prototype Research</div><span class="pg-badge pg-badge-progress">In Progress</span></div>
+        <div class="pg-card-body">Prototype development and component research are part of the same workstream. We have begun identifying suppliers but are not limiting ourselves to what we have found so far. There is a wide range of domestic suppliers worth researching. We are looking broadly, comparing quality, pricing, and ethics, and building a checklist structure by component category. This feeds directly into prototype planning and ethical sourcing decisions.</div>
         <div class="pg-support-label">We Need Help Here</div>
-        <div class="pg-support-body">Expanded supplier research, domestic sourcing comparison, component checklist by category, ethical verification, sourcing documentation, pricing research</div>
+        <div class="pg-support-body">Expanded supplier research, domestic sourcing comparison, component checklist by category, ethical verification, sourcing documentation, pricing research, sustainable manufacturing research</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#components-suppliers</div>
       </div>
 
       <div class="pg-card">
@@ -2440,6 +2531,8 @@ img { max-width: 100%; display: block; }
         <div class="pg-card-body">The founder is planning Cioré's social media presence and looking to strengthen visibility, consistency, and contributor awareness as public-facing activity grows.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
         <div class="pg-support-body">Content planning, platform strategy, post ideas, brand voice refinement, scheduling support, light design support</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#social-media</div>
       </div>
 
       <div class="pg-card">
@@ -2447,27 +2540,45 @@ img { max-width: 100%; display: block; }
         <div class="pg-card-body">As Cioré continues preparing for growth and funding pathways, grant research support is welcome to help identify aligned opportunities and organize promising leads.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
         <div class="pg-support-body">Grant database research, opportunity sorting, eligibility review, deadline tracking, summary notes</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#grant-research</div>
       </div>
 
       <div class="pg-card">
-        <div class="pg-card-head"><div class="pg-card-title">Operational Readiness</div><span class="pg-badge pg-badge-progress">In Progress</span></div>
-        <div class="pg-card-body">Internal operational preparation is underway as the company continues awaiting funding and strengthening internal structure. This includes administrative research, organizational documentation, and internal systems preparation.</div>
+        <div class="pg-card-head"><div class="pg-card-title">Operating System Planning</div><span class="pg-badge pg-badge-progress">Planning</span></div>
+        <div class="pg-card-body">We are still gathering the information and research needed to move this workstream into full active development. When the time comes and the foundation is ready, this work will open up fully to contributors. Until then, research contributions and documentation support are welcome to help prepare the ground.</div>
         <div class="pg-support-label">Where Help Is Welcome</div>
-        <div class="pg-support-body">Administrative research support, organizational documentation, internal systems documentation, process research</div>
-      </div>
-
-      <div class="pg-card">
-        <div class="pg-card-head"><div class="pg-card-title">Operating System and Hardware Research</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">Research is underway to define how Lum&eacute; OS will handle core system functions at the kernel level, without relying on cloud-connected or generative tools. Specific areas under active investigation include Linux kernel power governors, resource limiting frameworks, thermal management, and how existing privacy operating systems handle these natively. Hardware component research is also active, with the goal of mapping out what the Cioré phone requires, understanding what is available, and identifying realistic pricing.</div>
-        <div class="pg-support-label">We Need Help Here</div>
-        <div class="pg-support-body">OS feature research, kernel-level system research, hardware component mapping, component pricing research, privacy OS comparison research, documentation support</div>
+        <div class="pg-support-body">OS research, kernel-level system research, privacy OS comparison, documentation</div>
+        <div class="pg-channel-label">Discord Channel</div>
+        <div class="pg-channel-body">#operating-system (when this workstream opens)</div>
       </div>
 
       <div class="pg-card">
         <div class="pg-card-head"><div class="pg-card-title">Community Hardware Research</div><span class="pg-badge pg-badge-active">Active</span></div>
-        <div class="pg-card-body">The waitlist and social media community has requested several hardware features: a physical audio jack, modular button options, a physical keyboard attachment, a phone stand, and alternative casing shapes and materials. These are being researched as part of the product direction. Help is needed to evaluate feasibility, research how other modular hardware projects have addressed similar requests, and document what is realistic for different phases of the product.</div>
+        <div class="pg-card-body">The waitlist and social media community has requested several hardware features including a physical audio jack, modular button options, a physical keyboard attachment, a phone stand, and alternative casing shapes. These are being researched as part of the product direction.</div>
         <div class="pg-support-label">We Need Help Here</div>
         <div class="pg-support-body">Hardware feasibility research, modular design research, accessory ecosystem research, community feedback documentation, materials and casing research</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Round Screen UX and UI Research</div><span class="pg-badge pg-badge-active">Active</span></div>
+        <div class="pg-card-body">Community feedback has raised interest in a round display option. A circular screen introduces real design challenges including what content gets cut off at the edges, how navigation works, and how to make the experience feel intentional rather than cramped. We need creative research and thinking around what a round screen could look and feel like done well.</div>
+        <div class="pg-support-label">We Need Help Here</div>
+        <div class="pg-support-body">UX research, UI design exploration, circular display case studies, creative brainstorming, visual mockups</div>
+      </div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Phone Shape, Ergonomics, and Accessibility</div><span class="pg-badge pg-badge-active">Active</span></div>
+        <div class="pg-card-body">Not everyone connects with the pill shape. Community members want alternative form options that feel more comfortable, reduce hand fatigue, and work for a wider range of people. We want to research different phone shapes, study how ergonomics affects long-term use, and think about accessibility from the start rather than as an afterthought.</div>
+        <div class="pg-support-label">We Need Help Here</div>
+        <div class="pg-support-body">Ergonomic design research, alternative form factor research, accessibility research, hand fatigue studies, shape brainstorming, user research</div>
+      </div>
+
+      <div class="cat-label">Low Priority</div>
+
+      <div class="pg-card">
+        <div class="pg-card-head"><div class="pg-card-title">Operational Readiness</div><span class="pg-badge" style="background:#e8e8e8;color:#666">Low Priority</span></div>
+        <div class="pg-card-body">Internal operational preparation is underway and progressing. This area does not need significant contributor support at this time. If this changes it will be updated here.</div>
       </div>
 
       <div class="cat-label">Completed</div>
@@ -2497,37 +2608,11 @@ img { max-width: 100%; display: block; }
         <div class="cc"><div class="cc-eye green">Readiness</div><div class="cc-title">Getting Ready to Move</div><div class="cc-body">Making sure project management, key roles, a clear build map, and supplier research are organized before deeper execution begins.</div></div>
       </div>
 
-      <div class="pull">Strong project management preparation, key roles filled, a clear build map, and well-organized supplier and component research are the priorities before deeper Lumé OS execution begins. When the foundation is right, the work will move forward with clarity and confidence.</div>
-
-      <div class="cat-label">Lumé OS Phase Summary</div>
-      <div class="pg-lume-phases">
-        <div class="pg-lume-row"><div class="pg-lume-num">Phase 0</div><div><div class="pg-lume-title">Foundation and Hardware Selection</div><div class="pg-lume-body">Confirm architecture direction. Select initial reference hardware. Define security baseline and threat model.</div></div></div>
-        <div class="pg-lume-row"><div class="pg-lume-num">Phase 1</div><div><div class="pg-lume-title">Boot Hardened Base</div><div class="pg-lume-body">Boot a hardened AOSP build on reference hardware. Set up build infrastructure, code hosting, CI pipeline, and OTA update hosting.</div></div></div>
-        <div class="pg-lume-row"><div class="pg-lume-num">Phase 2</div><div><div class="pg-lume-title">Privacy Layer and Core Experience</div><div class="pg-lume-body">Build Cioré's custom privacy enforcement layer, permission system, and sandboxing rules. Launch the initial Cioré UI. Integrate Gaia-X MVP.</div></div></div>
-        <div class="pg-lume-row"><div class="pg-lume-num">Phase 3</div><div><div class="pg-lume-title">App Ecosystem and Compatibility</div><div class="pg-lume-body">Build out core apps. Evaluate third-party verified apps. Begin controlled testing of the Android compatibility container. Conduct security audits.</div></div></div>
-        <div class="pg-lume-row"><div class="pg-lume-num">Phase 4</div><div><div class="pg-lume-title">Optimization, Audit, and Expansion</div><div class="pg-lume-body">Stability and performance refinement. External security audit. Broader device support and platform expansion planning.</div></div></div>
-      </div>
-
-      <div class="cat-label">Where Help Is Welcome</div>
-      <div class="pg-help-grid">
-        <span class="pg-help-tag green">Waitlist Growth Ideas</span>
-        <span class="pg-help-tag green">Outreach Segment Organization</span>
-        <span class="pg-help-tag green">Strategic Partnership Research</span>
-        <span class="pg-help-tag green">Component Mapping</span>
-        <span class="pg-help-tag green">Supplier Research</span>
-        <span class="pg-help-tag green">Ethical Vendor Verification</span>
-        <span class="pg-help-tag">Social Media Planning</span>
-        <span class="pg-help-tag">Grant Research</span>
-        <span class="pg-help-tag">OS Project Planning Support</span>
-        <span class="pg-help-tag">Technical Research</span>
-        <span class="pg-help-tag">Documentation Support</span>
-        <span class="pg-help-tag">Operational Documentation</span>
-      </div>
-
       <div class="cat-label">How To Plug In</div>
-      <p class="bt">If you see an area on this page that aligns with your skills or interests, reach out on Discord. If there is no listed project contact for that area, message the founder directly. There is no formal application for optional support. Just start a conversation about fit, bandwidth, and how you can best contribute.</p>
+      <p class="bt">If you see an area on this page that aligns with your skills or interests, head to the Discord channel listed on the card. If there is no channel listed yet or no project contact listed, message the founder directly. There is no formal application for optional support. Just start a conversation about fit, bandwidth, and how you can best contribute.</p>
 
     </div><!-- /p10 -->
+
 
     <div class="panel" id="p9">
       <h1 class="s-heading">Tips, Requests and Suggestions</h1>
