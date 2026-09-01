@@ -152,6 +152,33 @@
     padding:104px 32px 72px;
     z-index:2;
   }
+#page-home .hero-top-grid {
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:48px;
+    align-items:center;
+  }
+#page-home .hero-symbol {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:28px;
+    padding:36px;
+    min-height:260px;
+  }
+#page-home .hero-symbol-img {
+    display:block;
+    width:100%;
+    max-width:280px;
+    height:auto;
+    object-fit:contain;
+  }
+@media (max-width:900px){
+#page-home .hero-top-grid { grid-template-columns:1fr; gap:0; }
+#page-home .hero-symbol { display:none; }
+}
 #page-home .hero h1 {
     font-size:clamp(2.1rem, 4.6vw, 3.55rem);
     line-height:1.08;
@@ -371,6 +398,23 @@
 }
 @media (max-width:600px){
 #page-home .essentials-grid {grid-template-columns:1fr;}
+}
+#page-home .essentials-footnote-link{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  margin-top:16px; padding:16px 20px;
+  background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius-md);
+  font-size:0.92rem; font-weight:600; color:var(--ink-soft);
+  text-decoration:none; transition:border-color .15s ease;
+}
+#page-home .essentials-footnote-link:hover{ border-color:var(--green); color:var(--ink); }
+#page-home .essentials-footnote-link .arrow-circle{
+  flex:none; width:30px; height:30px; border-radius:50%;
+  border:1px solid var(--line); color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:center;
+}
+#page-home .essentials-footnote-link .arrow-circle svg{ width:12px; height:12px; }
+@media (max-width:600px){
+  #page-home .essentials-footnote-link{ font-size:0.88rem; }
 }
 #page-home .r-card {
     border-radius:var(--radius-md);
@@ -1299,17 +1343,22 @@
     margin:0 0 20px; display:flex; align-items:center; gap:8px;
   }
   .gate-eyebrow::before{ content:""; width:16px; height:1.5px; background:var(--green-on-black); display:inline-block; }
-  .gate-brand{ display:flex; align-items:center; gap:12px; margin-bottom:32px; }
+  .gate-brand{
+    display:flex; flex-direction:column; align-items:center;
+    gap:14px; margin-bottom:32px; text-align:center;
+  }
   .gate-mark{
-    width:32px; height:32px; border-radius:9px;
-    background:var(--black-soft); position:relative; flex:none;
+    width:100%; max-width:220px; min-height:64px;
+    border-radius:12px;
+    background:var(--white); position:relative;
+    display:flex; align-items:center; justify-content:center;
+    padding:14px 20px; overflow:hidden;
   }
-  .gate-mark::after{
-    content:""; position:absolute; width:9px; height:9px; border-radius:50%;
-    background:var(--green-on-black); top:50%; left:50%; transform:translate(-50%,-50%);
+  .gate-mark-img{
+    display:block; max-width:100%; max-height:56px; width:auto; height:auto;
+    object-fit:contain;
   }
-  .gate-brand-name{ margin:0; font-weight:700; font-size:1.15rem; letter-spacing:-0.01em; }
-  .gate-brand-sub{ margin:2px 0 0; font-size:0.86rem; color:rgba(255,255,255,0.6); }
+  .gate-brand-sub{ margin:0; font-size:0.86rem; color:rgba(255,255,255,0.6); }
   .gate-field{ margin-bottom:14px; }
   .gate-label{ display:block; font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.85); margin-bottom:8px; }
   .gate-input{
@@ -4239,6 +4288,98 @@
     }
   }
 
+
+  /* ================================================
+     ORGANIZATION INFORMATION — BRAND IDENTITY ADDITIONS
+     ================================================ */
+  #page-organization-information .brand-subheading{
+    margin-top:32px; font-size:1.02rem;
+  }
+  #page-organization-information h2 + .brand-subheading{ margin-top:8px; }
+
+  /* Logo card */
+  #page-organization-information .brand-logo-card{
+    margin-top:18px; background:var(--white); border:1px solid var(--line);
+    border-radius:var(--radius-lg); padding:40px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #page-organization-information .brand-logo-img{
+    max-width:280px; width:100%; height:auto; display:block;
+  }
+  #page-organization-information .logo-download-link{
+    margin-top:14px;
+  }
+
+  /* Standalone symbol card: obsidian background, generous negative space */
+  #page-organization-information .symbol-card{
+    margin-top:12px; background:#0A0A0A; border-radius:var(--radius-lg);
+    padding:64px 40px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #page-organization-information .symbol-img{
+    max-width:220px; width:60%; height:auto; display:block;
+  }
+  #page-organization-information .symbol-download-row{ margin-top:18px; }
+  #page-organization-information .symbol-download-btn{ margin-top:0; }
+  #page-organization-information .symbol-download-note{
+    margin-top:12px; font-size:0.84rem; color:var(--ink-faint); line-height:1.6;
+  }
+
+  @media (max-width:560px){
+    #page-organization-information .brand-logo-card{ padding:28px 20px; }
+    #page-organization-information .symbol-card{ padding:44px 24px; }
+    #page-organization-information .symbol-img{ width:70%; }
+  }
+
+  /* Color swatches: text rendered directly on the color card */
+  #page-organization-information .color-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-top:20px;
+  }
+  @media (max-width:820px){ #page-organization-information .color-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ #page-organization-information .color-grid{ grid-template-columns:1fr; } }
+
+  #page-organization-information .color-card{
+    border-radius:var(--radius-md); padding:20px 18px 18px;
+    display:flex; flex-direction:column; gap:4px; min-height:150px;
+  }
+  #page-organization-information .color-card h4{ margin:0 0 6px; font-size:0.98rem; font-weight:700; }
+  #page-organization-information .color-card .color-hex{
+    font-family:'IBM Plex Mono', monospace; font-size:0.86rem; margin:0 0 10px; opacity:0.85;
+    user-select:all; color:inherit;
+  }
+  #page-organization-information .color-card .color-use{ font-size:0.82rem; line-height:1.5; margin:0; opacity:0.85; color:inherit; }
+
+  #page-organization-information .color-card--dark-text{ color:var(--ink); }
+  #page-organization-information .color-card--light-text{ color:#FFFFFF; }
+  #page-organization-information .color-card--bordered{ border:1px solid var(--line); }
+
+  /* Buttons (scoped copy, matching established Hub button system) */
+  #page-organization-information .btn{
+    display:inline-flex; align-items:center; gap:12px;
+    font-weight:600; font-size:0.96rem;
+    padding:14px 20px 14px 22px; border-radius:999px;
+    border:1px solid transparent; cursor:pointer; white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  #page-organization-information .btn:hover{ transform:translateY(-1px); }
+  #page-organization-information .btn:focus-visible{ outline:2px solid var(--green); outline-offset:2px; }
+  #page-organization-information .btn-primary{ background:var(--black); color:var(--white); }
+  #page-organization-information .btn-primary:hover{ background:var(--black-soft); }
+  #page-organization-information .btn-primary .arrow-circle{ color:var(--green-on-black); border-color:rgba(79,190,147,0.5); }
+  #page-organization-information .arrow-circle{
+    width:34px; height:34px; border-radius:50%;
+    border:1px solid currentColor;
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+  }
+  #page-organization-information .arrow-circle svg{ width:13px; height:13px; }
+
+  @media (max-width:560px){
+    #page-organization-information .btn{
+      width:100%; justify-content:center;
+      white-space:normal; text-align:center; line-height:1.3;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -4248,14 +4389,16 @@
      ============================================================ -->
 <div id="gate" class="gate">
   <div class="gate-panel">
-    <p class="gate-eyebrow">Internal access</p>
 
     <div class="gate-brand">
-      <span class="gate-mark" aria-hidden="true"></span>
-      <div>
-        <p class="gate-brand-name">Cioré</p>
-        <p class="gate-brand-sub">Contributor Hub</p>
-      </div>
+      <span class="gate-mark" aria-hidden="false">
+        <img
+          src="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/6ee448a1-1f3a-475f-8ab3-9d74da69364a/IMG_0877.jpeg?content-type=image%2Fjpeg"
+          alt="Cioré"
+          class="gate-mark-img"
+          loading="lazy">
+      </span>
+      <p class="gate-brand-sub">Contributor Hub</p>
     </div>
 
     <div class="gate-field">
@@ -4388,11 +4531,23 @@
       <circle cx="90" cy="470" r="70" stroke="rgba(255,255,255,0.05)" fill="none"/>
     </svg>
     <div class="hero-inner">
-      <h1 id="hero-heading">Welcome to the Cioré Contributor Hub</h1>
-      <p class="preview">Cioré is shaped by everyone who dares to approach technology from a new angle. Whether you bring research, creative problem-solving, or bold vision, this is where you’ll find the work, resources, and community to turn ideas into progress.</p>
-      <div class="confidentiality" role="note">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 11-3.6-2.5-7-6-7-11V5l7-3z" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-linejoin="round"/></svg>
-        <p>This Hub includes private team information. Please protect what is shared here and log out when you are finished, especially on a shared device.</p>
+      <div class="hero-top-grid">
+        <div class="hero-text">
+          <h1 id="hero-heading">Welcome to the Cioré Contributor Hub</h1>
+          <p class="preview">Cioré is shaped by everyone who dares to approach technology from a new angle. Whether you bring research, creative problem-solving, or bold vision, this is where you’ll find the work, resources, and community to turn ideas into progress.</p>
+          <div class="confidentiality" role="note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 3v6c0 5-3.4 8.5-7 11-3.6-2.5-7-6-7-11V5l7-3z" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <p>This Hub includes private team information. Please protect what is shared here and log out when you are finished, especially on a shared device.</p>
+          </div>
+        </div>
+
+        <div class="hero-symbol" aria-hidden="true">
+          <img
+            src="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/f54af28e-88bd-4174-a657-e7c077b94693/Ciore+Symbol.jpeg?content-type=image%2Fjpeg"
+            alt=""
+            class="hero-symbol-img"
+            loading="lazy">
+        </div>
       </div>
 
       <div class="pillars">
@@ -4525,6 +4680,13 @@
           <h3>Record Your Contribution Time</h3>
           <p class="resource-strip-text">Keep a simple personal record of the time you contribute to Cioré. It is an easy way to document your participation, contributions, and progress over time.</p>
         </div>
+        <span class="arrow-circle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </a>
+
+      <a class="essentials-footnote-link" href="#organization-information" data-nav="organization-information">
+        Need business details or brand reference materials? Visit Organization Information
         <span class="arrow-circle" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
@@ -7394,72 +7556,123 @@
         </div>
       </section>
 
-      <!-- ================= BRAND COLORS ================= -->
-      <section aria-labelledby="oi-colors-heading">
+      <!-- ================= BRAND IDENTITY ================= -->
+      <section aria-labelledby="oi-brand-heading">
         <p class="section-label">Brand reference</p>
-        <h2 id="oi-colors-heading">Cioré Brand Colors</h2>
+        <h2 id="oi-brand-heading">Brand Identity</h2>
+
+        <div class="brand-logo-card">
+          <img
+            src="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/6ee448a1-1f3a-475f-8ab3-9d74da69364a/IMG_0877.jpeg?content-type=image%2Fjpeg"
+            alt="Official Cioré logo"
+            class="brand-logo-img"
+            loading="lazy">
+        </div>
+        <a
+          class="btn btn-primary logo-download-link"
+          href="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/6ee448a1-1f3a-475f-8ab3-9d74da69364a/IMG_0877.jpeg?content-type=image%2Fjpeg"
+          download="ciore-logo.jpg"
+          target="_blank"
+          rel="noopener noreferrer">
+          Download Official Cioré Logo
+          <span class="arrow-circle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <h3 class="brand-subheading">Our Name</h3>
+        <p>Cioré takes its shape and sound from “core,” the center that holds everything else together. The name carries that idea forward: a technology company built around a steady center of privacy, repairability, and care, with room for the people, product, purpose, and impact that surround it.</p>
+
+        <h3 class="brand-subheading">Our Symbol</h3>
+
+        <div class="symbol-card">
+          <img
+            src="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/f54af28e-88bd-4174-a657-e7c077b94693/Ciore+Symbol.jpeg?content-type=image%2Fjpeg"
+            alt="Official standalone Cioré symbol"
+            class="symbol-img"
+            loading="lazy">
+        </div>
+
+        <div class="symbol-download-row">
+          <a
+            class="btn btn-primary symbol-download-btn"
+            href="https://images.squarespace-cdn.com/content/682f59a12de6f2156dacf80c/f54af28e-88bd-4174-a657-e7c077b94693/Ciore+Symbol.jpeg?content-type=image%2Fjpeg"
+            download="ciore-symbol.jpg"
+            target="_blank"
+            rel="noopener noreferrer">
+            Download Official Cioré Symbol
+            <span class="arrow-circle" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <p class="symbol-download-note">If the download does not start automatically, the button opens the original image in a new tab, where you can save it directly.</p>
+        </div>
+
+        <p>Our symbol replaces the letter O in our wordmark. It features two inward-facing forms with an open space at the center, mirroring the layered silhouette of a Cioré device.</p>
+        <p>Here is what that symbol holds for us:</p>
+        <ul class="bullets">
+          <li>A gathering place where people, product, purpose, and impact meet</li>
+          <li>Room to pause, listen, and make thoughtful choices</li>
+          <li>Two forms working closely together while keeping their distinct shapes</li>
+          <li>Capable innovation balanced with durability, repairability, privacy, and care</li>
+          <li>A commitment to build useful technology that lasts, rather than something disposable</li>
+        </ul>
+        <p>We are glad you are here with us.</p>
+
+        <h3 class="brand-subheading">Cioré Brand Colors</h3>
         <p>Use Cioré's colors consistently across approved internal work, presentations, contributor materials, product concepts, and public-facing work that has received approval.</p>
 
         <div class="color-grid">
-  <div class="color-card">
-    <span class="color-swatch" style="background:#0A0A0A;" aria-hidden="true"></span>
-    <h3>Obsidian Black</h3>
+  <div class="color-card color-card--light-text" style="background:#0A0A0A;">
+    <h4>Obsidian</h4>
     <p class="color-hex">#0A0A0A</p>
-    <p class="color-role">Primary foundation</p>
-    <p class="color-use">Main backgrounds, dark surfaces, primary text on light backgrounds</p>
+    <p class="color-use">Primary dark foundation for backgrounds, text, and structure</p>
   </div>
-  <div class="color-card">
-    <span class="color-swatch" style="background:#F5EEE6; border:1px solid #E3E3DD;" aria-hidden="true"></span>
-    <h3>Warm Ivory</h3>
-    <p class="color-hex">#F5EEE6</p>
-    <p class="color-role">Soft neutral</p>
-    <p class="color-use">Editorial text on black, warm page surfaces, and soft contrast</p>
+  <div class="color-card color-card--light-text" style="background:#1E1E1C;">
+    <h4>Carbon</h4>
+    <p class="color-hex">#1E1E1C</p>
+    <p class="color-use">Secondary dark surface, panels, and layered depth</p>
   </div>
-  <div class="color-card">
-    <span class="color-swatch" style="background:#4F7942;" aria-hidden="true"></span>
-    <h3>Eco Green</h3>
-    <p class="color-hex">#4F7942</p>
-    <p class="color-role">Grounded Cioré green</p>
-    <p class="color-use">Sustainability, research labels, supporting links, and quieter interface signals</p>
+  <div class="color-card color-card--dark-text" style="background:#5DD62C;">
+    <h4>Signal</h4>
+    <p class="color-hex">#5DD62C</p>
+    <p class="color-use">Calls to action, selection, progress, and focused emphasis</p>
   </div>
-  <div class="color-card color-card--bright">
-    <span class="color-swatch" style="background:#B7FF2A;" aria-hidden="true"></span>
-    <h3>Bright Lime Green</h3>
-    <p class="color-hex">#B7FF2A</p>
-    <p class="color-role">Main high-energy accent</p>
-    <p class="color-use">Major calls to action, active selections, Gaia moments, and selected emphasis</p>
+  <div class="color-card color-card--dark-text" style="background:#A4ED3A;">
+    <h4>Lime</h4>
+    <p class="color-hex">#A4ED3A</p>
+    <p class="color-use">Supporting accent for tags, highlights, and secondary emphasis</p>
   </div>
-  <div class="color-card color-card--bright">
-    <span class="color-swatch" style="background:#C8FF00;" aria-hidden="true"></span>
-    <h3>Neon Chartreuse</h3>
-    <p class="color-hex">#C8FF00</p>
-    <p class="color-role">Strong editorial highlight</p>
-    <p class="color-use">Large display emphasis, campaign graphics, and rare high-impact moments</p>
+  <div class="color-card color-card--dark-text" style="background:#D2FF3B;">
+    <h4>Chartreuse</h4>
+    <p class="color-hex">#D2FF3B</p>
+    <p class="color-use">Alternate accent for hover states and interactive highlights</p>
   </div>
-  <div class="color-card">
-    <span class="color-swatch" style="background:#D9FF8A;" aria-hidden="true"></span>
-    <h3>Soft Lime Tint</h3>
-    <p class="color-hex">#D9FF8A</p>
-    <p class="color-role">Light supportive accent</p>
-    <p class="color-use">Hover states, badges, light highlight panels, and low-intensity emphasis</p>
+  <div class="color-card color-card--dark-text" style="background:#E2FC02;">
+    <h4>Volt</h4>
+    <p class="color-hex">#E2FC02</p>
+    <p class="color-use">High-energy accent for rare, high-impact moments</p>
   </div>
-  <div class="color-card">
-    <span class="color-swatch" style="background:#163F31;" aria-hidden="true"></span>
-    <h3>Deep Forest Green</h3>
-    <p class="color-hex">#163F31</p>
-    <p class="color-role">Dark green support tone</p>
-    <p class="color-use">Dark green cards, system sections, and environmental or research-focused areas</p>
+  <div class="color-card color-card--light-text" style="background:#337418;">
+    <h4>Signal Deep</h4>
+    <p class="color-hex">#337418</p>
+    <p class="color-use">Secondary green states, hover states, and supporting accents</p>
   </div>
-  <div class="color-card">
-    <span class="color-swatch" style="background:#4FBE93;" aria-hidden="true"></span>
-    <h3>Mint Signal Green</h3>
-    <p class="color-hex">#4FBE93</p>
-    <p class="color-role">Interface accent</p>
-    <p class="color-use">Positive status, secondary buttons, success states, and small UI highlights</p>
+  <div class="color-card color-card--dark-text color-card--bordered" style="background:#FFFFFF;">
+    <h4>Pure White</h4>
+    <p class="color-hex">#FFFFFF</p>
+    <p class="color-use">High-contrast digital use and accessibility</p>
+  </div>
+  <div class="color-card color-card--light-text" style="background:#000000;">
+    <h4>Black</h4>
+    <p class="color-hex">#000000</p>
+    <p class="color-use">One-color print and black logo fallback</p>
   </div>
 </div>
-        <p class="color-guidance">Use Bright Lime Green and Neon Chartreuse sparingly. They work best for high-priority actions, selected emphasis, and campaign moments. Do not use them for long body text, dense tables, or large page backgrounds.</p>
+        <p class="color-guidance">Primary brand combination: Pure White on Obsidian.</p>
+        <p class="color-guidance">Signal should be used sparingly and purposefully. It should guide attention, communicate action, or identify an active state. It is not the default color for large backgrounds, body text, or the primary logo.</p>
       </section>
+
 
       <!-- ================= BRAND-USE GUIDANCE ================= -->
       <section aria-labelledby="oi-guidance-heading">
